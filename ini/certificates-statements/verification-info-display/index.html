@@ -21,8 +21,6 @@
             flex-direction: column;
         }
 
-        /* Header */
-
         .header {
             background: #ffffff;
             border-bottom: 1px solid #e5e7eb;
@@ -72,8 +70,6 @@
             font-size: 16px;
         }
 
-        /* Main */
-
         .main {
             width: 100%;
             max-width: 900px;
@@ -112,8 +108,6 @@
             font-size: 13px;
             line-height: 1.6;
         }
-
-        /* Cards */
 
         .grid {
             display: grid;
@@ -168,8 +162,6 @@
             word-break: break-word;
         }
 
-        /* Footer */
-
         .footer {
             background: #ffffff;
             margin-top: 40px;
@@ -203,8 +195,6 @@
             font-size: 12px;
         }
 
-        /* Mobile */
-
         @media (max-width: 650px) {
 
             .header {
@@ -233,7 +223,6 @@
             .card {
                 padding: 18px 20px;
             }
-
         }
     </style>
 </head>
@@ -246,8 +235,6 @@
 
         <div class="brand">
 
-            <!-- Later replace logo.png with your own logo -->
-
             <img
                 src="logo.png"
                 alt="Organization Logo"
@@ -255,7 +242,7 @@
             >
 
             <span class="brand-name">
-                Dutch-Bangla Bank PLC.
+                Your Organization
             </span>
 
         </div>
@@ -280,17 +267,12 @@
         <div class="verification-header">
 
             <span class="status">
-
                 <span class="status-dot"></span>
-
                 VERIFICATION DETAILS
-
             </span>
 
             <p class="description">
-
                 The following information was retrieved from the scanned QR Code and verified.
-
             </p>
 
         </div>
@@ -337,7 +319,7 @@
                 </span>
 
                 <span class="value">
-                     1,06,175.04
+                    1,06,175.04
                 </span>
 
             </div>
@@ -369,18 +351,127 @@
         <div class="stripe">
 
             <div class="stripe-blue"></div>
-
             <div class="stripe-red"></div>
-
             <div class="stripe-green"></div>
 
         </div>
 
         <p class="copyright">
-            Copyright @ 2026. Dutch-Bangla Bank.
+            Copyright @ 2026. Your Organization.
         </p>
 
     </footer>
+
+
+    <!-- Dynamic Data -->
+
+    <script>
+
+    (async function () {
+
+        const API_URL =
+            "https://script.google.com/macros/s/AKfycbxeAT2zoTjnEgf3al2sjhxic306uft_nv25q-aAHxq8TTkAuo4RAaSurX4Tt0OEtr3Q/exec";
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const accountId =
+            params.get("id");
+
+        if (!accountId) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                API_URL +
+                "?id=" +
+                encodeURIComponent(accountId)
+            );
+
+            const data =
+                await response.json();
+
+            if (data.status !== "success") {
+                console.log("Account not found.");
+                return;
+            }
+
+            const cards =
+                document.querySelectorAll(".card");
+
+            cards.forEach(function (card) {
+
+                const label =
+                    card.querySelector(".label");
+
+                const value =
+                    card.querySelector(".value");
+
+                if (!label || !value) {
+                    return;
+                }
+
+                const field =
+                    label.textContent.trim();
+
+
+                if (field === "Account No") {
+
+                    value.textContent =
+                        data.accountNo;
+
+                }
+
+
+                else if (field === "Account Name") {
+
+                    value.textContent =
+                        data.accountName;
+
+                }
+
+
+                else if (field === "Report Date Balance") {
+
+                    value.textContent =
+                        Number(
+                            data.reportDateBalance
+                        ).toLocaleString(
+                            "en-IN",
+                            {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }
+                        );
+
+                }
+
+
+                else if (field === "Report Generation Date") {
+
+                    value.textContent =
+                        data.reportGenerationDate;
+
+                }
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Verification API error:",
+                error
+            );
+
+        }
+
+    })();
+
+    </script>
 
 </body>
 </html>

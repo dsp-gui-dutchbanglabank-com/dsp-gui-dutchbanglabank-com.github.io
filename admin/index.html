@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo-Bangla Bank PLC. — Admin Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 18px 24px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .demo {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .title {
+      margin-bottom: 20px;
+    }
+
+    .title h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+    }
+
+    .title p {
+      margin: 0;
+      color: #64748b;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .stat-number {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 25px;
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #0055a5;
+      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .save {
+      background: #0055a5;
+      color: white;
+    }
+
+    .clear {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #475569;
+    }
+
+    .empty {
+      text-align: center;
+      color: #64748b;
+      padding: 25px;
+    }
+
+    @media (max-width: 700px) {
+      .cards,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <div class="brand">Demo-Bangla Bank PLC.</div>
+        <span class="demo">DEMO SYSTEM</span>
+      </div>
+
+      <strong>Admin Dashboard</strong>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="title">
+      <h1>Welcome, Administrator</h1>
+      <p>Demo Certificate Management System</p>
+    </div>
+
+    <div class="cards">
+      <div class="stat">
+        <div class="stat-label">Total Certificates</div>
+        <div class="stat-number" id="totalCertificates">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Valid Certificates</div>
+        <div class="stat-number" id="validCertificates">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Revoked Certificates</div>
+        <div class="stat-number" id="revokedCertificates">0</div>
+      </div>
+    </div>
+
+    <section class="panel">
+
+      <h2>+ Add Certificate</h2>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="accountNo">Account No</label>
+          <input
+            id="accountNo"
+            type="text"
+            placeholder="Enter account number">
+        </div>
+
+        <div class="field">
+          <label for="accountName">Account Name</label>
+          <input
+            id="accountName"
+            type="text"
+            placeholder="Enter account name">
+        </div>
+
+        <div class="field">
+          <label for="balance">Report Date Balance</label>
+          <input
+            id="balance"
+            type="text"
+            placeholder="Enter balance">
+        </div>
+
+        <div class="field">
+          <label for="reportDate">Report Generation Date</label>
+          <input
+            id="reportDate"
+            type="text"
+            placeholder="Example: 12-Aug-2026">
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="save" onclick="saveCertificate()">
+          SAVE CERTIFICATE
+        </button>
+
+        <button class="clear" onclick="clearForm()">
+          CLEAR
+        </button>
+      </div>
+
+      <div id="message" class="message"></div>
+
+    </section>
+
+    <section class="panel">
+
+      <h2>Certificate List</h2>
+
+      <div class="table-wrap">
+
+        <table>
+          <thead>
+            <tr>
+              <th>REF</th>
+              <th>Account No</th>
+              <th>Account Name</th>
+              <th>Balance</th>
+              <th>Generation Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody id="certificateTable">
+            <tr>
+              <td colspan="6" class="empty">
+                No certificates yet.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    let certificates =
+      JSON.parse(localStorage.getItem("demoCertificates") || "[]");
+
+    function generateRef() {
+      const random =
+        Math.random().toString(36).substring(2, 12);
+
+      const time =
+        Date.now().toString(36);
+
+      return "DEMO-" + time + "-" + random;
+    }
+
+    function saveCertificate() {
+
+      const accountNo =
+        document.getElementById("accountNo").value.trim();
+
+      const accountName =
+        document.getElementById("accountName").value.trim();
+
+      const balance =
+        document.getElementById("balance").value.trim();
+
+      const reportDate =
+        document.getElementById("reportDate").value.trim();
+
+      if (!accountNo || !accountName || !balance || !reportDate) {
+        showMessage("Please fill in all fields.", true);
+        return;
+      }
+
+      const certificate = {
+        ref: generateRef(),
+        accountNo: accountNo,
+        accountName: accountName,
+        balance: balance,
+        reportDate: reportDate,
+        status: "VALID"
+      };
+
+      certificates.push(certificate);
+
+      localStorage.setItem(
+        "demoCertificates",
+        JSON.stringify(certificates)
+      );
+
+      clearForm();
+      renderCertificates();
+
+      showMessage(
+        "Demo certificate saved successfully."
+      );
+    }
+
+    function clearForm() {
+      document.getElementById("accountNo").value = "";
+      document.getElementById("accountName").value = "";
+      document.getElementById("balance").value = "";
+      document.getElementById("reportDate").value = "";
+    }
+
+    function showMessage(text, error = false) {
+      const message =
+        document.getElementById("message");
+
+      message.textContent = text;
+      message.style.display = "block";
+
+      if (error) {
+        message.style.background = "#fee2e2";
+        message.style.color = "#991b1b";
+      } else {
+        message.style.background = "#dcfce7";
+        message.style.color = "#166534";
+      }
+
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 3000);
+    }
+
+    function renderCertificates() {
+
+      const table =
+        document.getElementById("certificateTable");
+
+      table.innerHTML = "";
+
+      certificates.forEach(cert => {
+
+        const row =
+          document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${escapeHtml(cert.ref)}</td>
+          <td>${escapeHtml(cert.accountNo)}</td>
+          <td>${escapeHtml(cert.accountName)}</td>
+          <td>${escapeHtml(cert.balance)}</td>
+          <td>${escapeHtml(cert.reportDate)}</td>
+          <td>${escapeHtml(cert.status)}</td>
+        `;
+
+        table.appendChild(row);
+      });
+
+      if (certificates.length === 0) {
+        table.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty">
+              No certificates yet.
+            </td>
+          </tr>
+        `;
+      }
+
+      document.getElementById("totalCertificates")
+        .textContent = certificates.length;
+
+      document.getElementById("validCertificates")
+        .textContent =
+        certificates.filter(x => x.status === "VALID").length;
+
+      document.getElementById("revokedCertificates")
+        .textContent =
+        certificates.filter(x => x.status === "REVOKED").length;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    renderCertificates();
+  </script>
+
+</body>
+</html>

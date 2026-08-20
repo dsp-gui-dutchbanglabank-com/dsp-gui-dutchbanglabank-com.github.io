@@ -1,3 +1,5 @@
+# index.html
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -11,17 +13,13 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Demo-Bangla Bank PLC. — Admin Dashboard
-  </title>
-
+  <title>Demo-Bangla Bank PLC. — Admin Dashboard</title>
 
   <style>
 
     * {
       box-sizing: border-box;
     }
-
 
     body {
       margin: 0;
@@ -30,13 +28,11 @@
       color: #0f172a;
     }
 
-
     .header {
       background: #ffffff;
       border-bottom: 1px solid #e2e8f0;
       padding: 18px 24px;
     }
-
 
     .header-inner {
       max-width: 1100px;
@@ -47,12 +43,10 @@
       gap: 20px;
     }
 
-
     .brand {
       font-size: 20px;
       font-weight: 700;
     }
-
 
     .demo {
       display: inline-block;
@@ -65,30 +59,25 @@
       font-weight: 700;
     }
 
-
     .container {
       max-width: 1100px;
       margin: 30px auto;
       padding: 0 20px;
     }
 
-
     .title {
       margin-bottom: 20px;
     }
-
 
     .title h1 {
       margin: 0 0 6px;
       font-size: 26px;
     }
 
-
     .title p {
       margin: 0;
       color: #64748b;
     }
-
 
     .cards {
       display: grid;
@@ -97,7 +86,6 @@
       margin-bottom: 25px;
     }
 
-
     .stat {
       background: white;
       border: 1px solid #e2e8f0;
@@ -105,19 +93,16 @@
       padding: 20px;
     }
 
-
     .stat-label {
       color: #64748b;
       font-size: 14px;
     }
-
 
     .stat-number {
       margin-top: 8px;
       font-size: 28px;
       font-weight: 700;
     }
-
 
     .panel {
       background: white;
@@ -127,12 +112,10 @@
       margin-bottom: 25px;
     }
 
-
     .panel h2 {
       margin-top: 0;
       font-size: 20px;
     }
-
 
     .form-grid {
       display: grid;
@@ -140,14 +123,12 @@
       gap: 18px;
     }
 
-
     .field label {
       display: block;
       margin-bottom: 7px;
       font-size: 14px;
       font-weight: 600;
     }
-
 
     .field input {
       width: 100%;
@@ -158,20 +139,16 @@
       outline: none;
     }
 
-
     .field input:focus {
       border-color: #0055a5;
-      box-shadow:
-        0 0 0 3px rgba(0,85,165,.1);
+      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
     }
-
 
     .actions {
       margin-top: 22px;
       display: flex;
       gap: 10px;
     }
-
 
     button {
       border: 0;
@@ -182,24 +159,20 @@
       font-size: 14px;
     }
 
-
     .save {
       background: #0055a5;
       color: white;
     }
-
 
     .save:disabled {
       opacity: .6;
       cursor: not-allowed;
     }
 
-
     .clear {
       background: #e2e8f0;
       color: #334155;
     }
-
 
     .message {
       display: none;
@@ -209,14 +182,12 @@
       font-size: 14px;
     }
 
-
     .search-box {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
       flex-wrap: wrap;
     }
-
 
     .search-input {
       flex: 1;
@@ -228,36 +199,29 @@
       outline: none;
     }
 
-
     .search-input:focus {
       border-color: #0055a5;
-      box-shadow:
-        0 0 0 3px rgba(0,85,165,.1);
+      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
     }
-
 
     .search-button {
       background: #0055a5;
       color: white;
     }
 
-
     .show-all-button {
       background: #e2e8f0;
       color: #334155;
     }
 
-
     .table-wrap {
       overflow-x: auto;
     }
-
 
     table {
       width: 100%;
       border-collapse: collapse;
     }
-
 
     th,
     td {
@@ -267,12 +231,10 @@
       font-size: 14px;
     }
 
-
     th {
       background: #f8fafc;
       color: #475569;
     }
-
 
     .empty {
       text-align: center;
@@ -280,18 +242,15 @@
       padding: 25px;
     }
 
-
     .status-valid {
       color: #166534;
       font-weight: 700;
     }
 
-
     .status-revoked {
       color: #991b1b;
       font-weight: 700;
     }
-
 
     @media (max-width: 700px) {
 
@@ -299,7 +258,6 @@
       .form-grid {
         grid-template-columns: 1fr;
       }
-
 
       .header-inner {
         align-items: flex-start;
@@ -332,7 +290,6 @@
 
       </div>
 
-
       <strong>
         Admin Dashboard
       </strong>
@@ -340,7 +297,6 @@
     </div>
 
   </header>
-
 
 
   <main class="container">
@@ -358,11 +314,6 @@
 
     </div>
 
-
-
-    <!-- ==========================
-         STATISTICS
-    =========================== -->
 
     <div class="cards">
 
@@ -383,7 +334,6 @@
       </div>
 
 
-
       <div class="stat">
 
         <div class="stat-label">
@@ -398,7 +348,6 @@
         </div>
 
       </div>
-
 
 
       <div class="stat">
@@ -419,11 +368,6 @@
 
     </div>
 
-
-
-    <!-- ==========================
-         ADD CERTIFICATE
-    =========================== -->
 
     <section class="panel">
 
@@ -451,7 +395,6 @@
         </div>
 
 
-
         <div class="field">
 
           <label for="accountName">
@@ -467,7 +410,6 @@
         </div>
 
 
-
         <div class="field">
 
           <label for="balance">
@@ -481,7 +423,6 @@
           >
 
         </div>
-
 
 
         <div class="field">
@@ -502,9 +443,7 @@
       </div>
 
 
-
       <div class="actions">
-
 
         <button
           class="save"
@@ -514,7 +453,6 @@
           SAVE CERTIFICATE
         </button>
 
-
         <button
           class="clear"
           onclick="clearForm()"
@@ -522,9 +460,7 @@
           CLEAR
         </button>
 
-
       </div>
-
 
 
       <div
@@ -536,11 +472,6 @@
     </section>
 
 
-
-    <!-- ==========================
-         CERTIFICATE LIST + SEARCH
-    =========================== -->
-
     <section class="panel">
 
 
@@ -549,9 +480,7 @@
       </h2>
 
 
-
       <div class="search-box">
-
 
         <input
           id="searchCertificate"
@@ -561,14 +490,12 @@
           onkeydown="handleSearchKey(event)"
         >
 
-
         <button
           class="search-button"
           onclick="searchCertificates()"
         >
           SEARCH
         </button>
-
 
         <button
           class="show-all-button"
@@ -577,31 +504,22 @@
           SHOW ALL
         </button>
 
-
       </div>
-
 
 
       <div class="table-wrap">
 
-
         <table>
-
 
           <thead>
 
             <tr>
 
               <th>REF</th>
-
               <th>Account No</th>
-
               <th>Account Name</th>
-
               <th>Balance</th>
-
               <th>Generation Date</th>
-
               <th>Status</th>
 
             </tr>
@@ -609,9 +527,7 @@
           </thead>
 
 
-          <tbody
-            id="certificateTable"
-          >
+          <tbody id="certificateTable">
 
             <tr>
 
@@ -620,15 +536,14 @@
                 class="empty"
               >
                 Loading certificates...
+
               </td>
 
             </tr>
 
           </tbody>
 
-
         </table>
-
 
       </div>
 
@@ -639,21 +554,18 @@
   </main>
 
 
-
   <script>
 
 
     /* =========================================
-       GOOGLE APPS SCRIPT WEB APP URL
+       GOOGLE APPS SCRIPT URL
     ========================================= */
 
     const API_URL =
-  "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
-
+      "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
 
 
     let certificates = [];
-
 
 
     /* =========================================
@@ -661,7 +573,6 @@
     ========================================= */
 
     async function saveCertificate() {
-
 
       const accountNo =
         document
@@ -691,7 +602,6 @@
           .trim();
 
 
-
       if (
         !accountNo ||
         !accountName ||
@@ -705,9 +615,7 @@
         );
 
         return;
-
       }
-
 
 
       const saveButton =
@@ -722,9 +630,7 @@
         "SAVING...";
 
 
-
       try {
-
 
         const response =
           await fetch(
@@ -753,14 +659,12 @@
                     reportDate
 
                 })
-
             }
           );
 
 
         const result =
           await response.json();
-
 
 
         if (!result.success) {
@@ -772,9 +676,7 @@
           );
 
           return;
-
         }
-
 
 
         clearForm();
@@ -790,10 +692,7 @@
 
       } catch (error) {
 
-
-        console.error(
-          error
-        );
+        console.error(error);
 
 
         showMessage(
@@ -802,7 +701,6 @@
         );
 
       } finally {
-
 
         saveButton.disabled =
           false;
@@ -815,13 +713,11 @@
     }
 
 
-
     /* =========================================
        LOAD ALL CERTIFICATES
     ========================================= */
 
     function loadCertificates() {
-
 
       const table =
         document.getElementById(
@@ -838,6 +734,7 @@
             class="empty"
           >
             Loading certificates...
+
           </td>
 
         </tr>
@@ -845,13 +742,15 @@
       `;
 
 
-
-      loadFromAppsScript(
+      requestAppsScript(
         "action=list",
+
         function(result) {
 
-
-          if (!result.success) {
+          if (
+            !result ||
+            !result.success
+          ) {
 
             table.innerHTML = `
 
@@ -861,10 +760,14 @@
                   colspan="6"
                   class="empty"
                 >
+
                   ${escapeHtml(
-                    result.message ||
-                    "Could not load certificates."
+                    result &&
+                    result.message
+                      ? result.message
+                      : "Could not load certificates."
                   )}
+
                 </td>
 
               </tr>
@@ -872,13 +775,15 @@
             `;
 
             return;
-
           }
 
 
-
           certificates =
-            result.certificates || [];
+            Array.isArray(
+              result.certificates
+            )
+              ? result.certificates
+              : [];
 
 
           renderCertificates();
@@ -889,13 +794,11 @@
     }
 
 
-
     /* =========================================
        SEARCH
     ========================================= */
 
     function searchCertificates() {
-
 
       const input =
         document.getElementById(
@@ -907,15 +810,12 @@
         input.value.trim();
 
 
-
       if (!query) {
 
         loadCertificates();
 
         return;
-
       }
-
 
 
       const table =
@@ -933,6 +833,7 @@
             class="empty"
           >
             Searching...
+
           </td>
 
         </tr>
@@ -940,16 +841,17 @@
       `;
 
 
-
-      loadFromAppsScript(
+      requestAppsScript(
 
         "action=search&q=" +
         encodeURIComponent(query),
 
         function(result) {
 
-
-          if (!result.success) {
+          if (
+            !result ||
+            !result.success
+          ) {
 
             table.innerHTML = `
 
@@ -959,10 +861,14 @@
                   colspan="6"
                   class="empty"
                 >
+
                   ${escapeHtml(
-                    result.message ||
-                    "Search failed."
+                    result &&
+                    result.message
+                      ? result.message
+                      : "Search failed."
                   )}
+
                 </td>
 
               </tr>
@@ -970,13 +876,15 @@
             `;
 
             return;
-
           }
 
 
-
           certificates =
-            result.certificates || [];
+            Array.isArray(
+              result.certificates
+            )
+              ? result.certificates
+              : [];
 
 
           renderCertificates();
@@ -988,23 +896,21 @@
     }
 
 
-
     /* =========================================
-       APPS SCRIPT JSONP REQUEST
+       JSONP REQUEST
     ========================================= */
 
-    function loadFromAppsScript(
+    function requestAppsScript(
       parameters,
       callback
     ) {
-
 
       const callbackName =
         "certificateCallback_" +
         Date.now() +
         "_" +
         Math.floor(
-          Math.random() * 100000
+          Math.random() * 1000000
         );
 
 
@@ -1014,43 +920,40 @@
         );
 
 
+      let finished = false;
+
+
       const timeout =
         setTimeout(
           function() {
+
+            if (finished) {
+              return;
+            }
+
+
+            finished = true;
 
 
             cleanup();
 
 
-            const table =
-              document.getElementById(
-                "certificateTable"
-              );
-
-
-            table.innerHTML = `
-
-              <tr>
-
-                <td
-                  colspan="6"
-                  class="empty"
-                >
-                  Connection failed. Please check Apps Script deployment.
-                </td>
-
-              </tr>
-
-            `;
+            showConnectionError();
 
           },
           15000
         );
 
 
-
       window[callbackName] =
         function(result) {
+
+          if (finished) {
+            return;
+          }
+
+
+          finished = true;
 
 
           clearTimeout(timeout);
@@ -1064,18 +967,25 @@
         };
 
 
-
       script.src =
         API_URL +
         "?" +
         parameters +
         "&callback=" +
-        callbackName;
-
+        encodeURIComponent(
+          callbackName
+        );
 
 
       script.onerror =
         function() {
+
+          if (finished) {
+            return;
+          }
+
+
+          finished = true;
 
 
           clearTimeout(timeout);
@@ -1084,60 +994,80 @@
           cleanup();
 
 
-          const table =
-            document.getElementById(
-              "certificateTable"
-            );
-
-
-          table.innerHTML = `
-
-            <tr>
-
-              <td
-                colspan="6"
-                class="empty"
-              >
-                Connection failed.
-              </td>
-
-            </tr>
-
-          `;
+          showConnectionError();
 
         };
 
 
-
-      document
-        .body
-        .appendChild(script);
-
+      document.body.appendChild(
+        script
+      );
 
 
       function cleanup() {
 
         if (script.parentNode) {
 
-          script
-            .parentNode
-            .removeChild(script);
+          script.parentNode.removeChild(
+            script
+          );
 
         }
 
 
-        delete window[
-          callbackName
-        ];
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch (error) {
+
+          window[callbackName] =
+            undefined;
+
+        }
 
       }
 
     }
 
 
+    /* =========================================
+       CONNECTION ERROR
+    ========================================= */
+
+    function showConnectionError() {
+
+      const table =
+        document.getElementById(
+          "certificateTable"
+        );
+
+
+      table.innerHTML = `
+
+        <tr>
+
+          <td
+            colspan="6"
+            class="empty"
+          >
+
+            Connection failed.
+            Please check Apps Script deployment.
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+
 
     /* =========================================
-       ENTER KEY
+       ENTER KEY SEARCH
     ========================================= */
 
     function handleSearchKey(
@@ -1155,43 +1085,32 @@
     }
 
 
-
     /* =========================================
        CLEAR FORM
     ========================================= */
 
     function clearForm() {
 
-
-      document
-        .getElementById(
-          "accountNo"
-        )
-        .value = "";
+      document.getElementById(
+        "accountNo"
+      ).value = "";
 
 
-      document
-        .getElementById(
-          "accountName"
-        )
-        .value = "";
+      document.getElementById(
+        "accountName"
+      ).value = "";
 
 
-      document
-        .getElementById(
-          "balance"
-        )
-        .value = "";
+      document.getElementById(
+        "balance"
+      ).value = "";
 
 
-      document
-        .getElementById(
-          "reportDate"
-        )
-        .value = "";
+      document.getElementById(
+        "reportDate"
+      ).value = "";
 
     }
-
 
 
     /* =========================================
@@ -1202,7 +1121,6 @@
       text,
       error = false
     ) {
-
 
       const message =
         document.getElementById(
@@ -1256,13 +1174,11 @@
     }
 
 
-
     /* =========================================
        RENDER TABLE
     ========================================= */
 
     function renderCertificates() {
-
 
       const table =
         document.getElementById(
@@ -1273,10 +1189,8 @@
       table.innerHTML = "";
 
 
-
       certificates.forEach(
         function(cert) {
-
 
           const row =
             document.createElement(
@@ -1284,48 +1198,54 @@
             );
 
 
+          const status =
+            String(
+              cert.status ||
+              "VALID"
+            ).toUpperCase();
+
+
           const statusClass =
-            cert.status === "VALID"
+            status === "VALID"
               ? "status-valid"
               : "status-revoked";
-
 
 
           row.innerHTML = `
 
             <td>
               ${escapeHtml(
-                cert.ref
+                cert.ref || ""
               )}
             </td>
 
             <td>
               ${escapeHtml(
-                cert.accountNo
+                cert.accountNo || ""
               )}
             </td>
 
             <td>
               ${escapeHtml(
-                cert.accountName
+                cert.accountName || ""
               )}
             </td>
 
             <td>
               ${escapeHtml(
-                cert.balance
+                cert.balance || ""
               )}
             </td>
 
             <td>
               ${escapeHtml(
-                cert.reportDate
+                cert.reportDate || ""
               )}
             </td>
 
             <td class="${statusClass}">
               ${escapeHtml(
-                cert.status
+                status
               )}
             </td>
 
@@ -1338,7 +1258,6 @@
 
         }
       );
-
 
 
       if (
@@ -1354,6 +1273,7 @@
               class="empty"
             >
               No certificates found.
+
             </td>
 
           </tr>
@@ -1363,42 +1283,42 @@
       }
 
 
-
-      document
-        .getElementById(
-          "totalCertificates"
-        )
-        .textContent =
+      document.getElementById(
+        "totalCertificates"
+      ).textContent =
         certificates.length;
 
 
-
-      document
-        .getElementById(
-          "validCertificates"
-        )
-        .textContent =
+      document.getElementById(
+        "validCertificates"
+      ).textContent =
         certificates.filter(
-          function(x) {
-            return x.status === "VALID";
+          function(cert) {
+
+            return String(
+              cert.status || ""
+            ).toUpperCase() ===
+              "VALID";
+
           }
         ).length;
 
 
-
-      document
-        .getElementById(
-          "revokedCertificates"
-        )
-        .textContent =
+      document.getElementById(
+        "revokedCertificates"
+      ).textContent =
         certificates.filter(
-          function(x) {
-            return x.status === "REVOKED";
+          function(cert) {
+
+            return String(
+              cert.status || ""
+            ).toUpperCase() ===
+              "REVOKED";
+
           }
         ).length;
 
     }
-
 
 
     /* =========================================
@@ -1439,13 +1359,11 @@
     }
 
 
-
     /* =========================================
        START
     ========================================= */
 
     loadCertificates();
-
 
   </script>
 

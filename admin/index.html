@@ -1,15 +1,27 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Demo-Bangla Bank PLC. — Admin Dashboard</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Demo-Bangla Bank PLC. — Admin Dashboard
+  </title>
+
 
   <style>
+
     * {
       box-sizing: border-box;
     }
+
 
     body {
       margin: 0;
@@ -18,11 +30,13 @@
       color: #0f172a;
     }
 
+
     .header {
       background: #ffffff;
       border-bottom: 1px solid #e2e8f0;
       padding: 18px 24px;
     }
+
 
     .header-inner {
       max-width: 1100px;
@@ -33,10 +47,12 @@
       gap: 20px;
     }
 
+
     .brand {
       font-size: 20px;
       font-weight: 700;
     }
+
 
     .demo {
       display: inline-block;
@@ -49,25 +65,30 @@
       font-weight: 700;
     }
 
+
     .container {
       max-width: 1100px;
       margin: 30px auto;
       padding: 0 20px;
     }
 
+
     .title {
       margin-bottom: 20px;
     }
+
 
     .title h1 {
       margin: 0 0 6px;
       font-size: 26px;
     }
 
+
     .title p {
       margin: 0;
       color: #64748b;
     }
+
 
     .cards {
       display: grid;
@@ -76,6 +97,7 @@
       margin-bottom: 25px;
     }
 
+
     .stat {
       background: white;
       border: 1px solid #e2e8f0;
@@ -83,16 +105,19 @@
       padding: 20px;
     }
 
+
     .stat-label {
       color: #64748b;
       font-size: 14px;
     }
+
 
     .stat-number {
       margin-top: 8px;
       font-size: 28px;
       font-weight: 700;
     }
+
 
     .panel {
       background: white;
@@ -102,10 +127,12 @@
       margin-bottom: 25px;
     }
 
+
     .panel h2 {
       margin-top: 0;
       font-size: 20px;
     }
+
 
     .form-grid {
       display: grid;
@@ -113,12 +140,14 @@
       gap: 18px;
     }
 
+
     .field label {
       display: block;
       margin-bottom: 7px;
       font-size: 14px;
       font-weight: 600;
     }
+
 
     .field input {
       width: 100%;
@@ -129,16 +158,20 @@
       outline: none;
     }
 
+
     .field input:focus {
       border-color: #0055a5;
-      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
+      box-shadow:
+        0 0 0 3px rgba(0,85,165,.1);
     }
+
 
     .actions {
       margin-top: 22px;
       display: flex;
       gap: 10px;
     }
+
 
     button {
       border: 0;
@@ -149,20 +182,24 @@
       font-size: 14px;
     }
 
+
     .save {
       background: #0055a5;
       color: white;
     }
+
 
     .save:disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
 
+
     .clear {
       background: #e2e8f0;
       color: #334155;
     }
+
 
     .message {
       display: none;
@@ -174,14 +211,57 @@
       font-size: 14px;
     }
 
+
+    /* SEARCH */
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+
+    .search-input:focus {
+      border-color: #0055a5;
+      box-shadow:
+        0 0 0 3px rgba(0,85,165,.1);
+    }
+
+
+    .search-button {
+      background: #0055a5;
+      color: white;
+    }
+
+
+    .show-all-button {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+
     .table-wrap {
       overflow-x: auto;
     }
+
 
     table {
       width: 100%;
       border-collapse: collapse;
     }
+
 
     th,
     td {
@@ -191,10 +271,12 @@
       font-size: 14px;
     }
 
+
     th {
       background: #f8fafc;
       color: #475569;
     }
+
 
     .empty {
       text-align: center;
@@ -202,36 +284,48 @@
       padding: 25px;
     }
 
+
     .status-valid {
       color: #166534;
       font-weight: 700;
     }
+
 
     .status-revoked {
       color: #991b1b;
       font-weight: 700;
     }
 
+
     @media (max-width: 700px) {
+
       .cards,
       .form-grid {
         grid-template-columns: 1fr;
       }
 
+
       .header-inner {
         align-items: flex-start;
         flex-direction: column;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
   <header class="header">
+
     <div class="header-inner">
 
       <div>
+
         <div class="brand">
           Demo-Bangla Bank PLC.
         </div>
@@ -239,19 +333,25 @@
         <span class="demo">
           DEMO SYSTEM
         </span>
+
       </div>
+
 
       <strong>
         Admin Dashboard
       </strong>
 
     </div>
+
   </header>
+
 
 
   <main class="container">
 
+
     <div class="title">
+
       <h1>
         Welcome, Administrator
       </h1>
@@ -259,53 +359,74 @@
       <p>
         Demo Certificate Management System
       </p>
+
     </div>
 
 
+
+    <!-- STATISTICS -->
+
     <div class="cards">
 
+
       <div class="stat">
+
         <div class="stat-label">
           Total Certificates
         </div>
 
         <div
           class="stat-number"
-          id="totalCertificates">
+          id="totalCertificates"
+        >
           0
         </div>
+
       </div>
 
 
+
       <div class="stat">
+
         <div class="stat-label">
           Valid Certificates
         </div>
 
         <div
           class="stat-number"
-          id="validCertificates">
+          id="validCertificates"
+        >
           0
         </div>
+
       </div>
 
 
+
       <div class="stat">
+
         <div class="stat-label">
           Revoked Certificates
         </div>
 
         <div
           class="stat-number"
-          id="revokedCertificates">
+          id="revokedCertificates"
+        >
           0
         </div>
+
       </div>
+
 
     </div>
 
 
+
+    <!-- ADD CERTIFICATE -->
+
     <section class="panel">
+
 
       <h2>
         + Add Certificate
@@ -313,6 +434,7 @@
 
 
       <div class="form-grid">
+
 
         <div class="field">
 
@@ -323,9 +445,11 @@
           <input
             id="accountNo"
             type="text"
-            placeholder="Enter account number">
+            placeholder="Enter account number"
+          >
 
         </div>
+
 
 
         <div class="field">
@@ -337,9 +461,11 @@
           <input
             id="accountName"
             type="text"
-            placeholder="Enter account name">
+            placeholder="Enter account name"
+          >
 
         </div>
+
 
 
         <div class="field">
@@ -351,9 +477,11 @@
           <input
             id="balance"
             type="text"
-            placeholder="Enter balance">
+            placeholder="Enter balance"
+          >
 
         </div>
+
 
 
         <div class="field">
@@ -365,54 +493,103 @@
           <input
             id="reportDate"
             type="text"
-            placeholder="Example: 12-Aug-2026">
+            placeholder="Example: 12-Aug-2026"
+          >
 
         </div>
+
 
       </div>
 
 
+
       <div class="actions">
+
 
         <button
           class="save"
           id="saveButton"
-          onclick="saveCertificate()">
-
+          onclick="saveCertificate()"
+        >
           SAVE CERTIFICATE
-
         </button>
 
 
         <button
           class="clear"
-          onclick="clearForm()">
-
+          onclick="clearForm()"
+        >
           CLEAR
-
         </button>
 
+
       </div>
+
 
 
       <div
         id="message"
-        class="message">
+        class="message"
+      >
       </div>
+
 
     </section>
 
 
+
+    <!-- CERTIFICATE LIST -->
+
     <section class="panel">
+
 
       <h2>
         Certificate List
       </h2>
 
 
+
+      <!-- SEARCH -->
+
+      <div class="search-box">
+
+
+        <input
+          id="searchCertificate"
+          class="search-input"
+          type="text"
+          placeholder="Search by REF, Account No or Account Name"
+          onkeydown="handleSearchKey(event)"
+        >
+
+
+        <button
+          class="search-button"
+          onclick="searchCertificates()"
+        >
+          SEARCH
+        </button>
+
+
+        <button
+          class="show-all-button"
+          onclick="loadCertificates()"
+        >
+          SHOW ALL
+        </button>
+
+
+      </div>
+
+
+
+      <!-- TABLE -->
+
       <div class="table-wrap">
 
+
         <table>
+
 
           <thead>
 
@@ -447,57 +624,64 @@
           </thead>
 
 
+
           <tbody id="certificateTable">
+
 
             <tr>
 
               <td
                 colspan="6"
-                class="empty">
-
-                No certificates yet.
-
+                class="empty"
+              >
+                Loading certificates...
               </td>
 
             </tr>
 
+
           </tbody>
+
 
         </table>
 
+
       </div>
 
+
     </section>
+
 
   </main>
 
 
+
   <script>
 
-    /*
-      DEMO BACKEND
-      Google Apps Script Web App
-    */
+
+    /* =================================
+       GOOGLE APPS SCRIPT URL
+    ================================= */
 
     const API_URL =
       "https://script.google.com/macros/s/AKfycbxDarn_5nfBJ5bnX0ECFjRaV4zFnHk2jxluSrAS7FqaypEpkKgmyxK52oMKMN0rI-jcuA/exec";
 
 
-    /*
-      Local browser copy
-    */
 
-    let certificates =
-      JSON.parse(
-        localStorage.getItem("demoCertificates") || "[]"
-      );
+    /* =================================
+       CERTIFICATE ARRAY
+    ================================= */
+
+    let certificates = [];
 
 
-    /*
-      SAVE CERTIFICATE
-    */
+
+    /* =================================
+       SAVE CERTIFICATE
+    ================================= */
 
     async function saveCertificate() {
+
 
       const accountNo =
         document
@@ -527,9 +711,8 @@
           .trim();
 
 
-      /*
-        Validation
-      */
+
+      /* Validation */
 
       if (
         !accountNo ||
@@ -544,11 +727,15 @@
         );
 
         return;
+
       }
 
 
+
       const saveButton =
-        document.getElementById("saveButton");
+        document.getElementById(
+          "saveButton"
+        );
 
 
       saveButton.disabled = true;
@@ -562,7 +749,9 @@
       );
 
 
+
       try {
+
 
         const response =
           await fetch(
@@ -577,6 +766,7 @@
 
               body:
                 JSON.stringify({
+
                   accountNo:
                     accountNo,
 
@@ -588,18 +778,18 @@
 
                   reportDate:
                     reportDate
+
                 })
+
             }
           );
+
 
 
         const result =
           await response.json();
 
 
-        /*
-          Backend error
-        */
 
         if (!result.success) {
 
@@ -610,63 +800,27 @@
           );
 
           return;
+
         }
 
 
-        /*
-          Create local copy
-        */
-
-        const certificate = {
-
-          ref:
-            result.ref,
-
-          accountNo:
-            accountNo,
-
-          accountName:
-            accountName,
-
-          balance:
-            balance,
-
-          reportDate:
-            reportDate,
-
-          status:
-            result.status || "VALID"
-        };
-
-
-        certificates.push(
-          certificate
-        );
-
-
-        localStorage.setItem(
-          "demoCertificates",
-          JSON.stringify(
-            certificates
-          )
-        );
-
-
-        /*
-          Update screen
-        */
 
         clearForm();
 
-        renderCertificates();
-
 
         showMessage(
-          "Demo certificate saved successfully."
+          "Certificate saved successfully."
         );
 
 
+
+        /* Reload from Google Sheet */
+
+        await loadCertificates();
+
+
       } catch (error) {
+
 
         console.error(
           "Save error:",
@@ -682,52 +836,324 @@
 
       } finally {
 
+
         saveButton.disabled =
           false;
 
+
         saveButton.textContent =
           "SAVE CERTIFICATE";
+
       }
 
     }
 
 
-    /*
-      CLEAR FORM
-    */
+
+    /* =================================
+       LOAD ALL CERTIFICATES
+    ================================= */
+
+    async function loadCertificates() {
+
+
+      const table =
+        document.getElementById(
+          "certificateTable"
+        );
+
+
+      table.innerHTML = `
+
+        <tr>
+
+          <td
+            colspan="6"
+            class="empty"
+          >
+            Loading certificates...
+          </td>
+
+        </tr>
+
+      `;
+
+
+
+      try {
+
+
+        const response =
+          await fetch(
+            API_URL +
+            "?action=list"
+          );
+
+
+        const result =
+          await response.json();
+
+
+
+        if (!result.success) {
+
+          table.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="6"
+                class="empty"
+              >
+                ${escapeHtml(
+                  result.message ||
+                  "Could not load certificates."
+                )}
+              </td>
+
+            </tr>
+
+          `;
+
+          return;
+
+        }
+
+
+
+        certificates =
+          result.certificates || [];
+
+
+        renderCertificates();
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Load error:",
+          error
+        );
+
+
+        table.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="6"
+              class="empty"
+            >
+              Connection failed. Please check the Apps Script deployment.
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /* =================================
+       SEARCH CERTIFICATES
+    ================================= */
+
+    async function searchCertificates() {
+
+
+      const input =
+        document.getElementById(
+          "searchCertificate"
+        );
+
+
+      const query =
+        input.value.trim();
+
+
+
+      /* Empty search = show all */
+
+      if (!query) {
+
+        await loadCertificates();
+
+        return;
+
+      }
+
+
+
+      const table =
+        document.getElementById(
+          "certificateTable"
+        );
+
+
+      table.innerHTML = `
+
+        <tr>
+
+          <td
+            colspan="6"
+            class="empty"
+          >
+            Searching...
+          </td>
+
+        </tr>
+
+      `;
+
+
+
+      try {
+
+
+        const response =
+          await fetch(
+
+            API_URL +
+            "?action=search&q=" +
+            encodeURIComponent(query)
+
+          );
+
+
+        const result =
+          await response.json();
+
+
+
+        if (!result.success) {
+
+          table.innerHTML = `
+
+            <tr>
+
+              <td
+                colspan="6"
+                class="empty"
+              >
+                Search failed.
+              </td>
+
+            </tr>
+
+          `;
+
+          return;
+
+        }
+
+
+
+        certificates =
+          result.certificates || [];
+
+
+        renderCertificates();
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Search error:",
+          error
+        );
+
+
+        table.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="6"
+              class="empty"
+            >
+              Connection failed.
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /* =================================
+       ENTER KEY SEARCH
+    ================================= */
+
+    function handleSearchKey(event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        searchCertificates();
+
+      }
+
+    }
+
+
+
+    /* =================================
+       CLEAR FORM
+    ================================= */
 
     function clearForm() {
 
+
       document
-        .getElementById("accountNo")
+        .getElementById(
+          "accountNo"
+        )
         .value = "";
 
 
       document
-        .getElementById("accountName")
+        .getElementById(
+          "accountName"
+        )
         .value = "";
 
 
       document
-        .getElementById("balance")
+        .getElementById(
+          "balance"
+        )
         .value = "";
 
 
       document
-        .getElementById("reportDate")
+        .getElementById(
+          "reportDate"
+        )
         .value = "";
 
     }
 
 
-    /*
-      MESSAGE
-    */
+
+    /* =================================
+       MESSAGE
+    ================================= */
 
     function showMessage(
       text,
       error = false
     ) {
+
 
       const message =
         document.getElementById(
@@ -741,6 +1167,7 @@
 
       message.style.display =
         "block";
+
 
 
       if (error) {
@@ -758,7 +1185,9 @@
 
         message.style.color =
           "#166534";
+
       }
+
 
 
       clearTimeout(
@@ -780,11 +1209,13 @@
     }
 
 
-    /*
-      RENDER CERTIFICATE TABLE
-    */
+
+    /* =================================
+       RENDER CERTIFICATE TABLE
+    ================================= */
 
     function renderCertificates() {
+
 
       const table =
         document.getElementById(
@@ -795,13 +1226,16 @@
       table.innerHTML = "";
 
 
+
       certificates.forEach(
         cert => {
+
 
           const row =
             document.createElement(
               "tr"
             );
+
 
 
           const statusClass =
@@ -810,33 +1244,47 @@
               : "status-revoked";
 
 
+
           row.innerHTML = `
 
             <td>
-              ${escapeHtml(cert.ref)}
+              ${escapeHtml(
+                cert.ref
+              )}
             </td>
 
             <td>
-              ${escapeHtml(cert.accountNo)}
+              ${escapeHtml(
+                cert.accountNo
+              )}
             </td>
 
             <td>
-              ${escapeHtml(cert.accountName)}
+              ${escapeHtml(
+                cert.accountName
+              )}
             </td>
 
             <td>
-              ${escapeHtml(cert.balance)}
+              ${escapeHtml(
+                cert.balance
+              )}
             </td>
 
             <td>
-              ${escapeHtml(cert.reportDate)}
+              ${escapeHtml(
+                cert.reportDate
+              )}
             </td>
 
             <td class="${statusClass}">
-              ${escapeHtml(cert.status)}
+              ${escapeHtml(
+                cert.status
+              )}
             </td>
 
           `;
+
 
 
           table.appendChild(
@@ -847,9 +1295,8 @@
       );
 
 
-      /*
-        Empty table
-      */
+
+      /* No results */
 
       if (
         certificates.length === 0
@@ -861,21 +1308,20 @@
 
             <td
               colspan="6"
-              class="empty">
-
-              No certificates yet.
-
+              class="empty"
+            >
+              No certificates found.
             </td>
 
           </tr>
 
         `;
+
       }
 
 
-      /*
-        Statistics
-      */
+
+      /* Statistics */
 
       document
         .getElementById(
@@ -883,6 +1329,7 @@
         )
         .textContent =
         certificates.length;
+
 
 
       document
@@ -894,6 +1341,7 @@
           x =>
             x.status === "VALID"
         ).length;
+
 
 
       document
@@ -909,13 +1357,12 @@
     }
 
 
-    /*
-      HTML ESCAPE
-    */
 
-    function escapeHtml(
-      value
-    ) {
+    /* =================================
+       HTML ESCAPE
+    ================================= */
+
+    function escapeHtml(value) {
 
       return String(value)
 
@@ -947,13 +1394,18 @@
     }
 
 
-    /*
-      INITIAL LOAD
-    */
 
-    renderCertificates();
+    /* =================================
+       INITIAL LOAD
+    ================================= */
+
+    loadCertificates();
+
 
   </script>
 
+
 </body>
+
 </html>
+```

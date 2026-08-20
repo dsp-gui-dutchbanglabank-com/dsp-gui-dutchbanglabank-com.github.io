@@ -172,14 +172,9 @@ button {
   background: #b91c1c;
 }
 
-.status-valid {
-  color: #166534;
-  font-weight: 700;
-}
-
-.status-revoked {
-  color: #991b1b;
-  font-weight: 700;
+.revoke:disabled {
+  opacity: .6;
+  cursor: not-allowed;
 }
 
 .message {
@@ -244,6 +239,16 @@ th {
   padding: 25px;
 }
 
+.status-valid {
+  color: #166534;
+  font-weight: 700;
+}
+
+.status-revoked {
+  color: #991b1b;
+  font-weight: 700;
+}
+
 @media (max-width: 700px) {
 
   .cards,
@@ -261,6 +266,7 @@ th {
 </style>
 
 </head>
+
 
 <body>
 
@@ -290,6 +296,7 @@ Admin Dashboard
 
 
 <main class="container">
+
 
 <div class="title">
 
@@ -508,6 +515,7 @@ SHOW ALL
 
 </thead>
 
+
 <tbody id="certificateTable">
 
 <tr>
@@ -533,6 +541,7 @@ Loading certificates...
 
 
 <script>
+
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
@@ -647,15 +656,24 @@ button.textContent = "SAVE CERTIFICATE";
 function loadCertificates() {
 
 const table =
-document.getElementById("certificateTable");
+document.getElementById(
+"certificateTable"
+);
 
 
 table.innerHTML = `
+
 <tr>
-<td colspan="7" class="empty">
+
+<td
+colspan="7"
+class="empty"
+>
 Loading certificates...
 </td>
+
 </tr>
+
 `;
 
 
@@ -663,18 +681,29 @@ requestAppsScript(
 "action=list",
 function(result) {
 
-if (!result || !result.success) {
+if (
+!result ||
+!result.success
+) {
 
 table.innerHTML = `
+
 <tr>
-<td colspan="7" class="empty">
+
+<td
+colspan="7"
+class="empty"
+>
 ${escapeHtml(
-result && result.message
+result &&
+result.message
 ? result.message
 : "Could not load certificates."
 )}
 </td>
+
 </tr>
+
 `;
 
 return;
@@ -700,7 +729,9 @@ function searchCertificates() {
 
 const query =
 document
-.getElementById("searchCertificate")
+.getElementById(
+"searchCertificate"
+)
 .value
 .trim();
 
@@ -708,7 +739,6 @@ document
 if (!query) {
 
 loadCertificates();
-
 return;
 
 }
@@ -720,7 +750,10 @@ encodeURIComponent(query),
 
 function(result) {
 
-if (!result || !result.success) {
+if (
+!result ||
+!result.success
+) {
 
 showMessage(
 "Search failed.",
@@ -766,10 +799,14 @@ encodeURIComponent(ref),
 
 function(result) {
 
-if (!result || !result.success) {
+if (
+!result ||
+!result.success
+) {
 
 showMessage(
-result && result.message
+result &&
+result.message
 ? result.message
 : "Could not revoke certificate.",
 true
@@ -858,7 +895,9 @@ API_URL +
 "?" +
 parameters +
 "&callback=" +
-encodeURIComponent(callbackName);
+encodeURIComponent(
+callbackName
+);
 
 
 script.onerror =
@@ -886,17 +925,22 @@ function cleanup() {
 
 if (script.parentNode) {
 
-script.parentNode.removeChild(script);
+script.parentNode.removeChild(
+script
+);
 
 }
 
 try {
 
-delete window[callbackName];
+delete window[
+callbackName
+];
 
 } catch (error) {
 
-window[callbackName] = undefined;
+window[callbackName] =
+undefined;
 
 }
 
@@ -908,14 +952,25 @@ window[callbackName] = undefined;
 function showConnectionError() {
 
 const table =
-document.getElementById("certificateTable");
+document.getElementById(
+"certificateTable"
+);
+
 
 table.innerHTML = `
+
 <tr>
-<td colspan="7" class="empty">
-Connection failed. Please check Apps Script deployment.
+
+<td
+colspan="7"
+class="empty"
+>
+Connection failed.
+Please check Apps Script deployment.
 </td>
+
 </tr>
+
 `;
 
 }
@@ -924,7 +979,9 @@ Connection failed. Please check Apps Script deployment.
 function renderCertificates() {
 
 const table =
-document.getElementById("certificateTable");
+document.getElementById(
+"certificateTable"
+);
 
 
 table.innerHTML = "";
@@ -955,12 +1012,14 @@ let action = "";
 if (status === "VALID") {
 
 action = `
+
 <button
 class="revoke"
 onclick="revokeCertificate('${escapeJs(cert.ref)}')"
 >
 REVOKE
 </button>
+
 `;
 
 } else {
@@ -1013,14 +1072,23 @@ table.appendChild(row);
 );
 
 
-if (certificates.length === 0) {
+if (
+certificates.length === 0
+) {
 
 table.innerHTML = `
+
 <tr>
-<td colspan="7" class="empty">
+
+<td
+colspan="7"
+class="empty"
+>
 No certificates found.
 </td>
+
 </tr>
+
 `;
 
 }
@@ -1040,7 +1108,8 @@ function(cert) {
 
 return String(
 cert.status || ""
-).toUpperCase() === "VALID";
+).toUpperCase() ===
+"VALID";
 
 }
 ).length;
@@ -1054,7 +1123,8 @@ function(cert) {
 
 return String(
 cert.status || ""
-).toUpperCase() === "REVOKED";
+).toUpperCase() ===
+"REVOKED";
 
 }
 ).length;
@@ -1085,7 +1155,9 @@ document.getElementById(
 
 function handleSearchKey(event) {
 
-if (event.key === "Enter") {
+if (
+event.key === "Enter"
+) {
 
 searchCertificates();
 
@@ -1100,28 +1172,41 @@ error = false
 ) {
 
 const message =
-document.getElementById("message");
+document.getElementById(
+"message"
+);
 
 
-message.textContent = text;
+message.textContent =
+text;
 
-message.style.display = "block";
+message.style.display =
+"block";
+
 
 message.style.background =
-error ? "#fee2e2" : "#dcfce7";
+error
+? "#fee2e2"
+: "#dcfce7";
+
 
 message.style.color =
-error ? "#991b1b" : "#166534";
+error
+? "#991b1b"
+: "#166534";
 
 
-clearTimeout(window.messageTimer);
+clearTimeout(
+window.messageTimer
+);
 
 
 window.messageTimer =
 setTimeout(
 function() {
 
-message.style.display = "none";
+message.style.display =
+"none";
 
 },
 4000
@@ -1133,11 +1218,31 @@ message.style.display = "none";
 function escapeHtml(value) {
 
 return String(value)
-.replaceAll("&", "&amp;")
-.replaceAll("<", "&lt;")
-.replaceAll(">", "&gt;")
-.replaceAll('"', "&quot;")
-.replaceAll("'", "&#039;");
+
+.replaceAll(
+"&",
+"&amp;"
+)
+
+.replaceAll(
+"<",
+"&lt;"
+)
+
+.replaceAll(
+">",
+"&gt;"
+)
+
+.replaceAll(
+'"',
+"&quot;"
+)
+
+.replaceAll(
+"'",
+"&#039;"
+);
 
 }
 
@@ -1145,10 +1250,26 @@ return String(value)
 function escapeJs(value) {
 
 return String(value)
-.replaceAll("\\", "\\\\")
-.replaceAll("'", "\\'")
-.replaceAll("\n", "\\n")
-.replaceAll("\r", "\\r");
+
+.replaceAll(
+"\\",
+"\\\\"
+)
+
+.replaceAll(
+"'",
+"\\'"
+)
+
+.replaceAll(
+"\n",
+"\\n"
+)
+
+.replaceAll(
+"\r",
+"\\r"
+);
 
 }
 

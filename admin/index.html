@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Demo-Bangla Bank PLC. — Admin Dashboard</title>
 
   <style>
@@ -153,6 +154,11 @@
       color: white;
     }
 
+    .save:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .clear {
       background: #e2e8f0;
       color: #334155;
@@ -196,6 +202,16 @@
       padding: 25px;
     }
 
+    .status-valid {
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .status-revoked {
+      color: #991b1b;
+      font-weight: 700;
+    }
+
     @media (max-width: 700px) {
       .cards,
       .form-grid {
@@ -214,118 +230,239 @@
 
   <header class="header">
     <div class="header-inner">
+
       <div>
-        <div class="brand">Demo-Bangla Bank PLC.</div>
-        <span class="demo">DEMO SYSTEM</span>
+        <div class="brand">
+          Demo-Bangla Bank PLC.
+        </div>
+
+        <span class="demo">
+          DEMO SYSTEM
+        </span>
       </div>
 
-      <strong>Admin Dashboard</strong>
+      <strong>
+        Admin Dashboard
+      </strong>
+
     </div>
   </header>
+
 
   <main class="container">
 
     <div class="title">
-      <h1>Welcome, Administrator</h1>
-      <p>Demo Certificate Management System</p>
+      <h1>
+        Welcome, Administrator
+      </h1>
+
+      <p>
+        Demo Certificate Management System
+      </p>
     </div>
+
 
     <div class="cards">
-      <div class="stat">
-        <div class="stat-label">Total Certificates</div>
-        <div class="stat-number" id="totalCertificates">0</div>
-      </div>
 
       <div class="stat">
-        <div class="stat-label">Valid Certificates</div>
-        <div class="stat-number" id="validCertificates">0</div>
+        <div class="stat-label">
+          Total Certificates
+        </div>
+
+        <div
+          class="stat-number"
+          id="totalCertificates">
+          0
+        </div>
       </div>
 
+
       <div class="stat">
-        <div class="stat-label">Revoked Certificates</div>
-        <div class="stat-number" id="revokedCertificates">0</div>
+        <div class="stat-label">
+          Valid Certificates
+        </div>
+
+        <div
+          class="stat-number"
+          id="validCertificates">
+          0
+        </div>
       </div>
+
+
+      <div class="stat">
+        <div class="stat-label">
+          Revoked Certificates
+        </div>
+
+        <div
+          class="stat-number"
+          id="revokedCertificates">
+          0
+        </div>
+      </div>
+
     </div>
+
 
     <section class="panel">
 
-      <h2>+ Add Certificate</h2>
+      <h2>
+        + Add Certificate
+      </h2>
+
 
       <div class="form-grid">
 
         <div class="field">
-          <label for="accountNo">Account No</label>
+
+          <label for="accountNo">
+            Account No
+          </label>
+
           <input
             id="accountNo"
             type="text"
             placeholder="Enter account number">
+
         </div>
 
+
         <div class="field">
-          <label for="accountName">Account Name</label>
+
+          <label for="accountName">
+            Account Name
+          </label>
+
           <input
             id="accountName"
             type="text"
             placeholder="Enter account name">
+
         </div>
 
+
         <div class="field">
-          <label for="balance">Report Date Balance</label>
+
+          <label for="balance">
+            Report Date Balance
+          </label>
+
           <input
             id="balance"
             type="text"
             placeholder="Enter balance">
+
         </div>
 
+
         <div class="field">
-          <label for="reportDate">Report Generation Date</label>
+
+          <label for="reportDate">
+            Report Generation Date
+          </label>
+
           <input
             id="reportDate"
             type="text"
             placeholder="Example: 12-Aug-2026">
+
         </div>
 
       </div>
 
+
       <div class="actions">
-        <button class="save" onclick="saveCertificate()">
+
+        <button
+          class="save"
+          id="saveButton"
+          onclick="saveCertificate()">
+
           SAVE CERTIFICATE
+
         </button>
 
-        <button class="clear" onclick="clearForm()">
+
+        <button
+          class="clear"
+          onclick="clearForm()">
+
           CLEAR
+
         </button>
+
       </div>
 
-      <div id="message" class="message"></div>
+
+      <div
+        id="message"
+        class="message">
+      </div>
 
     </section>
 
+
     <section class="panel">
 
-      <h2>Certificate List</h2>
+      <h2>
+        Certificate List
+      </h2>
+
 
       <div class="table-wrap">
 
         <table>
+
           <thead>
+
             <tr>
-              <th>REF</th>
-              <th>Account No</th>
-              <th>Account Name</th>
-              <th>Balance</th>
-              <th>Generation Date</th>
-              <th>Status</th>
+
+              <th>
+                REF
+              </th>
+
+              <th>
+                Account No
+              </th>
+
+              <th>
+                Account Name
+              </th>
+
+              <th>
+                Balance
+              </th>
+
+              <th>
+                Generation Date
+              </th>
+
+              <th>
+                Status
+              </th>
+
             </tr>
+
           </thead>
 
+
           <tbody id="certificateTable">
+
             <tr>
-              <td colspan="6" class="empty">
+
+              <td
+                colspan="6"
+                class="empty">
+
                 No certificates yet.
+
               </td>
+
             </tr>
+
           </tbody>
+
         </table>
 
       </div>
@@ -334,146 +471,488 @@
 
   </main>
 
+
   <script>
+
+    /*
+      DEMO BACKEND
+      Google Apps Script Web App
+    */
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbxDarn_5nfBJ5bnX0ECFjRaV4zFnHk2jxluSrAS7FqaypEpkKgmyxK52oMKMN0rI-jcuA/exec";
+
+
+    /*
+      Local browser copy
+    */
+
     let certificates =
-      JSON.parse(localStorage.getItem("demoCertificates") || "[]");
+      JSON.parse(
+        localStorage.getItem("demoCertificates") || "[]"
+      );
 
-    function generateRef() {
-      const random =
-        Math.random().toString(36).substring(2, 12);
 
-      const time =
-        Date.now().toString(36);
+    /*
+      SAVE CERTIFICATE
+    */
 
-      return "DEMO-" + time + "-" + random;
-    }
-
-    function saveCertificate() {
+    async function saveCertificate() {
 
       const accountNo =
-        document.getElementById("accountNo").value.trim();
+        document
+          .getElementById("accountNo")
+          .value
+          .trim();
+
 
       const accountName =
-        document.getElementById("accountName").value.trim();
+        document
+          .getElementById("accountName")
+          .value
+          .trim();
+
 
       const balance =
-        document.getElementById("balance").value.trim();
+        document
+          .getElementById("balance")
+          .value
+          .trim();
+
 
       const reportDate =
-        document.getElementById("reportDate").value.trim();
+        document
+          .getElementById("reportDate")
+          .value
+          .trim();
 
-      if (!accountNo || !accountName || !balance || !reportDate) {
-        showMessage("Please fill in all fields.", true);
+
+      /*
+        Validation
+      */
+
+      if (
+        !accountNo ||
+        !accountName ||
+        !balance ||
+        !reportDate
+      ) {
+
+        showMessage(
+          "Please fill in all fields.",
+          true
+        );
+
         return;
       }
 
-      const certificate = {
-        ref: generateRef(),
-        accountNo: accountNo,
-        accountName: accountName,
-        balance: balance,
-        reportDate: reportDate,
-        status: "VALID"
-      };
 
-      certificates.push(certificate);
+      const saveButton =
+        document.getElementById("saveButton");
 
-      localStorage.setItem(
-        "demoCertificates",
-        JSON.stringify(certificates)
-      );
 
-      clearForm();
-      renderCertificates();
+      saveButton.disabled = true;
+
+      saveButton.textContent =
+        "SAVING...";
+
 
       showMessage(
-        "Demo certificate saved successfully."
+        "Saving certificate..."
       );
-    }
 
-    function clearForm() {
-      document.getElementById("accountNo").value = "";
-      document.getElementById("accountName").value = "";
-      document.getElementById("balance").value = "";
-      document.getElementById("reportDate").value = "";
-    }
 
-    function showMessage(text, error = false) {
-      const message =
-        document.getElementById("message");
+      try {
 
-      message.textContent = text;
-      message.style.display = "block";
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
 
-      if (error) {
-        message.style.background = "#fee2e2";
-        message.style.color = "#991b1b";
-      } else {
-        message.style.background = "#dcfce7";
-        message.style.color = "#166534";
+              headers: {
+                "Content-Type":
+                  "text/plain;charset=utf-8"
+              },
+
+              body:
+                JSON.stringify({
+                  accountNo:
+                    accountNo,
+
+                  accountName:
+                    accountName,
+
+                  balance:
+                    balance,
+
+                  reportDate:
+                    reportDate
+                })
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        /*
+          Backend error
+        */
+
+        if (!result.success) {
+
+          showMessage(
+            result.message ||
+              "Could not save certificate.",
+            true
+          );
+
+          return;
+        }
+
+
+        /*
+          Create local copy
+        */
+
+        const certificate = {
+
+          ref:
+            result.ref,
+
+          accountNo:
+            accountNo,
+
+          accountName:
+            accountName,
+
+          balance:
+            balance,
+
+          reportDate:
+            reportDate,
+
+          status:
+            result.status || "VALID"
+        };
+
+
+        certificates.push(
+          certificate
+        );
+
+
+        localStorage.setItem(
+          "demoCertificates",
+          JSON.stringify(
+            certificates
+          )
+        );
+
+
+        /*
+          Update screen
+        */
+
+        clearForm();
+
+        renderCertificates();
+
+
+        showMessage(
+          "Demo certificate saved successfully."
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Save error:",
+          error
+        );
+
+
+        showMessage(
+          "Connection failed. Please check the Apps Script deployment.",
+          true
+        );
+
+
+      } finally {
+
+        saveButton.disabled =
+          false;
+
+        saveButton.textContent =
+          "SAVE CERTIFICATE";
       }
 
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 3000);
     }
+
+
+    /*
+      CLEAR FORM
+    */
+
+    function clearForm() {
+
+      document
+        .getElementById("accountNo")
+        .value = "";
+
+
+      document
+        .getElementById("accountName")
+        .value = "";
+
+
+      document
+        .getElementById("balance")
+        .value = "";
+
+
+      document
+        .getElementById("reportDate")
+        .value = "";
+
+    }
+
+
+    /*
+      MESSAGE
+    */
+
+    function showMessage(
+      text,
+      error = false
+    ) {
+
+      const message =
+        document.getElementById(
+          "message"
+        );
+
+
+      message.textContent =
+        text;
+
+
+      message.style.display =
+        "block";
+
+
+      if (error) {
+
+        message.style.background =
+          "#fee2e2";
+
+        message.style.color =
+          "#991b1b";
+
+      } else {
+
+        message.style.background =
+          "#dcfce7";
+
+        message.style.color =
+          "#166534";
+      }
+
+
+      clearTimeout(
+        window.demoMessageTimer
+      );
+
+
+      window.demoMessageTimer =
+        setTimeout(
+          () => {
+
+            message.style.display =
+              "none";
+
+          },
+          4000
+        );
+
+    }
+
+
+    /*
+      RENDER CERTIFICATE TABLE
+    */
 
     function renderCertificates() {
 
       const table =
-        document.getElementById("certificateTable");
+        document.getElementById(
+          "certificateTable"
+        );
+
 
       table.innerHTML = "";
 
-      certificates.forEach(cert => {
 
-        const row =
-          document.createElement("tr");
+      certificates.forEach(
+        cert => {
 
-        row.innerHTML = `
-          <td>${escapeHtml(cert.ref)}</td>
-          <td>${escapeHtml(cert.accountNo)}</td>
-          <td>${escapeHtml(cert.accountName)}</td>
-          <td>${escapeHtml(cert.balance)}</td>
-          <td>${escapeHtml(cert.reportDate)}</td>
-          <td>${escapeHtml(cert.status)}</td>
-        `;
+          const row =
+            document.createElement(
+              "tr"
+            );
 
-        table.appendChild(row);
-      });
 
-      if (certificates.length === 0) {
-        table.innerHTML = `
-          <tr>
-            <td colspan="6" class="empty">
-              No certificates yet.
+          const statusClass =
+            cert.status === "VALID"
+              ? "status-valid"
+              : "status-revoked";
+
+
+          row.innerHTML = `
+
+            <td>
+              ${escapeHtml(cert.ref)}
             </td>
+
+            <td>
+              ${escapeHtml(cert.accountNo)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.accountName)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.balance)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.reportDate)}
+            </td>
+
+            <td class="${statusClass}">
+              ${escapeHtml(cert.status)}
+            </td>
+
+          `;
+
+
+          table.appendChild(
+            row
+          );
+
+        }
+      );
+
+
+      /*
+        Empty table
+      */
+
+      if (
+        certificates.length === 0
+      ) {
+
+        table.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="6"
+              class="empty">
+
+              No certificates yet.
+
+            </td>
+
           </tr>
+
         `;
       }
 
-      document.getElementById("totalCertificates")
-        .textContent = certificates.length;
 
-      document.getElementById("validCertificates")
-        .textContent =
-        certificates.filter(x => x.status === "VALID").length;
+      /*
+        Statistics
+      */
 
-      document.getElementById("revokedCertificates")
+      document
+        .getElementById(
+          "totalCertificates"
+        )
         .textContent =
-        certificates.filter(x => x.status === "REVOKED").length;
+        certificates.length;
+
+
+      document
+        .getElementById(
+          "validCertificates"
+        )
+        .textContent =
+        certificates.filter(
+          x =>
+            x.status === "VALID"
+        ).length;
+
+
+      document
+        .getElementById(
+          "revokedCertificates"
+        )
+        .textContent =
+        certificates.filter(
+          x =>
+            x.status === "REVOKED"
+        ).length;
+
     }
 
-    function escapeHtml(value) {
+
+    /*
+      HTML ESCAPE
+    */
+
+    function escapeHtml(
+      value
+    ) {
+
       return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
     }
+
+
+    /*
+      INITIAL LOAD
+    */
 
     renderCertificates();
+
   </script>
 
 </body>

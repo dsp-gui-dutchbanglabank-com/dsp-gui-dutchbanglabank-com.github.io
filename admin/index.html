@@ -2,315 +2,319 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta charset="UTF-8">
 
-  <title>Demo-Bangla Bank PLC. — Admin Dashboard</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <style>
+<title>
+  Demo Certificate Management System
+</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #0f172a;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .header {
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 18px 24px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+}
 
-    .header-inner {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 18px 24px;
+}
 
-    .brand {
-      font-size: 20px;
-      font-weight: 700;
-    }
+.header-inner {
+  max-width: 1150px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
 
-    .demo {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 4px 9px;
-      border-radius: 6px;
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 11px;
-      font-weight: 700;
-    }
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+}
 
-    .container {
-      max-width: 1150px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
+.demo {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 700;
+}
 
-    .title {
-      margin-bottom: 20px;
-    }
+.container {
+  max-width: 1150px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
 
-    .title h1 {
-      margin: 0 0 6px;
-      font-size: 26px;
-    }
+.title {
+  margin-bottom: 20px;
+}
 
-    .title p {
-      margin: 0;
-      color: #64748b;
-    }
+.title h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.title p {
+  margin: 0;
+  color: #64748b;
+}
 
-    .stat {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 20px;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
 
-    .stat-label {
-      color: #64748b;
-      font-size: 14px;
-    }
+.stat {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
 
-    .stat-number {
-      margin-top: 8px;
-      font-size: 28px;
-      font-weight: 700;
-    }
+.stat-label {
+  color: #64748b;
+  font-size: 14px;
+}
 
-    .panel {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 24px;
-      margin-bottom: 25px;
-    }
+.stat-number {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
 
-    .panel h2 {
-      margin-top: 0;
-      font-size: 20px;
-    }
+.panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 25px;
+}
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
+.panel h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
 
-    .field label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 14px;
-      font-weight: 600;
-    }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
 
-    .field input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-    }
+.field label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-    .field input:focus,
-    .search-input:focus {
-      border-color: #0055a5;
-      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
-    }
+.field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
 
-    .actions {
-      margin-top: 22px;
-      display: flex;
-      gap: 10px;
-    }
+.field input:focus,
+.search-input:focus {
+  border-color: #0055a5;
+  box-shadow: 0 0 0 3px rgba(0,85,165,.1);
+}
 
-    button {
-      border: 0;
-      border-radius: 8px;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-    }
+.actions {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+}
 
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
 
-    .save {
-      background: #0055a5;
-      color: white;
-    }
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
 
-    .clear {
-      background: #e2e8f0;
-      color: #334155;
-    }
+.save {
+  background: #0055a5;
+  color: white;
+}
 
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      white-space: pre-line;
-    }
+.clear {
+  background: #e2e8f0;
+  color: #334155;
+}
 
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
+.message {
+  display: none;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  white-space: pre-line;
+}
 
-    .search-input {
-      flex: 1;
-      min-width: 250px;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-    }
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
 
-    .search-button {
-      background: #0055a5;
-      color: white;
-    }
+.search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
 
-    .show-all-button {
-      background: #e2e8f0;
-      color: #334155;
-    }
+.search-button {
+  background: #0055a5;
+  color: white;
+}
 
-    .table-wrap {
-      overflow-x: auto;
-    }
+.show-all-button {
+  background: #e2e8f0;
+  color: #334155;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+.table-wrap {
+  overflow-x: auto;
+}
 
-    th,
-    td {
-      padding: 13px 10px;
-      border-bottom: 1px solid #e2e8f0;
-      text-align: left;
-      font-size: 14px;
-      vertical-align: middle;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    th {
-      background: #f8fafc;
-      color: #475569;
-    }
+th,
+td {
+  padding: 13px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: middle;
+}
 
-    .empty {
-      text-align: center;
-      color: #64748b;
-      padding: 25px;
-    }
+th {
+  background: #f8fafc;
+  color: #475569;
+}
 
-    .ref-cell {
-      min-width: 260px;
-      max-width: 350px;
-      word-break: break-all;
-      font-family: monospace;
-      font-size: 11px;
-    }
+.empty {
+  text-align: center;
+  color: #64748b;
+  padding: 25px;
+}
 
-    .status-valid {
-      color: #166534;
-      font-weight: 700;
-    }
+.ref-cell {
+  min-width: 260px;
+  max-width: 360px;
+  word-break: break-all;
+  font-family: monospace;
+  font-size: 11px;
+}
 
-    .status-revoked {
-      color: #991b1b;
-      font-weight: 700;
-    }
+.status-valid {
+  color: #166534;
+  font-weight: 700;
+}
 
-    .revoke {
-      background: #dc2626;
-      color: white;
-    }
+.status-revoked {
+  color: #991b1b;
+  font-weight: 700;
+}
 
-    .revoke:hover {
-      background: #b91c1c;
-    }
+.status-button {
+  color: white;
+  min-width: 85px;
+}
 
-    .validate {
-      background: #16a34a;
-      color: white;
-    }
+.status-button.valid-action {
+  background: #15803d;
+}
 
-    .validate:hover {
-      background: #15803d;
-    }
+.status-button.valid-action:hover {
+  background: #166534;
+}
 
-    .delete-button {
-      background: #111827;
-      color: white;
-      margin-left: 5px;
-    }
+.status-button.revoke-action {
+  background: #dc2626;
+}
 
-    .delete-button:hover {
-      background: #000000;
-    }
+.status-button.revoke-action:hover {
+  background: #b91c1c;
+}
 
-    .action-cell {
-      white-space: nowrap;
-    }
+.delete-button {
+  background: #111827;
+  color: white;
+  margin-left: 5px;
+}
 
-    @media (max-width: 800px) {
+.delete-button:hover {
+  background: #000000;
+}
 
-      .cards,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+.action-cell {
+  white-space: nowrap;
+}
 
-      .header-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+@media (max-width: 800px) {
 
-      .action-cell {
-        white-space: normal;
-      }
+  .cards,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 
-    }
+  .header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 
-  </style>
+  .action-cell {
+    white-space: normal;
+  }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <header class="header">
 
@@ -338,7 +342,6 @@
 
 
 <main class="container">
-
 
   <div class="title">
 
@@ -555,11 +558,17 @@
           <tr>
 
             <th>REF</th>
+
             <th>Account No</th>
+
             <th>Account Name</th>
+
             <th>Balance</th>
+
             <th>Generation Date</th>
+
             <th>Status</th>
+
             <th>Action</th>
 
           </tr>
@@ -588,16 +597,14 @@
 
   </section>
 
-
 </main>
 
 
 <script>
 
-
-/* =========================================
+/* =====================================================
    GOOGLE APPS SCRIPT WEB APP URL
-========================================= */
+===================================================== */
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
@@ -606,9 +613,9 @@ const API_URL =
 let certificates = [];
 
 
-/* =========================================
-   SAVE CERTIFICATE
-========================================= */
+/* =====================================================
+   SAVE
+===================================================== */
 
 async function saveCertificate() {
 
@@ -658,11 +665,15 @@ async function saveCertificate() {
 
 
   const button =
-    document.getElementById("saveButton");
+    document.getElementById(
+      "saveButton"
+    );
 
 
   button.disabled = true;
-  button.textContent = "SAVING...";
+
+  button.textContent =
+    "SAVING...";
 
 
   try {
@@ -671,6 +682,7 @@ async function saveCertificate() {
       await fetch(
         API_URL,
         {
+
           method: "POST",
 
           headers: {
@@ -694,6 +706,7 @@ async function saveCertificate() {
                 reportDate
 
             })
+
         }
       );
 
@@ -719,8 +732,10 @@ async function saveCertificate() {
 
 
     showMessage(
+
       "Certificate saved successfully.\n\nREF:\n" +
-      (result.ref || "")
+      result.ref
+
     );
 
 
@@ -731,6 +746,7 @@ async function saveCertificate() {
 
     console.error(error);
 
+
     showMessage(
       "Could not connect to Google Apps Script.",
       true
@@ -739,16 +755,18 @@ async function saveCertificate() {
   } finally {
 
     button.disabled = false;
-    button.textContent = "SAVE CERTIFICATE";
+
+    button.textContent =
+      "SAVE CERTIFICATE";
 
   }
 
 }
 
 
-/* =========================================
-   LOAD ALL CERTIFICATES
-========================================= */
+/* =====================================================
+   LOAD
+===================================================== */
 
 function loadCertificates() {
 
@@ -806,9 +824,9 @@ function loadCertificates() {
 }
 
 
-/* =========================================
+/* =====================================================
    SEARCH
-========================================= */
+===================================================== */
 
 function searchCertificates() {
 
@@ -866,9 +884,7 @@ function searchCertificates() {
       ) {
 
         showMessage(
-          result && result.message
-            ? result.message
-            : "Search failed.",
+          "Search failed.",
           true
         );
 
@@ -894,50 +910,38 @@ function searchCertificates() {
 }
 
 
-/* =========================================
-   TOGGLE STATUS
-========================================= */
+/* =====================================================
+   TOGGLE VALID / REVOKED
+===================================================== */
 
-function toggleCertificateStatus(
-  ref,
-  currentStatus
-) {
+function toggleStatus(ref, currentStatus) {
 
   const status =
     String(
-      currentStatus || ""
+      currentStatus || "VALID"
     ).toUpperCase();
 
 
-  const newStatus =
+  const nextStatus =
     status === "VALID"
       ? "REVOKED"
       : "VALID";
 
 
-  let confirmationText;
-
-
-  if (
-    newStatus === "REVOKED"
-  ) {
-
-    confirmationText =
-      "Are you sure you want to REVOKE this certificate?";
-
-  } else {
-
-    confirmationText =
-      "Are you sure you want to make this certificate VALID again?";
-
-  }
-
-
   const confirmed =
     confirm(
-      confirmationText +
-      "\n\nREF:\n" +
-      ref
+
+      "Change certificate status?\n\n" +
+
+      "REF:\n" +
+      ref +
+
+      "\n\nCurrent: " +
+      status +
+
+      "\nNew: " +
+      nextStatus
+
     );
 
 
@@ -963,7 +967,7 @@ function toggleCertificateStatus(
           result &&
           result.message
             ? result.message
-            : "Could not update certificate status.",
+            : "Could not change status.",
 
           true
 
@@ -974,17 +978,13 @@ function toggleCertificateStatus(
       }
 
 
-      const updatedStatus =
-        String(
-          result.status ||
-          newStatus
-        ).toUpperCase();
-
-
       showMessage(
-        "Certificate status changed to " +
-        updatedStatus +
-        "."
+
+        "Status updated successfully.\n\n" +
+        result.oldStatus +
+        " → " +
+        result.status
+
       );
 
 
@@ -997,13 +997,11 @@ function toggleCertificateStatus(
 }
 
 
-/* =========================================
-   DELETE CERTIFICATE
-========================================= */
+/* =====================================================
+   DELETE
+===================================================== */
 
-function deleteCertificate(
-  ref
-) {
+function deleteCertificate(ref) {
 
   const confirmed =
     confirm(
@@ -1065,9 +1063,9 @@ function deleteCertificate(
 }
 
 
-/* =========================================
+/* =====================================================
    JSONP REQUEST
-========================================= */
+===================================================== */
 
 function requestAppsScript(
   parameters,
@@ -1104,9 +1102,7 @@ function requestAppsScript(
 
         finished = true;
 
-
         cleanup();
-
 
         showConnectionError();
 
@@ -1128,7 +1124,9 @@ function requestAppsScript(
       finished = true;
 
 
-      clearTimeout(timeout);
+      clearTimeout(
+        timeout
+      );
 
 
       cleanup();
@@ -1160,7 +1158,9 @@ function requestAppsScript(
       finished = true;
 
 
-      clearTimeout(timeout);
+      clearTimeout(
+        timeout
+      );
 
 
       cleanup();
@@ -1212,9 +1212,9 @@ function requestAppsScript(
 }
 
 
-/* =========================================
-   RENDER CERTIFICATES
-========================================= */
+/* =====================================================
+   RENDER TABLE
+===================================================== */
 
 function renderCertificates() {
 
@@ -1249,67 +1249,48 @@ function renderCertificates() {
           : "status-revoked";
 
 
-      let action = "";
-
-
       /*
-        VALID
-        ↓
-        REVOKE
+        VALID:
+          REVOKE + DELETE
 
-        REVOKED
-        ↓
-        VALID
+        REVOKED:
+          VALID + DELETE
       */
+
+
+      let statusButton = "";
+
 
       if (
         status === "VALID"
       ) {
 
-        action = `
+        statusButton = `
 
           <button
-            class="revoke"
-            onclick="toggleCertificateStatus(
-              ${JSON.stringify(cert.ref || "")},
+            class="status-button revoke-action"
+            onclick="toggleStatus(
+              '${escapeJs(cert.ref)}',
               'VALID'
             )"
           >
             REVOKE
           </button>
 
-          <button
-            class="delete-button"
-            onclick="deleteCertificate(
-              ${JSON.stringify(cert.ref || "")}
-            )"
-          >
-            DELETE
-          </button>
-
         `;
 
       } else {
 
-        action = `
+        statusButton = `
 
           <button
-            class="validate"
-            onclick="toggleCertificateStatus(
-              ${JSON.stringify(cert.ref || "")},
+            class="status-button valid-action"
+            onclick="toggleStatus(
+              '${escapeJs(cert.ref)}',
               'REVOKED'
             )"
           >
             VALID
-          </button>
-
-          <button
-            class="delete-button"
-            onclick="deleteCertificate(
-              ${JSON.stringify(cert.ref || "")}
-            )"
-          >
-            DELETE
           </button>
 
         `;
@@ -1317,40 +1298,90 @@ function renderCertificates() {
       }
 
 
+      const action = `
+
+        ${statusButton}
+
+        <button
+          class="delete-button"
+          onclick="deleteCertificate(
+            '${escapeJs(cert.ref)}'
+          )"
+        >
+          DELETE
+        </button>
+
+      `;
+
+
       row.innerHTML = `
 
         <td class="ref-cell">
-          ${escapeHtml(cert.ref || "")}
+
+          ${escapeHtml(
+            cert.ref || ""
+          )}
+
         </td>
 
-        <td>
-          ${escapeHtml(cert.accountNo || "")}
-        </td>
 
         <td>
-          ${escapeHtml(cert.accountName || "")}
+
+          ${escapeHtml(
+            cert.accountNo || ""
+          )}
+
         </td>
 
-        <td>
-          ${escapeHtml(cert.balance || "")}
-        </td>
 
         <td>
-          ${escapeHtml(cert.reportDate || "")}
+
+          ${escapeHtml(
+            cert.accountName || ""
+          )}
+
         </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.balance || ""
+          )}
+
+        </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.reportDate || ""
+          )}
+
+        </td>
+
 
         <td class="${statusClass}">
-          ${escapeHtml(status)}
+
+          ${escapeHtml(
+            status
+          )}
+
         </td>
 
+
         <td class="action-cell">
+
           ${action}
+
         </td>
 
       `;
 
 
-      table.appendChild(row);
+      table.appendChild(
+        row
+      );
 
     }
   );
@@ -1383,52 +1414,18 @@ function renderCertificates() {
 }
 
 
-/* =========================================
-   UPDATE STATISTICS
-========================================= */
+/* =====================================================
+   STATISTICS
+===================================================== */
 
 function updateStatistics() {
-
-  const total =
-    certificates.length;
-
-
-  const valid =
-    certificates.filter(
-      function(cert) {
-
-        return (
-          String(
-            cert.status || ""
-          ).toUpperCase() ===
-          "VALID"
-        );
-
-      }
-    ).length;
-
-
-  const revoked =
-    certificates.filter(
-      function(cert) {
-
-        return (
-          String(
-            cert.status || ""
-          ).toUpperCase() ===
-          "REVOKED"
-        );
-
-      }
-    ).length;
-
 
   document
     .getElementById(
       "totalCertificates"
     )
     .textContent =
-    total;
+    certificates.length;
 
 
   document
@@ -1436,7 +1433,24 @@ function updateStatistics() {
       "validCertificates"
     )
     .textContent =
-    valid;
+
+    certificates.filter(
+
+      function(cert) {
+
+        return (
+
+          String(
+            cert.status ||
+            ""
+          ).toUpperCase() ===
+          "VALID"
+
+        );
+
+      }
+
+    ).length;
 
 
   document
@@ -1444,14 +1458,31 @@ function updateStatistics() {
       "revokedCertificates"
     )
     .textContent =
-    revoked;
+
+    certificates.filter(
+
+      function(cert) {
+
+        return (
+
+          String(
+            cert.status ||
+            ""
+          ).toUpperCase() ===
+          "REVOKED"
+
+        );
+
+      }
+
+    ).length;
 
 }
 
 
-/* =========================================
+/* =====================================================
    CLEAR FORM
-========================================= */
+===================================================== */
 
 function clearForm() {
 
@@ -1485,9 +1516,9 @@ function clearForm() {
 }
 
 
-/* =========================================
-   ENTER KEY SEARCH
-========================================= */
+/* =====================================================
+   ENTER KEY
+===================================================== */
 
 function handleSearchKey(
   event
@@ -1504,9 +1535,9 @@ function handleSearchKey(
 }
 
 
-/* =========================================
+/* =====================================================
    MESSAGE
-========================================= */
+===================================================== */
 
 function showMessage(
   text,
@@ -1561,9 +1592,9 @@ function showMessage(
 }
 
 
-/* =========================================
+/* =====================================================
    CONNECTION ERROR
-========================================= */
+===================================================== */
 
 function showConnectionError() {
 
@@ -1592,15 +1623,17 @@ function showConnectionError() {
 }
 
 
-/* =========================================
+/* =====================================================
    ESCAPE HTML
-========================================= */
+===================================================== */
 
 function escapeHtml(
   value
 ) {
 
-  return String(value)
+  return String(
+    value
+  )
 
     .replaceAll(
       "&",
@@ -1630,14 +1663,48 @@ function escapeHtml(
 }
 
 
-/* =========================================
+/* =====================================================
+   ESCAPE JAVASCRIPT
+===================================================== */
+
+function escapeJs(
+  value
+) {
+
+  return String(
+    value
+  )
+
+    .replaceAll(
+      "\\",
+      "\\\\"
+    )
+
+    .replaceAll(
+      "'",
+      "\\'"
+    )
+
+    .replaceAll(
+      "\n",
+      "\\n"
+    )
+
+    .replaceAll(
+      "\r",
+      "\\r"
+    );
+
+}
+
+
+/* =====================================================
    START
-========================================= */
+===================================================== */
 
 loadCertificates();
 
 </script>
-
 
 </body>
 

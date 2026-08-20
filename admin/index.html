@@ -10,7 +10,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>Demo-Bangla Bank PLC. — Demo Admin</title>
+<title>Demo Certificate Management System</title>
 
 <style>
 
@@ -32,7 +32,7 @@ body {
 }
 
 .header-inner {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -57,7 +57,7 @@ body {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1150px;
   margin: 30px auto;
   padding: 0 20px;
 }
@@ -84,7 +84,7 @@ body {
 }
 
 .stat {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 20px;
@@ -102,7 +102,7 @@ body {
 }
 
 .panel {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 24px;
@@ -136,6 +136,12 @@ body {
   outline: none;
 }
 
+.field input:focus,
+.search-input:focus {
+  border-color: #0055a5;
+  box-shadow: 0 0 0 3px rgba(0,85,165,.1);
+}
+
 .actions {
   margin-top: 22px;
   display: flex;
@@ -151,6 +157,11 @@ button {
   font-size: 13px;
 }
 
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
 .save {
   background: #0055a5;
   color: white;
@@ -161,41 +172,13 @@ button {
   color: #334155;
 }
 
-.revoke {
-  background: #dc2626;
-  color: white;
-}
-
-.delete-button {
-  background: #111827;
-  color: white;
-  margin-left: 5px;
-}
-
-.revoke:hover {
-  background: #b91c1c;
-}
-
-.delete-button:hover {
-  background: #000000;
-}
-
-.status-valid {
-  color: #166534;
-  font-weight: 700;
-}
-
-.status-revoked {
-  color: #991b1b;
-  font-weight: 700;
-}
-
 .message {
   display: none;
   margin-top: 15px;
   padding: 12px;
   border-radius: 8px;
   font-size: 14px;
+  white-space: pre-line;
 }
 
 .search-box {
@@ -212,6 +195,7 @@ button {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 14px;
+  outline: none;
 }
 
 .search-button {
@@ -239,6 +223,7 @@ td {
   border-bottom: 1px solid #e2e8f0;
   text-align: left;
   font-size: 14px;
+  vertical-align: middle;
 }
 
 th {
@@ -253,13 +238,47 @@ th {
 }
 
 .ref-cell {
-  max-width: 260px;
+  min-width: 260px;
+  max-width: 350px;
   word-break: break-all;
   font-family: monospace;
-  font-size: 12px;
+  font-size: 11px;
 }
 
-@media (max-width: 700px) {
+.status-valid {
+  color: #166534;
+  font-weight: 700;
+}
+
+.status-revoked {
+  color: #991b1b;
+  font-weight: 700;
+}
+
+.revoke {
+  background: #dc2626;
+  color: white;
+}
+
+.revoke:hover {
+  background: #b91c1c;
+}
+
+.delete-button {
+  background: #111827;
+  color: white;
+  margin-left: 5px;
+}
+
+.delete-button:hover {
+  background: #000000;
+}
+
+.action-cell {
+  white-space: nowrap;
+}
+
+@media (max-width: 800px) {
 
   .cards,
   .form-grid {
@@ -277,277 +296,333 @@ th {
 
 </head>
 
+
 <body>
+
 
 <header class="header">
 
-<div class="header-inner">
+  <div class="header-inner">
 
-<div>
+    <div>
 
-<div class="brand">
-Demo-Bangla Bank PLC.
-</div>
+      <div class="brand">
+        Demo-Bangla Bank PLC.
+      </div>
 
-<span class="demo">
-DEMO SYSTEM
-</span>
+      <span class="demo">
+        DEMO SYSTEM
+      </span>
 
-</div>
+    </div>
 
-<strong>
-Admin Dashboard
-</strong>
+    <strong>
+      Admin Dashboard
+    </strong>
 
-</div>
+  </div>
 
 </header>
 
 
 <main class="container">
 
-<div class="title">
 
-<h1>
-Welcome, Administrator
-</h1>
+  <div class="title">
 
-<p>
-Demo Certificate Management System
-</p>
+    <h1>
+      Welcome, Administrator
+    </h1>
 
-</div>
+    <p>
+      Demo Certificate Management System
+    </p>
 
+  </div>
 
-<div class="cards">
 
-<div class="stat">
+  <!-- STATISTICS -->
 
-<div class="stat-label">
-Total Certificates
-</div>
+  <div class="cards">
 
-<div
-class="stat-number"
-id="totalCertificates"
->
-0
-</div>
 
-</div>
+    <div class="stat">
 
+      <div class="stat-label">
+        Total Certificates
+      </div>
 
-<div class="stat">
+      <div
+        class="stat-number"
+        id="totalCertificates"
+      >
+        0
+      </div>
 
-<div class="stat-label">
-Valid Certificates
-</div>
+    </div>
 
-<div
-class="stat-number"
-id="validCertificates"
->
-0
-</div>
 
-</div>
+    <div class="stat">
 
+      <div class="stat-label">
+        Valid Certificates
+      </div>
 
-<div class="stat">
+      <div
+        class="stat-number"
+        id="validCertificates"
+      >
+        0
+      </div>
 
-<div class="stat-label">
-Revoked Certificates
-</div>
+    </div>
 
-<div
-class="stat-number"
-id="revokedCertificates"
->
-0
-</div>
 
-</div>
+    <div class="stat">
 
-</div>
+      <div class="stat-label">
+        Revoked Certificates
+      </div>
 
+      <div
+        class="stat-number"
+        id="revokedCertificates"
+      >
+        0
+      </div>
 
-<section class="panel">
+    </div>
 
-<h2>
-+ Add Certificate
-</h2>
 
-<div class="form-grid">
+  </div>
 
-<div class="field">
 
-<label>
-Account No
-</label>
+  <!-- ADD CERTIFICATE -->
 
-<input
-id="accountNo"
-type="text"
-placeholder="Enter account number"
->
+  <section class="panel">
 
-</div>
 
+    <h2>
+      + Add Certificate
+    </h2>
 
-<div class="field">
 
-<label>
-Account Name
-</label>
+    <div class="form-grid">
 
-<input
-id="accountName"
-type="text"
-placeholder="Enter account name"
->
 
-</div>
+      <div class="field">
 
+        <label for="accountNo">
+          Account No
+        </label>
 
-<div class="field">
+        <input
+          id="accountNo"
+          type="text"
+          placeholder="Enter account number"
+        >
 
-<label>
-Report Date Balance
-</label>
+      </div>
 
-<input
-id="balance"
-type="text"
-placeholder="Enter balance"
->
 
-</div>
+      <div class="field">
 
+        <label for="accountName">
+          Account Name
+        </label>
 
-<div class="field">
+        <input
+          id="accountName"
+          type="text"
+          placeholder="Enter account name"
+        >
 
-<label>
-Report Generation Date
-</label>
+      </div>
 
-<input
-id="reportDate"
-type="text"
-placeholder="Example: 12-Aug-2026"
->
 
-</div>
+      <div class="field">
 
-</div>
+        <label for="balance">
+          Report Date Balance
+        </label>
 
+        <input
+          id="balance"
+          type="text"
+          placeholder="Enter balance"
+        >
 
-<div class="actions">
+      </div>
 
-<button
-class="save"
-id="saveButton"
-onclick="saveCertificate()"
->
-SAVE CERTIFICATE
-</button>
 
-<button
-class="clear"
-onclick="clearForm()"
->
-CLEAR
-</button>
+      <div class="field">
 
-</div>
+        <label for="reportDate">
+          Report Generation Date
+        </label>
 
+        <input
+          id="reportDate"
+          type="text"
+          placeholder="Example: 12-Aug-2026"
+        >
 
-<div
-id="message"
-class="message"
-></div>
+      </div>
 
-</section>
 
+    </div>
 
-<section class="panel">
 
-<h2>
-Certificate List
-</h2>
+    <div class="actions">
 
+      <button
+        class="save"
+        id="saveButton"
+        onclick="saveCertificate()"
+      >
+        SAVE CERTIFICATE
+      </button>
 
-<div class="search-box">
 
-<input
-id="searchCertificate"
-class="search-input"
-type="text"
-placeholder="Search by REF, Account No or Account Name"
-onkeydown="handleSearchKey(event)"
->
+      <button
+        class="clear"
+        onclick="clearForm()"
+      >
+        CLEAR
+      </button>
 
-<button
-class="search-button"
-onclick="searchCertificates()"
->
-SEARCH
-</button>
+    </div>
 
-<button
-class="show-all-button"
-onclick="loadCertificates()"
->
-SHOW ALL
-</button>
 
-</div>
+    <div
+      id="message"
+      class="message"
+    ></div>
 
 
-<div class="table-wrap">
+  </section>
 
-<table>
 
-<thead>
+  <!-- CERTIFICATE LIST -->
 
-<tr>
+  <section class="panel">
 
-<th>REF</th>
-<th>Account No</th>
-<th>Account Name</th>
-<th>Balance</th>
-<th>Generation Date</th>
-<th>Status</th>
-<th>Action</th>
 
-</tr>
+    <h2>
+      Certificate List
+    </h2>
 
-</thead>
 
-<tbody id="certificateTable">
+    <div class="search-box">
 
-<tr>
 
-<td
-colspan="7"
-class="empty"
->
-Loading certificates...
-</td>
+      <input
+        id="searchCertificate"
+        class="search-input"
+        type="text"
+        placeholder="Search by REF, Account No or Account Name"
+        onkeydown="handleSearchKey(event)"
+      >
 
-</tr>
 
-</tbody>
+      <button
+        class="search-button"
+        onclick="searchCertificates()"
+      >
+        SEARCH
+      </button>
 
-</table>
 
-</div>
+      <button
+        class="show-all-button"
+        onclick="loadCertificates()"
+      >
+        SHOW ALL
+      </button>
 
-</section>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+
+      <table>
+
+
+        <thead>
+
+          <tr>
+
+            <th>
+              REF
+            </th>
+
+            <th>
+              Account No
+            </th>
+
+            <th>
+              Account Name
+            </th>
+
+            <th>
+              Balance
+            </th>
+
+            <th>
+              Generation Date
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody
+          id="certificateTable"
+        >
+
+          <tr>
+
+            <td
+              colspan="7"
+              class="empty"
+            >
+              Loading certificates...
+            </td>
+
+          </tr>
+
+        </tbody>
+
+
+      </table>
+
+
+    </div>
+
+
+  </section>
+
 
 </main>
 
 
 <script>
+
+
+/* =========================================
+   GOOGLE APPS SCRIPT URL
+========================================= */
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
@@ -557,174 +632,230 @@ let certificates = [];
 
 
 /* =========================================
-   SAVE
+   SAVE CERTIFICATE
 ========================================= */
 
 async function saveCertificate() {
 
-const accountNo =
-document.getElementById(
-"accountNo"
-).value.trim();
 
-const accountName =
-document.getElementById(
-"accountName"
-).value.trim();
-
-const balance =
-document.getElementById(
-"balance"
-).value.trim();
-
-const reportDate =
-document.getElementById(
-"reportDate"
-).value.trim();
+  const accountNo =
+    document
+      .getElementById("accountNo")
+      .value
+      .trim();
 
 
-if (
-!accountNo ||
-!accountName ||
-!balance ||
-!reportDate
-) {
-
-showMessage(
-"Please fill in all fields.",
-true
-);
-
-return;
-
-}
+  const accountName =
+    document
+      .getElementById("accountName")
+      .value
+      .trim();
 
 
-const button =
-document.getElementById(
-"saveButton"
-);
-
-button.disabled = true;
-button.textContent = "SAVING...";
+  const balance =
+    document
+      .getElementById("balance")
+      .value
+      .trim();
 
 
-try {
-
-const response =
-await fetch(
-API_URL,
-{
-method: "POST",
-headers: {
-"Content-Type":
-"text/plain;charset=utf-8"
-},
-body: JSON.stringify({
-accountNo:
-accountNo,
-accountName:
-accountName,
-balance:
-balance,
-reportDate:
-reportDate
-})
-}
-);
+  const reportDate =
+    document
+      .getElementById("reportDate")
+      .value
+      .trim();
 
 
-const result =
-await response.json();
+  if (
+    !accountNo ||
+    !accountName ||
+    !balance ||
+    !reportDate
+  ) {
+
+    showMessage(
+      "Please fill in all fields.",
+      true
+    );
+
+    return;
+
+  }
 
 
-if (!result.success) {
-
-showMessage(
-result.message ||
-"Could not save certificate.",
-true
-);
-
-return;
-
-}
+  const button =
+    document.getElementById(
+      "saveButton"
+    );
 
 
-clearForm();
+  button.disabled = true;
 
-showMessage(
-"Certificate saved successfully.\nREF: " +
-result.ref
-);
-
-loadCertificates();
+  button.textContent =
+    "SAVING...";
 
 
-} catch (error) {
+  try {
 
-showMessage(
-"Could not connect to Google Apps Script.",
-true
-);
 
-} finally {
+    const response =
+      await fetch(
+        API_URL,
+        {
 
-button.disabled = false;
-button.textContent =
-"SAVE CERTIFICATE";
+          method: "POST",
 
-}
+          headers: {
+
+            "Content-Type":
+              "text/plain;charset=utf-8"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              accountNo:
+                accountNo,
+
+              accountName:
+                accountName,
+
+              balance:
+                balance,
+
+              reportDate:
+                reportDate
+
+            })
+
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      showMessage(
+        result.message ||
+        "Could not save certificate.",
+        true
+      );
+
+      return;
+
+    }
+
+
+    clearForm();
+
+
+    showMessage(
+
+      "Certificate saved successfully.\n\nREF:\n" +
+      result.ref
+
+    );
+
+
+    loadCertificates();
+
+
+  } catch (error) {
+
+
+    console.error(
+      error
+    );
+
+
+    showMessage(
+
+      "Could not connect to Google Apps Script.",
+
+      true
+
+    );
+
+
+  } finally {
+
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "SAVE CERTIFICATE";
+
+  }
 
 }
 
 
 /* =========================================
-   LOAD
+   LOAD CERTIFICATES
 ========================================= */
 
 function loadCertificates() {
 
-const table =
-document.getElementById(
-"certificateTable"
-);
+
+  const table =
+    document.getElementById(
+      "certificateTable"
+    );
 
 
-table.innerHTML = `
-<tr>
-<td colspan="7" class="empty">
-Loading certificates...
-</td>
-</tr>
-`;
+  table.innerHTML = `
+
+    <tr>
+
+      <td
+        colspan="7"
+        class="empty"
+      >
+        Loading certificates...
+      </td>
+
+    </tr>
+
+  `;
 
 
-requestAppsScript(
-"action=list",
-function(result) {
+  requestAppsScript(
 
-if (!result || !result.success) {
+    "action=list",
 
-showConnectionError();
-
-return;
-
-}
+    function(result) {
 
 
-certificates =
-Array.isArray(
-result.certificates
-)
-? result.certificates
-: [];
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        showConnectionError();
+
+        return;
+
+      }
 
 
-renderCertificates();
+      certificates =
+        Array.isArray(
+          result.certificates
+        )
+          ? result.certificates
+          : [];
 
-}
-);
+
+      renderCertificates();
+
+    }
+
+  );
 
 }
 
@@ -735,58 +866,88 @@ renderCertificates();
 
 function searchCertificates() {
 
-const query =
-document
-.getElementById(
-"searchCertificate"
-)
-.value
-.trim();
+
+  const input =
+    document.getElementById(
+      "searchCertificate"
+    );
 
 
-if (!query) {
-
-loadCertificates();
-
-return;
-
-}
+  const query =
+    input
+      .value
+      .trim();
 
 
-requestAppsScript(
+  if (!query) {
 
-"action=search&q=" +
-encodeURIComponent(query),
+    loadCertificates();
 
-function(result) {
+    return;
 
-if (
-!result ||
-!result.success
-) {
-
-showMessage(
-"Search failed.",
-true
-);
-
-return;
-
-}
+  }
 
 
-certificates =
-Array.isArray(
-result.certificates
-)
-? result.certificates
-: [];
+  const table =
+    document.getElementById(
+      "certificateTable"
+    );
 
 
-renderCertificates();
+  table.innerHTML = `
 
-}
-);
+    <tr>
+
+      <td
+        colspan="7"
+        class="empty"
+      >
+        Searching...
+      </td>
+
+    </tr>
+
+  `;
+
+
+  requestAppsScript(
+
+    "action=search&q=" +
+    encodeURIComponent(
+      query
+    ),
+
+    function(result) {
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        showMessage(
+          "Search failed.",
+          true
+        );
+
+        return;
+
+      }
+
+
+      certificates =
+        Array.isArray(
+          result.certificates
+        )
+          ? result.certificates
+          : [];
+
+
+      renderCertificates();
+
+    }
+
+  );
 
 }
 
@@ -795,53 +956,66 @@ renderCertificates();
    REVOKE
 ========================================= */
 
-function revokeCertificate(ref) {
-
-const confirmed =
-confirm(
-"Are you sure you want to REVOKE this certificate?\n\nREF:\n" +
-ref
-);
-
-
-if (!confirmed) {
-return;
-}
-
-
-requestAppsScript(
-
-"action=revoke&ref=" +
-encodeURIComponent(ref),
-
-function(result) {
-
-if (
-!result ||
-!result.success
+function revokeCertificate(
+  ref
 ) {
 
-showMessage(
-result &&
-result.message
-? result.message
-: "Could not revoke certificate.",
-true
-);
 
-return;
+  const confirmed =
+    confirm(
 
-}
+      "Are you sure you want to REVOKE this certificate?\n\nREF:\n" +
+      ref
+
+    );
 
 
-showMessage(
-"Certificate has been REVOKED."
-);
+  if (!confirmed) {
+    return;
+  }
 
-loadCertificates();
 
-}
-);
+  requestAppsScript(
+
+    "action=revoke&ref=" +
+    encodeURIComponent(
+      ref
+    ),
+
+    function(result) {
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        showMessage(
+
+          result &&
+          result.message
+            ? result.message
+            : "Could not revoke certificate.",
+
+          true
+
+        );
+
+        return;
+
+      }
+
+
+      showMessage(
+        "Certificate has been REVOKED."
+      );
+
+
+      loadCertificates();
+
+    }
+
+  );
 
 }
 
@@ -850,418 +1024,547 @@ loadCertificates();
    DELETE
 ========================================= */
 
-function deleteCertificate(ref) {
-
-const confirmed =
-confirm(
-"WARNING!\n\n" +
-"This certificate will be permanently deleted.\n\n" +
-"REF:\n" +
-ref +
-"\n\n" +
-"Continue?"
-);
-
-
-if (!confirmed) {
-return;
-}
-
-
-requestAppsScript(
-
-"action=delete&ref=" +
-encodeURIComponent(ref),
-
-function(result) {
-
-if (
-!result ||
-!result.success
+function deleteCertificate(
+  ref
 ) {
 
-showMessage(
-result &&
-result.message
-? result.message
-: "Could not delete certificate.",
-true
-);
 
-return;
+  const confirmed =
+    confirm(
 
-}
+      "WARNING!\n\n" +
+      "This certificate will be permanently deleted.\n\n" +
+      "REF:\n" +
+      ref +
+      "\n\n" +
+      "Continue?"
+
+    );
 
 
-showMessage(
-"Certificate deleted successfully."
-);
+  if (!confirmed) {
+    return;
+  }
 
-loadCertificates();
 
-}
-);
+  requestAppsScript(
+
+    "action=delete&ref=" +
+    encodeURIComponent(
+      ref
+    ),
+
+    function(result) {
+
+
+      if (
+        !result ||
+        !result.success
+      ) {
+
+        showMessage(
+
+          result &&
+          result.message
+            ? result.message
+            : "Could not delete certificate.",
+
+          true
+
+        );
+
+        return;
+
+      }
+
+
+      showMessage(
+        "Certificate deleted successfully."
+      );
+
+
+      loadCertificates();
+
+    }
+
+  );
 
 }
 
 
 /* =========================================
-   JSONP
+   JSONP REQUEST
 ========================================= */
 
 function requestAppsScript(
-parameters,
-callback
+  parameters,
+  callback
 ) {
 
-const callbackName =
-"certificateCallback_" +
-Date.now() +
-"_" +
-Math.floor(
-Math.random() * 1000000
-);
+
+  const callbackName =
+    "certificateCallback_" +
+    Date.now() +
+    "_" +
+    Math.floor(
+      Math.random() * 1000000
+    );
 
 
-const script =
-document.createElement(
-"script"
-);
+  const script =
+    document.createElement(
+      "script"
+    );
 
 
-let finished = false;
+  let finished = false;
 
 
-const timeout =
-setTimeout(
-function() {
+  const timeout =
+    setTimeout(
 
-if (finished) {
-return;
-}
-
-finished = true;
-
-cleanup();
-
-showConnectionError();
-
-},
-15000
-);
+      function() {
 
 
-window[callbackName] =
-function(result) {
-
-if (finished) {
-return;
-}
-
-finished = true;
-
-clearTimeout(timeout);
-
-cleanup();
-
-callback(result);
-
-};
+        if (finished) {
+          return;
+        }
 
 
-script.src =
-API_URL +
-"?" +
-parameters +
-"&callback=" +
-encodeURIComponent(
-callbackName
-);
+        finished = true;
 
 
-script.onerror =
-function() {
-
-if (finished) {
-return;
-}
-
-finished = true;
-
-clearTimeout(timeout);
-
-cleanup();
-
-showConnectionError();
-
-};
+        cleanup();
 
 
-document.body.appendChild(
-script
-);
+        showConnectionError();
 
 
-function cleanup() {
+      },
 
-if (script.parentNode) {
+      15000
 
-script.parentNode.removeChild(
-script
-);
-
-}
+    );
 
 
-try {
+  window[callbackName] =
+    function(result) {
 
-delete window[
-callbackName
-];
 
-} catch (error) {
+      if (finished) {
+        return;
+      }
 
-window[
-callbackName
-] = undefined;
 
-}
+      finished = true;
 
-}
+
+      clearTimeout(
+        timeout
+      );
+
+
+      cleanup();
+
+
+      callback(
+        result
+      );
+
+
+    };
+
+
+  script.src =
+    API_URL +
+    "?" +
+    parameters +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.onerror =
+    function() {
+
+
+      if (finished) {
+        return;
+      }
+
+
+      finished = true;
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      cleanup();
+
+
+      showConnectionError();
+
+
+    };
+
+
+  document
+    .body
+    .appendChild(
+      script
+    );
+
+
+  function cleanup() {
+
+
+    if (
+      script.parentNode
+    ) {
+
+      script
+        .parentNode
+        .removeChild(
+          script
+        );
+
+    }
+
+
+    try {
+
+      delete window[
+        callbackName
+      ];
+
+    } catch (error) {
+
+      window[
+        callbackName
+      ] = undefined;
+
+    }
+
+  }
 
 }
 
 
 /* =========================================
-   RENDER
+   RENDER TABLE
 ========================================= */
 
 function renderCertificates() {
 
-const table =
-document.getElementById(
-"certificateTable"
-);
+
+  const table =
+    document.getElementById(
+      "certificateTable"
+    );
 
 
-table.innerHTML = "";
+  table.innerHTML = "";
 
 
-certificates.forEach(
-function(cert) {
+  certificates.forEach(
 
-const row =
-document.createElement(
-"tr"
-);
+    function(cert) {
 
 
-const status =
-String(
-cert.status || "VALID"
-).toUpperCase();
+      const row =
+        document.createElement(
+          "tr"
+        );
 
 
-const statusClass =
-status === "VALID"
-? "status-valid"
-: "status-revoked";
+      const status =
+        String(
+          cert.status ||
+          "VALID"
+        ).toUpperCase();
 
 
-let action = "";
+      const statusClass =
+        status === "VALID"
+          ? "status-valid"
+          : "status-revoked";
 
 
-if (
-status === "VALID"
-) {
-
-action = `
-
-<button
-class="revoke"
-onclick="revokeCertificate('${escapeJs(cert.ref)}')"
->
-REVOKE
-</button>
-
-<button
-class="delete-button"
-onclick="deleteCertificate('${escapeJs(cert.ref)}')"
->
-DELETE
-</button>
-
-`;
-
-} else {
-
-action = `
-
-<span class="status-revoked">
-REVOKED
-</span>
-
-<button
-class="delete-button"
-onclick="deleteCertificate('${escapeJs(cert.ref)}')"
->
-DELETE
-</button>
-
-`;
-
-}
+      let action = "";
 
 
-row.innerHTML = `
-
-<td class="ref-cell">
-${escapeHtml(
-cert.ref || ""
-)}
-</td>
-
-<td>
-${escapeHtml(
-cert.accountNo || ""
-)}
-</td>
-
-<td>
-${escapeHtml(
-cert.accountName || ""
-)}
-</td>
-
-<td>
-${escapeHtml(
-cert.balance || ""
-)}
-</td>
-
-<td>
-${escapeHtml(
-cert.reportDate || ""
-)}
-</td>
-
-<td class="${statusClass}">
-${escapeHtml(status)}
-</td>
-
-<td>
-${action}
-</td>
-
-`;
+      if (
+        status === "VALID"
+      ) {
 
 
-table.appendChild(row);
+        action = `
 
-}
-);
+          <button
+            class="revoke"
+            onclick="revokeCertificate('${escapeJs(cert.ref)}')"
+          >
+            REVOKE
+          </button>
 
+          <button
+            class="delete-button"
+            onclick="deleteCertificate('${escapeJs(cert.ref)}')"
+          >
+            DELETE
+          </button>
 
-if (
-certificates.length === 0
-) {
-
-table.innerHTML = `
-
-<tr>
-
-<td
-colspan="7"
-class="empty"
->
-No certificates found.
-</td>
-
-</tr>
-
-`;
-
-}
+        `;
 
 
-document.getElementById(
-"totalCertificates"
-).textContent =
-certificates.length;
+      } else {
 
 
-document.getElementById(
-"validCertificates"
-).textContent =
-certificates.filter(
-function(cert) {
+        action = `
 
-return String(
-cert.status || ""
-).toUpperCase()
-=== "VALID";
+          <span
+            class="status-revoked"
+          >
+            REVOKED
+          </span>
 
-}
-).length;
+          <button
+            class="delete-button"
+            onclick="deleteCertificate('${escapeJs(cert.ref)}')"
+          >
+            DELETE
+          </button>
+
+        `;
+
+      }
 
 
-document.getElementById(
-"revokedCertificates"
-).textContent =
-certificates.filter(
-function(cert) {
+      row.innerHTML = `
 
-return String(
-cert.status || ""
-).toUpperCase()
-=== "REVOKED";
+        <td class="ref-cell">
 
-}
-).length;
+          ${escapeHtml(
+            cert.ref || ""
+          )}
+
+        </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.accountNo || ""
+          )}
+
+        </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.accountName || ""
+          )}
+
+        </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.balance || ""
+          )}
+
+        </td>
+
+
+        <td>
+
+          ${escapeHtml(
+            cert.reportDate || ""
+          )}
+
+        </td>
+
+
+        <td class="${statusClass}">
+
+          ${escapeHtml(
+            status
+          )}
+
+        </td>
+
+
+        <td class="action-cell">
+
+          ${action}
+
+        </td>
+
+      `;
+
+
+      table.appendChild(
+        row
+      );
+
+    }
+
+  );
+
+
+  if (
+    certificates.length === 0
+  ) {
+
+
+    table.innerHTML = `
+
+      <tr>
+
+        <td
+          colspan="7"
+          class="empty"
+        >
+          No certificates found.
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  updateStatistics();
 
 }
 
 
 /* =========================================
-   CLEAR
+   STATISTICS
+========================================= */
+
+function updateStatistics() {
+
+
+  document
+    .getElementById(
+      "totalCertificates"
+    )
+    .textContent =
+    certificates.length;
+
+
+  document
+    .getElementById(
+      "validCertificates"
+    )
+    .textContent =
+
+    certificates.filter(
+
+      function(cert) {
+
+        return (
+
+          String(
+            cert.status ||
+            ""
+          ).toUpperCase() ===
+          "VALID"
+
+        );
+
+      }
+
+    ).length;
+
+
+  document
+    .getElementById(
+      "revokedCertificates"
+    )
+    .textContent =
+
+    certificates.filter(
+
+      function(cert) {
+
+        return (
+
+          String(
+            cert.status ||
+            ""
+          ).toUpperCase() ===
+          "REVOKED"
+
+        );
+
+      }
+
+    ).length;
+
+}
+
+
+/* =========================================
+   CLEAR FORM
 ========================================= */
 
 function clearForm() {
 
-document.getElementById(
-"accountNo"
-).value = "";
 
-document.getElementById(
-"accountName"
-).value = "";
+  document
+    .getElementById(
+      "accountNo"
+    )
+    .value = "";
 
-document.getElementById(
-"balance"
-).value = "";
 
-document.getElementById(
-"reportDate"
-).value = "";
+  document
+    .getElementById(
+      "accountName"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "balance"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "reportDate"
+    )
+    .value = "";
 
 }
 
 
 /* =========================================
-   SEARCH ENTER
+   ENTER KEY
 ========================================= */
 
 function handleSearchKey(
-event
+  event
 ) {
 
-if (
-event.key === "Enter"
-) {
 
-searchCertificates();
+  if (
+    event.key === "Enter"
+  ) {
 
-}
+    searchCertificates();
+
+  }
 
 }
 
@@ -1271,51 +1574,55 @@ searchCertificates();
 ========================================= */
 
 function showMessage(
-text,
-error = false
+  text,
+  error = false
 ) {
 
-const message =
-document.getElementById(
-"message"
-);
+
+  const message =
+    document.getElementById(
+      "message"
+    );
 
 
-message.textContent =
-text;
+  message.textContent =
+    text;
 
 
-message.style.display =
-"block";
+  message.style.display =
+    "block";
 
 
-message.style.background =
-error
-? "#fee2e2"
-: "#dcfce7";
+  message.style.background =
+    error
+      ? "#fee2e2"
+      : "#dcfce7";
 
 
-message.style.color =
-error
-? "#991b1b"
-: "#166534";
+  message.style.color =
+    error
+      ? "#991b1b"
+      : "#166534";
 
 
-clearTimeout(
-window.messageTimer
-);
+  clearTimeout(
+    window.messageTimer
+  );
 
 
-window.messageTimer =
-setTimeout(
-function() {
+  window.messageTimer =
+    setTimeout(
 
-message.style.display =
-"none";
+      function() {
 
-},
-5000
-);
+        message.style.display =
+          "none";
+
+      },
+
+      6000
+
+    );
 
 }
 
@@ -1326,89 +1633,104 @@ message.style.display =
 
 function showConnectionError() {
 
-const table =
-document.getElementById(
-"certificateTable"
-);
+
+  const table =
+    document.getElementById(
+      "certificateTable"
+    );
 
 
-table.innerHTML = `
+  table.innerHTML = `
 
-<tr>
+    <tr>
 
-<td
-colspan="7"
-class="empty"
->
-Connection failed. Please check Apps Script deployment.
-</td>
+      <td
+        colspan="7"
+        class="empty"
+      >
+        Connection failed. Please check Apps Script deployment.
+      </td>
 
-</tr>
+    </tr>
 
-`;
+  `;
 
 }
 
 
 /* =========================================
-   ESCAPE
+   ESCAPE HTML
 ========================================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
-return String(value)
 
-.replaceAll(
-"&",
-"&amp;"
-)
+  return String(
+    value
+  )
 
-.replaceAll(
-"<",
-"&lt;"
-)
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
 
-.replaceAll(
-">",
-"&gt;"
-)
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
 
-.replaceAll(
-'"',
-"&quot;"
-)
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
 
-.replaceAll(
-"'",
-"&#039;"
-);
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
 
 }
 
 
-function escapeJs(value) {
+/* =========================================
+   ESCAPE JAVASCRIPT
+========================================= */
 
-return String(value)
+function escapeJs(
+  value
+) {
 
-.replaceAll(
-"\\",
-"\\\\"
-)
 
-.replaceAll(
-"'",
-"\\'"
-)
+  return String(
+    value
+  )
 
-.replaceAll(
-"\n",
-"\\n"
-)
+  .replaceAll(
+    "\\",
+    "\\\\"
+  )
 
-.replaceAll(
-"\r",
-"\\r"
-);
+  .replaceAll(
+    "'",
+    "\\'"
+  )
+
+  .replaceAll(
+    "\n",
+    "\\n"
+  )
+
+  .replaceAll(
+    "\r",
+    "\\r"
+  );
 
 }
 

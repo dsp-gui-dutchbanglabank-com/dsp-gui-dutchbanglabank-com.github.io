@@ -1,311 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Certificate Management System</title>
 
-<meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
 
-<title>Demo Certificate Management System</title>
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 18px 24px;
+    }
 
-<style>
+    .header-inner {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  color: #0f172a;
-}
+    .demo {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+    }
 
-.header {
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 18px 24px;
-}
+    .container {
+      max-width: 1150px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
 
-.header-inner {
-  max-width: 1150px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
+    .title {
+      margin-bottom: 20px;
+    }
 
-.brand {
-  font-size: 20px;
-  font-weight: 700;
-}
+    .title h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+    }
 
-.demo {
-  display: inline-block;
-  margin-top: 5px;
-  padding: 4px 9px;
-  border-radius: 6px;
-  background: #fef3c7;
-  color: #92400e;
-  font-size: 11px;
-  font-weight: 700;
-}
+    .title p {
+      margin: 0;
+      color: #64748b;
+    }
 
-.container {
-  max-width: 1150px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
 
-.title {
-  margin-bottom: 20px;
-}
+    .stat {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
 
-.title h1 {
-  margin: 0 0 6px;
-  font-size: 26px;
-}
+    .stat-label {
+      color: #64748b;
+      font-size: 14px;
+    }
 
-.title p {
-  margin: 0;
-  color: #64748b;
-}
+    .stat-number {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 25px;
-}
+    .panel {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 25px;
+    }
 
-.stat {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-}
+    .panel h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
 
-.stat-label {
-  color: #64748b;
-  font-size: 14px;
-}
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
 
-.stat-number {
-  margin-top: 8px;
-  font-size: 28px;
-  font-weight: 700;
-}
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-.panel {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 24px;
-  margin-bottom: 25px;
-}
+    .field input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
 
-.panel h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
+    .field input:focus,
+    .search-input:focus {
+      border-color: #0055a5;
+      box-shadow: 0 0 0 3px rgba(0,85,165,.1);
+    }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      gap: 10px;
+    }
 
-.field label {
-  display: block;
-  margin-bottom: 7px;
-  font-size: 14px;
-  font-weight: 600;
-}
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
 
-.field input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-}
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
 
-.field input:focus,
-.search-input:focus {
-  border-color: #0055a5;
-  box-shadow: 0 0 0 3px rgba(0,85,165,.1);
-}
+    .save {
+      background: #0055a5;
+      color: white;
+    }
 
-.actions {
-  margin-top: 22px;
-  display: flex;
-  gap: 10px;
-}
+    .clear {
+      background: #e2e8f0;
+      color: #334155;
+    }
 
-button {
-  border: 0;
-  border-radius: 8px;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-}
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
 
-button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-}
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
 
-.save {
-  background: #0055a5;
-  color: white;
-}
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
 
-.clear {
-  background: #e2e8f0;
-  color: #334155;
-}
+    .search-button {
+      background: #0055a5;
+      color: white;
+    }
 
-.message {
-  display: none;
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  white-space: pre-line;
-}
+    .show-all-button {
+      background: #e2e8f0;
+      color: #334155;
+    }
 
-.search-box {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
+    .table-wrap {
+      overflow-x: auto;
+    }
 
-.search-input {
-  flex: 1;
-  min-width: 250px;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-.search-button {
-  background: #0055a5;
-  color: white;
-}
+    th,
+    td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: middle;
+    }
 
-.show-all-button {
-  background: #e2e8f0;
-  color: #334155;
-}
+    th {
+      background: #f8fafc;
+      color: #475569;
+    }
 
-.table-wrap {
-  overflow-x: auto;
-}
+    .empty {
+      text-align: center;
+      color: #64748b;
+      padding: 25px;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+    .ref-cell {
+      min-width: 260px;
+      max-width: 350px;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 11px;
+    }
 
-th,
-td {
-  padding: 13px 10px;
-  border-bottom: 1px solid #e2e8f0;
-  text-align: left;
-  font-size: 14px;
-  vertical-align: middle;
-}
+    .status-valid {
+      color: #166534;
+      font-weight: 700;
+    }
 
-th {
-  background: #f8fafc;
-  color: #475569;
-}
+    .status-revoked {
+      color: #991b1b;
+      font-weight: 700;
+    }
 
-.empty {
-  text-align: center;
-  color: #64748b;
-  padding: 25px;
-}
+    .revoke {
+      background: #dc2626;
+      color: white;
+    }
 
-.ref-cell {
-  min-width: 260px;
-  max-width: 350px;
-  word-break: break-all;
-  font-family: monospace;
-  font-size: 11px;
-}
+    .delete-button {
+      background: #111827;
+      color: white;
+      margin-left: 5px;
+    }
 
-.status-valid {
-  color: #166534;
-  font-weight: 700;
-}
+    .action-cell {
+      white-space: nowrap;
+    }
 
-.status-revoked {
-  color: #991b1b;
-  font-weight: 700;
-}
+    @media (max-width: 800px) {
+      .cards,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
 
-.revoke {
-  background: #dc2626;
-  color: white;
-}
-
-.revoke:hover {
-  background: #b91c1c;
-}
-
-.delete-button {
-  background: #111827;
-  color: white;
-  margin-left: 5px;
-}
-
-.delete-button:hover {
-  background: #000000;
-}
-
-.action-cell {
-  white-space: nowrap;
-}
-
-@media (max-width: 800px) {
-
-  .cards,
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .header-inner {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-}
-
-</style>
-
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header class="header">
-
   <div class="header-inner">
 
     <div>
-
       <div class="brand">
         Demo-Bangla Bank PLC.
       </div>
@@ -313,7 +289,6 @@ th {
       <span class="demo">
         DEMO SYSTEM
       </span>
-
     </div>
 
     <strong>
@@ -321,23 +296,14 @@ th {
     </strong>
 
   </div>
-
 </header>
 
 
 <main class="container">
 
-
   <div class="title">
-
-    <h1>
-      Welcome, Administrator
-    </h1>
-
-    <p>
-      Demo Certificate Management System
-    </p>
-
+    <h1>Welcome, Administrator</h1>
+    <p>Demo Certificate Management System</p>
   </div>
 
 
@@ -345,9 +311,7 @@ th {
 
   <div class="cards">
 
-
     <div class="stat">
-
       <div class="stat-label">
         Total Certificates
       </div>
@@ -358,12 +322,10 @@ th {
       >
         0
       </div>
-
     </div>
 
 
     <div class="stat">
-
       <div class="stat-label">
         Valid Certificates
       </div>
@@ -374,12 +336,10 @@ th {
       >
         0
       </div>
-
     </div>
 
 
     <div class="stat">
-
       <div class="stat-label">
         Revoked Certificates
       </div>
@@ -390,9 +350,7 @@ th {
       >
         0
       </div>
-
     </div>
-
 
   </div>
 
@@ -401,17 +359,13 @@ th {
 
   <section class="panel">
 
-
     <h2>
       + Add Certificate
     </h2>
 
-
     <div class="form-grid">
 
-
       <div class="field">
-
         <label for="accountNo">
           Account No
         </label>
@@ -421,12 +375,10 @@ th {
           type="text"
           placeholder="Enter account number"
         >
-
       </div>
 
 
       <div class="field">
-
         <label for="accountName">
           Account Name
         </label>
@@ -436,12 +388,10 @@ th {
           type="text"
           placeholder="Enter account name"
         >
-
       </div>
 
 
       <div class="field">
-
         <label for="balance">
           Report Date Balance
         </label>
@@ -451,12 +401,10 @@ th {
           type="text"
           placeholder="Enter balance"
         >
-
       </div>
 
 
       <div class="field">
-
         <label for="reportDate">
           Report Generation Date
         </label>
@@ -466,9 +414,7 @@ th {
           type="text"
           placeholder="Example: 12-Aug-2026"
         >
-
       </div>
-
 
     </div>
 
@@ -482,7 +428,6 @@ th {
       >
         SAVE CERTIFICATE
       </button>
-
 
       <button
         class="clear"
@@ -499,7 +444,6 @@ th {
       class="message"
     ></div>
 
-
   </section>
 
 
@@ -507,14 +451,12 @@ th {
 
   <section class="panel">
 
-
     <h2>
       Certificate List
     </h2>
 
 
     <div class="search-box">
-
 
       <input
         id="searchCertificate"
@@ -524,14 +466,12 @@ th {
         onkeydown="handleSearchKey(event)"
       >
 
-
       <button
         class="search-button"
         onclick="searchCertificates()"
       >
         SEARCH
       </button>
-
 
       <button
         class="show-all-button"
@@ -540,1209 +480,833 @@ th {
         SHOW ALL
       </button>
 
-
     </div>
 
 
     <div class="table-wrap">
 
-
       <table>
 
-
         <thead>
-
           <tr>
-
-            <th>
-              REF
-            </th>
-
-            <th>
-              Account No
-            </th>
-
-            <th>
-              Account Name
-            </th>
-
-            <th>
-              Balance
-            </th>
-
-            <th>
-              Generation Date
-            </th>
-
-            <th>
-              Status
-            </th>
-
-            <th>
-              Action
-            </th>
-
+            <th>REF</th>
+            <th>Account No</th>
+            <th>Account Name</th>
+            <th>Balance</th>
+            <th>Generation Date</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
-
         </thead>
 
-
-        <tbody
-          id="certificateTable"
-        >
+        <tbody id="certificateTable">
 
           <tr>
-
             <td
               colspan="7"
               class="empty"
             >
               Loading certificates...
             </td>
-
           </tr>
 
         </tbody>
 
-
       </table>
-
 
     </div>
 
-
   </section>
-
 
 </main>
 
 
 <script>
 
+  /*
+   * GOOGLE APPS SCRIPT WEB APP URL
+   */
 
-/* =========================================
-   GOOGLE APPS SCRIPT URL
-========================================= */
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
-
-
-let certificates = [];
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
 
 
-/* =========================================
-   SAVE CERTIFICATE
-========================================= */
-
-async function saveCertificate() {
+  let certificates = [];
 
 
-  const accountNo =
-    document
-      .getElementById("accountNo")
-      .value
-      .trim();
+  /*
+   * SAVE CERTIFICATE
+   */
+
+  async function saveCertificate() {
+
+    const accountNo =
+      document
+        .getElementById("accountNo")
+        .value
+        .trim();
+
+    const accountName =
+      document
+        .getElementById("accountName")
+        .value
+        .trim();
+
+    const balance =
+      document
+        .getElementById("balance")
+        .value
+        .trim();
+
+    const reportDate =
+      document
+        .getElementById("reportDate")
+        .value
+        .trim();
 
 
-  const accountName =
-    document
-      .getElementById("accountName")
-      .value
-      .trim();
-
-
-  const balance =
-    document
-      .getElementById("balance")
-      .value
-      .trim();
-
-
-  const reportDate =
-    document
-      .getElementById("reportDate")
-      .value
-      .trim();
-
-
-  if (
-    !accountNo ||
-    !accountName ||
-    !balance ||
-    !reportDate
-  ) {
-
-    showMessage(
-      "Please fill in all fields.",
-      true
-    );
-
-    return;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "saveButton"
-    );
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "SAVING...";
-
-
-  try {
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "text/plain;charset=utf-8"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              accountNo:
-                accountNo,
-
-              accountName:
-                accountName,
-
-              balance:
-                balance,
-
-              reportDate:
-                reportDate
-
-            })
-
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
+    if (
+      !accountNo ||
+      !accountName ||
+      !balance ||
+      !reportDate
+    ) {
 
       showMessage(
-        result.message ||
-        "Could not save certificate.",
+        "Please fill in all fields.",
         true
       );
 
       return;
-
     }
 
 
-    clearForm();
+    const button =
+      document.getElementById("saveButton");
 
+    button.disabled = true;
+    button.textContent = "SAVING...";
 
-    showMessage(
 
-      "Certificate saved successfully.\n\nREF:\n" +
-      result.ref
+    try {
 
-    );
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: "POST",
 
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
 
-    loadCertificates();
+            body:
+              JSON.stringify({
+                accountNo: accountNo,
+                accountName: accountName,
+                balance: balance,
+                reportDate: reportDate
+              })
+          }
+        );
 
 
-  } catch (error) {
+      const result =
+        await response.json();
 
 
-    console.error(
-      error
-    );
-
-
-    showMessage(
-
-      "Could not connect to Google Apps Script.",
-
-      true
-
-    );
-
-
-  } finally {
-
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "SAVE CERTIFICATE";
-
-  }
-
-}
-
-
-/* =========================================
-   LOAD CERTIFICATES
-========================================= */
-
-function loadCertificates() {
-
-
-  const table =
-    document.getElementById(
-      "certificateTable"
-    );
-
-
-  table.innerHTML = `
-
-    <tr>
-
-      <td
-        colspan="7"
-        class="empty"
-      >
-        Loading certificates...
-      </td>
-
-    </tr>
-
-  `;
-
-
-  requestAppsScript(
-
-    "action=list",
-
-    function(result) {
-
-
-      if (
-        !result ||
-        !result.success
-      ) {
-
-        showConnectionError();
-
-        return;
-
-      }
-
-
-      certificates =
-        Array.isArray(
-          result.certificates
-        )
-          ? result.certificates
-          : [];
-
-
-      renderCertificates();
-
-    }
-
-  );
-
-}
-
-
-/* =========================================
-   SEARCH
-========================================= */
-
-function searchCertificates() {
-
-
-  const input =
-    document.getElementById(
-      "searchCertificate"
-    );
-
-
-  const query =
-    input
-      .value
-      .trim();
-
-
-  if (!query) {
-
-    loadCertificates();
-
-    return;
-
-  }
-
-
-  const table =
-    document.getElementById(
-      "certificateTable"
-    );
-
-
-  table.innerHTML = `
-
-    <tr>
-
-      <td
-        colspan="7"
-        class="empty"
-      >
-        Searching...
-      </td>
-
-    </tr>
-
-  `;
-
-
-  requestAppsScript(
-
-    "action=search&q=" +
-    encodeURIComponent(
-      query
-    ),
-
-    function(result) {
-
-
-      if (
-        !result ||
-        !result.success
-      ) {
+      if (!result.success) {
 
         showMessage(
-          "Search failed.",
+          result.message ||
+          "Could not save certificate.",
           true
         );
 
         return;
-
       }
 
 
-      certificates =
-        Array.isArray(
-          result.certificates
-        )
-          ? result.certificates
-          : [];
-
-
-      renderCertificates();
-
-    }
-
-  );
-
-}
-
-
-/* =========================================
-   REVOKE
-========================================= */
-
-function revokeCertificate(
-  ref
-) {
-
-
-  const confirmed =
-    confirm(
-
-      "Are you sure you want to REVOKE this certificate?\n\nREF:\n" +
-      ref
-
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  requestAppsScript(
-
-    "action=revoke&ref=" +
-    encodeURIComponent(
-      ref
-    ),
-
-    function(result) {
-
-
-      if (
-        !result ||
-        !result.success
-      ) {
-
-        showMessage(
-
-          result &&
-          result.message
-            ? result.message
-            : "Could not revoke certificate.",
-
-          true
-
-        );
-
-        return;
-
-      }
+      clearForm();
 
 
       showMessage(
-        "Certificate has been REVOKED."
+        "Certificate saved successfully.\n\nREF:\n" +
+        result.ref
       );
 
 
       loadCertificates();
 
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "Could not connect to Google Apps Script.",
+        true
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "SAVE CERTIFICATE";
     }
-
-  );
-
-}
-
-
-/* =========================================
-   DELETE
-========================================= */
-
-function deleteCertificate(
-  ref
-) {
-
-
-  const confirmed =
-    confirm(
-
-      "WARNING!\n\n" +
-      "This certificate will be permanently deleted.\n\n" +
-      "REF:\n" +
-      ref +
-      "\n\n" +
-      "Continue?"
-
-    );
-
-
-  if (!confirmed) {
-    return;
   }
 
 
-  requestAppsScript(
+  /*
+   * LOAD CERTIFICATES
+   */
 
-    "action=delete&ref=" +
-    encodeURIComponent(
-      ref
-    ),
+  function loadCertificates() {
 
-    function(result) {
-
-
-      if (
-        !result ||
-        !result.success
-      ) {
-
-        showMessage(
-
-          result &&
-          result.message
-            ? result.message
-            : "Could not delete certificate.",
-
-          true
-
-        );
-
-        return;
-
-      }
-
-
-      showMessage(
-        "Certificate deleted successfully."
+    const table =
+      document.getElementById(
+        "certificateTable"
       );
 
 
-      loadCertificates();
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          class="empty"
+        >
+          Loading certificates...
+        </td>
+      </tr>
+    `;
 
+
+    requestAppsScript(
+      "action=list",
+      function(result) {
+
+        if (
+          !result ||
+          !result.success
+        ) {
+
+          showConnectionError();
+          return;
+        }
+
+
+        certificates =
+          Array.isArray(
+            result.certificates
+          )
+            ? result.certificates
+            : [];
+
+
+        renderCertificates();
+      }
+    );
+  }
+
+
+  /*
+   * SEARCH
+   */
+
+  function searchCertificates() {
+
+    const input =
+      document.getElementById(
+        "searchCertificate"
+      );
+
+
+    const query =
+      input.value.trim();
+
+
+    if (!query) {
+
+      loadCertificates();
+      return;
     }
 
-  );
 
-}
-
-
-/* =========================================
-   JSONP REQUEST
-========================================= */
-
-function requestAppsScript(
-  parameters,
-  callback
-) {
+    const table =
+      document.getElementById(
+        "certificateTable"
+      );
 
 
-  const callbackName =
-    "certificateCallback_" +
-    Date.now() +
-    "_" +
-    Math.floor(
-      Math.random() * 1000000
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          class="empty"
+        >
+          Searching...
+        </td>
+      </tr>
+    `;
+
+
+    requestAppsScript(
+      "action=search&q=" +
+      encodeURIComponent(query),
+
+      function(result) {
+
+        if (
+          !result ||
+          !result.success
+        ) {
+
+          showMessage(
+            result &&
+            result.message
+              ? result.message
+              : "Search failed.",
+            true
+          );
+
+          return;
+        }
+
+
+        certificates =
+          Array.isArray(
+            result.certificates
+          )
+            ? result.certificates
+            : [];
+
+
+        renderCertificates();
+      }
     );
+  }
 
 
-  const script =
-    document.createElement(
-      "script"
+  /*
+   * REVOKE
+   */
+
+  function revokeCertificate(ref) {
+
+    const confirmed =
+      confirm(
+        "Are you sure you want to REVOKE this certificate?\n\nREF:\n" +
+        ref
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    requestAppsScript(
+      "action=revoke&ref=" +
+      encodeURIComponent(ref),
+
+      function(result) {
+
+        if (
+          !result ||
+          !result.success
+        ) {
+
+          showMessage(
+            result &&
+            result.message
+              ? result.message
+              : "Could not revoke certificate.",
+            true
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "Certificate has been REVOKED."
+        );
+
+
+        loadCertificates();
+      }
     );
+  }
 
 
-  let finished = false;
+  /*
+   * DELETE
+   */
+
+  function deleteCertificate(ref) {
+
+    const confirmed =
+      confirm(
+        "WARNING!\n\n" +
+        "This certificate will be permanently deleted.\n\n" +
+        "REF:\n" +
+        ref +
+        "\n\n" +
+        "Continue?"
+      );
 
 
-  const timeout =
-    setTimeout(
+    if (!confirmed) {
+      return;
+    }
 
-      function() {
 
+    requestAppsScript(
+      "action=delete&ref=" +
+      encodeURIComponent(ref),
+
+      function(result) {
+
+        if (
+          !result ||
+          !result.success
+        ) {
+
+          showMessage(
+            result &&
+            result.message
+              ? result.message
+              : "Could not delete certificate.",
+            true
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "Certificate deleted successfully."
+        );
+
+
+        loadCertificates();
+      }
+    );
+  }
+
+
+  /*
+   * JSONP REQUEST
+   */
+
+  function requestAppsScript(
+    parameters,
+    callback
+  ) {
+
+    const callbackName =
+      "certificateCallback_" +
+      Date.now() +
+      "_" +
+      Math.floor(
+        Math.random() * 1000000
+      );
+
+
+    const script =
+      document.createElement("script");
+
+
+    let finished = false;
+
+
+    const timeout =
+      setTimeout(
+        function() {
+
+          if (finished) {
+            return;
+          }
+
+          finished = true;
+
+          cleanup();
+
+          showConnectionError();
+
+        },
+        15000
+      );
+
+
+    window[callbackName] =
+      function(result) {
 
         if (finished) {
           return;
         }
 
-
         finished = true;
 
+        clearTimeout(timeout);
 
         cleanup();
 
+        callback(result);
+      };
+
+
+    script.src =
+      API_URL +
+      "?" +
+      parameters +
+      "&callback=" +
+      encodeURIComponent(callbackName);
+
+
+    script.onerror =
+      function() {
+
+        if (finished) {
+          return;
+        }
+
+        finished = true;
+
+        clearTimeout(timeout);
+
+        cleanup();
 
         showConnectionError();
+      };
 
 
-      },
-
-      15000
-
-    );
+    document.body.appendChild(script);
 
 
-  window[callbackName] =
-    function(result) {
+    function cleanup() {
 
+      if (script.parentNode) {
 
-      if (finished) {
-        return;
-      }
-
-
-      finished = true;
-
-
-      clearTimeout(
-        timeout
-      );
-
-
-      cleanup();
-
-
-      callback(
-        result
-      );
-
-
-    };
-
-
-  script.src =
-    API_URL +
-    "?" +
-    parameters +
-    "&callback=" +
-    encodeURIComponent(
-      callbackName
-    );
-
-
-  script.onerror =
-    function() {
-
-
-      if (finished) {
-        return;
-      }
-
-
-      finished = true;
-
-
-      clearTimeout(
-        timeout
-      );
-
-
-      cleanup();
-
-
-      showConnectionError();
-
-
-    };
-
-
-  document
-    .body
-    .appendChild(
-      script
-    );
-
-
-  function cleanup() {
-
-
-    if (
-      script.parentNode
-    ) {
-
-      script
-        .parentNode
-        .removeChild(
+        script.parentNode.removeChild(
           script
         );
-
-    }
-
-
-    try {
-
-      delete window[
-        callbackName
-      ];
-
-    } catch (error) {
-
-      window[
-        callbackName
-      ] = undefined;
-
-    }
-
-  }
-
-}
-
-
-/* =========================================
-   RENDER TABLE
-========================================= */
-
-function renderCertificates() {
-
-
-  const table =
-    document.getElementById(
-      "certificateTable"
-    );
-
-
-  table.innerHTML = "";
-
-
-  certificates.forEach(
-
-    function(cert) {
-
-
-      const row =
-        document.createElement(
-          "tr"
-        );
-
-
-      const status =
-        String(
-          cert.status ||
-          "VALID"
-        ).toUpperCase();
-
-
-      const statusClass =
-        status === "VALID"
-          ? "status-valid"
-          : "status-revoked";
-
-
-      let action = "";
-
-
-      if (
-        status === "VALID"
-      ) {
-
-
-        action = `
-
-          <button
-            class="revoke"
-            onclick="revokeCertificate('${escapeJs(cert.ref)}')"
-          >
-            REVOKE
-          </button>
-
-          <button
-            class="delete-button"
-            onclick="deleteCertificate('${escapeJs(cert.ref)}')"
-          >
-            DELETE
-          </button>
-
-        `;
-
-
-      } else {
-
-
-        action = `
-
-          <span
-            class="status-revoked"
-          >
-            REVOKED
-          </span>
-
-          <button
-            class="delete-button"
-            onclick="deleteCertificate('${escapeJs(cert.ref)}')"
-          >
-            DELETE
-          </button>
-
-        `;
-
       }
 
 
-      row.innerHTML = `
+      try {
 
-        <td class="ref-cell">
+        delete window[callbackName];
 
-          ${escapeHtml(
-            cert.ref || ""
-          )}
+      } catch (error) {
 
-        </td>
-
-
-        <td>
-
-          ${escapeHtml(
-            cert.accountNo || ""
-          )}
-
-        </td>
+        window[callbackName] =
+          undefined;
+      }
+    }
+  }
 
 
-        <td>
+  /*
+   * RENDER TABLE
+   */
 
-          ${escapeHtml(
-            cert.accountName || ""
-          )}
+  function renderCertificates() {
 
-        </td>
-
-
-        <td>
-
-          ${escapeHtml(
-            cert.balance || ""
-          )}
-
-        </td>
-
-
-        <td>
-
-          ${escapeHtml(
-            cert.reportDate || ""
-          )}
-
-        </td>
-
-
-        <td class="${statusClass}">
-
-          ${escapeHtml(
-            status
-          )}
-
-        </td>
-
-
-        <td class="action-cell">
-
-          ${action}
-
-        </td>
-
-      `;
-
-
-      table.appendChild(
-        row
+    const table =
+      document.getElementById(
+        "certificateTable"
       );
 
+
+    table.innerHTML = "";
+
+
+    certificates.forEach(
+      function(cert) {
+
+        const row =
+          document.createElement("tr");
+
+
+        const status =
+          String(
+            cert.status || "VALID"
+          ).toUpperCase();
+
+
+        const statusClass =
+          status === "VALID"
+            ? "status-valid"
+            : "status-revoked";
+
+
+        let action = "";
+
+
+        if (status === "VALID") {
+
+          action = `
+            <button
+              class="revoke"
+              onclick="revokeCertificate(${JSON.stringify(cert.ref)})"
+            >
+              REVOKE
+            </button>
+
+            <button
+              class="delete-button"
+              onclick="deleteCertificate(${JSON.stringify(cert.ref)})"
+            >
+              DELETE
+            </button>
+          `;
+
+        } else {
+
+          action = `
+            <span class="status-revoked">
+              REVOKED
+            </span>
+
+            <button
+              class="delete-button"
+              onclick="deleteCertificate(${JSON.stringify(cert.ref)})"
+            >
+              DELETE
+            </button>
+          `;
+        }
+
+
+        row.innerHTML = `
+          <td class="ref-cell">
+            ${escapeHtml(cert.ref || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(cert.accountNo || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(cert.accountName || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(cert.balance || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(cert.reportDate || "")}
+          </td>
+
+          <td class="${statusClass}">
+            ${escapeHtml(status)}
+          </td>
+
+          <td class="action-cell">
+            ${action}
+          </td>
+        `;
+
+
+        table.appendChild(row);
+      }
+    );
+
+
+    if (certificates.length === 0) {
+
+      table.innerHTML = `
+        <tr>
+          <td
+            colspan="7"
+            class="empty"
+          >
+            No certificates found.
+          </td>
+        </tr>
+      `;
     }
 
-  );
+
+    updateStatistics();
+  }
 
 
-  if (
-    certificates.length === 0
+  /*
+   * STATISTICS
+   */
+
+  function updateStatistics() {
+
+    document
+      .getElementById("totalCertificates")
+      .textContent =
+      certificates.length;
+
+
+    document
+      .getElementById("validCertificates")
+      .textContent =
+      certificates.filter(
+        function(cert) {
+
+          return (
+            String(
+              cert.status || ""
+            ).toUpperCase() ===
+            "VALID"
+          );
+        }
+      ).length;
+
+
+    document
+      .getElementById("revokedCertificates")
+      .textContent =
+      certificates.filter(
+        function(cert) {
+
+          return (
+            String(
+              cert.status || ""
+            ).toUpperCase() ===
+            "REVOKED"
+          );
+        }
+      ).length;
+  }
+
+
+  /*
+   * CLEAR FORM
+   */
+
+  function clearForm() {
+
+    document
+      .getElementById("accountNo")
+      .value = "";
+
+    document
+      .getElementById("accountName")
+      .value = "";
+
+    document
+      .getElementById("balance")
+      .value = "";
+
+    document
+      .getElementById("reportDate")
+      .value = "";
+  }
+
+
+  /*
+   * ENTER KEY
+   */
+
+  function handleSearchKey(event) {
+
+    if (event.key === "Enter") {
+      searchCertificates();
+    }
+  }
+
+
+  /*
+   * MESSAGE
+   */
+
+  function showMessage(
+    text,
+    error = false
   ) {
+
+    const message =
+      document.getElementById("message");
+
+
+    message.textContent = text;
+
+    message.style.display = "block";
+
+    message.style.background =
+      error
+        ? "#fee2e2"
+        : "#dcfce7";
+
+    message.style.color =
+      error
+        ? "#991b1b"
+        : "#166534";
+
+
+    clearTimeout(
+      window.messageTimer
+    );
+
+
+    window.messageTimer =
+      setTimeout(
+        function() {
+
+          message.style.display =
+            "none";
+
+        },
+        6000
+      );
+  }
+
+
+  /*
+   * CONNECTION ERROR
+   */
+
+  function showConnectionError() {
+
+    const table =
+      document.getElementById(
+        "certificateTable"
+      );
 
 
     table.innerHTML = `
-
       <tr>
-
         <td
           colspan="7"
           class="empty"
         >
-          No certificates found.
+          Connection failed. Please check Apps Script deployment.
         </td>
-
       </tr>
-
     `;
-
   }
 
 
-  updateStatistics();
+  /*
+   * ESCAPE HTML
+   */
 
-}
+  function escapeHtml(value) {
 
-
-/* =========================================
-   STATISTICS
-========================================= */
-
-function updateStatistics() {
-
-
-  document
-    .getElementById(
-      "totalCertificates"
-    )
-    .textContent =
-    certificates.length;
-
-
-  document
-    .getElementById(
-      "validCertificates"
-    )
-    .textContent =
-
-    certificates.filter(
-
-      function(cert) {
-
-        return (
-
-          String(
-            cert.status ||
-            ""
-          ).toUpperCase() ===
-          "VALID"
-
-        );
-
-      }
-
-    ).length;
-
-
-  document
-    .getElementById(
-      "revokedCertificates"
-    )
-    .textContent =
-
-    certificates.filter(
-
-      function(cert) {
-
-        return (
-
-          String(
-            cert.status ||
-            ""
-          ).toUpperCase() ===
-          "REVOKED"
-
-        );
-
-      }
-
-    ).length;
-
-}
-
-
-/* =========================================
-   CLEAR FORM
-========================================= */
-
-function clearForm() {
-
-
-  document
-    .getElementById(
-      "accountNo"
-    )
-    .value = "";
-
-
-  document
-    .getElementById(
-      "accountName"
-    )
-    .value = "";
-
-
-  document
-    .getElementById(
-      "balance"
-    )
-    .value = "";
-
-
-  document
-    .getElementById(
-      "reportDate"
-    )
-    .value = "";
-
-}
-
-
-/* =========================================
-   ENTER KEY
-========================================= */
-
-function handleSearchKey(
-  event
-) {
-
-
-  if (
-    event.key === "Enter"
-  ) {
-
-    searchCertificates();
-
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-}
 
+  /*
+   * START
+   */
 
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(
-  text,
-  error = false
-) {
-
-
-  const message =
-    document.getElementById(
-      "message"
-    );
-
-
-  message.textContent =
-    text;
-
-
-  message.style.display =
-    "block";
-
-
-  message.style.background =
-    error
-      ? "#fee2e2"
-      : "#dcfce7";
-
-
-  message.style.color =
-    error
-      ? "#991b1b"
-      : "#166534";
-
-
-  clearTimeout(
-    window.messageTimer
-  );
-
-
-  window.messageTimer =
-    setTimeout(
-
-      function() {
-
-        message.style.display =
-          "none";
-
-      },
-
-      6000
-
-    );
-
-}
-
-
-/* =========================================
-   CONNECTION ERROR
-========================================= */
-
-function showConnectionError() {
-
-
-  const table =
-    document.getElementById(
-      "certificateTable"
-    );
-
-
-  table.innerHTML = `
-
-    <tr>
-
-      <td
-        colspan="7"
-        class="empty"
-      >
-        Connection failed. Please check Apps Script deployment.
-      </td>
-
-    </tr>
-
-  `;
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHtml(
-  value
-) {
-
-
-  return String(
-    value
-  )
-
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
-
-}
-
-
-/* =========================================
-   ESCAPE JAVASCRIPT
-========================================= */
-
-function escapeJs(
-  value
-) {
-
-
-  return String(
-    value
-  )
-
-  .replaceAll(
-    "\\",
-    "\\\\"
-  )
-
-  .replaceAll(
-    "'",
-    "\\'"
-  )
-
-  .replaceAll(
-    "\n",
-    "\\n"
-  )
-
-  .replaceAll(
-    "\r",
-    "\\r"
-  );
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-loadCertificates();
+  loadCertificates();
 
 </script>
 
 </body>
-
 </html>

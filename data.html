@@ -1,0 +1,343 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Certificate Data</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px 20px;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 25px;
+    }
+
+    .status {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      color: #475569;
+    }
+
+    .table-wrap {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #475569;
+    }
+
+    .ref {
+      min-width: 280px;
+      max-width: 400px;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    .valid {
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .revoked {
+      color: #991b1b;
+      font-weight: 700;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <h1>Certificate Data</h1>
+
+    <div class="subtitle">
+      Live certificate data from the main Google Sheet database
+    </div>
+
+    <div
+      id="status"
+      class="status"
+    >
+      Loading certificate data...
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>REF</th>
+            <th>Account No</th>
+            <th>Account Name</th>
+            <th>Balance</th>
+            <th>Report Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="certificateTable">
+
+          <tr>
+            <td
+              colspan="6"
+              class="empty"
+            >
+              Loading...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </main>
+
+
+<script>
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
+
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+async function loadCertificateData() {
+
+  const status =
+    document.getElementById("status");
+
+  const table =
+    document.getElementById(
+      "certificateTable"
+    );
+
+  try {
+
+    status.textContent =
+      "Loading live data from Google Sheet...";
+
+    const response =
+      await fetch(
+        API_URL +
+        "?action=list&_=" +
+        Date.now(),
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "API request failed: " +
+        response.status
+      );
+
+    }
+
+    const result =
+      await response.json();
+
+    if (
+      !result ||
+      result.success !== true ||
+      !Array.isArray(result.certificates)
+    ) {
+
+      throw new Error(
+        result?.message ||
+        "Invalid API response"
+      );
+
+    }
+
+
+    const certificates =
+      result.certificates;
+
+
+    table.innerHTML = "";
+
+
+    if (certificates.length === 0) {
+
+      table.innerHTML = `
+        <tr>
+          <td
+            colspan="6"
+            class="empty"
+          >
+            No certificates found.
+          </td>
+        </tr>
+      `;
+
+    } else {
+
+      certificates.forEach(
+        function(cert) {
+
+          const row =
+            document.createElement("tr");
+
+          const statusValue =
+            String(
+              cert.status || "VALID"
+            )
+            .trim()
+            .toUpperCase();
+
+          const statusClass =
+            statusValue === "REVOKED"
+              ? "revoked"
+              : "valid";
+
+
+          row.innerHTML = `
+
+            <td class="ref">
+              ${escapeHtml(cert.ref)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.accountNo)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.accountName)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.balance)}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.reportDate)}
+            </td>
+
+            <td class="${statusClass}">
+              ${escapeHtml(statusValue)}
+            </td>
+
+          `;
+
+
+          table.appendChild(row);
+
+        }
+      );
+
+    }
+
+
+    status.textContent =
+      "Live data loaded successfully. " +
+      certificates.length +
+      " certificate(s) found.";
+
+  } catch (error) {
+
+    console.error(
+      "Certificate Data Error:",
+      error
+    );
+
+    table.innerHTML = `
+
+      <tr>
+
+        <td
+          colspan="6"
+          class="empty"
+        >
+          Could not load certificate data.
+        </td>
+
+      </tr>
+
+    `;
+
+    status.textContent =
+      "Unable to connect to the certificate database.";
+
+  }
+
+}
+
+
+loadCertificateData();
+
+</script>
+
+</body>
+</html>
+```

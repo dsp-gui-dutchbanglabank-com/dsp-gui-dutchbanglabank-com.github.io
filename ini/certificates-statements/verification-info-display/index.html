@@ -166,6 +166,12 @@ async function loadCertificate() {
   setField("balance", "—");
   setField("reportDate", "—");
 
+  // Never show stale certificate information while a new REF is loading.
+  setVerificationStatus(
+    "invalid",
+    "Verifying..."
+  );
+
   const params =
     new URLSearchParams(
       window.location.search

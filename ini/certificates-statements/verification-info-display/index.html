@@ -160,6 +160,12 @@ function showVerificationFailed() {
 }
 
 async function loadCertificate() {
+  // Clear any stale certificate immediately before reading the new REF.
+  setField("accountNo", "—");
+  setField("accountName", "—");
+  setField("balance", "—");
+  setField("reportDate", "—");
+
   const params =
     new URLSearchParams(
       window.location.search
@@ -207,7 +213,10 @@ async function loadCertificate() {
         url,
         {
           method: "GET",
-          cache: "no-store"
+          cache: "no-store",
+          credentials: "omit",
+          redirect: "follow",
+          keepalive: true
         }
       );
 
@@ -301,9 +310,14 @@ async function loadCertificate() {
   }
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  loadCertificate
-);
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadCertificate,
+    { once: true }
+  );
+} else {
+  loadCertificate();
+}
 </script>
 </body>

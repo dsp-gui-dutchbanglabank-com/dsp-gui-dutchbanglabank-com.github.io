@@ -90,124 +90,313 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec";
 
+
 function setVerificationStatus(type, message) {
-  const badge = document.getElementById("verificationStatus");
-  const dot = document.getElementById("verificationDot");
-  const text = document.getElementById("verificationStatusText");
-  const desc = document.getElementById("verificationMessage");
-  if (!badge || !dot || !text || !desc) return;
+
+  const badge =
+    document.getElementById("verificationStatus");
+
+  const dot =
+    document.getElementById("verificationDot");
+
+  const text =
+    document.getElementById("verificationStatusText");
+
+  const desc =
+    document.getElementById("verificationMessage");
+
+  if (!badge || !dot || !text || !desc) {
+    return;
+  }
 
   const colors = {
-    valid: { bg: "rgba(0, 150, 57, 0.08)", color: "rgb(0, 150, 57)" },
-    revoked: { bg: "rgba(227, 28, 35, 0.08)", color: "rgb(227, 28, 35)" },
-    invalid: { bg: "rgba(227, 28, 35, 0.08)", color: "rgb(227, 28, 35)" }
+
+    valid: {
+      bg: "rgba(0, 150, 57, 0.08)",
+      color: "rgb(0, 150, 57)"
+    },
+
+    revoked: {
+      bg: "rgba(227, 28, 35, 0.08)",
+      color: "rgb(227, 28, 35)"
+    },
+
+    invalid: {
+      bg: "rgba(227, 28, 35, 0.08)",
+      color: "rgb(227, 28, 35)"
+    }
+
   };
 
-  const selected = colors[type] || colors.invalid;
-  badge.style.backgroundColor = selected.bg;
-  badge.style.color = selected.color;
-  dot.style.backgroundColor = selected.color;
-  text.textContent = message;
-  desc.textContent = type === "valid"
-    ? "The following information was retrieved from the scanned QR Code and verified."
-    : message === "Certificate Revoked"
-      ? "This certificate was found, but its current status is REVOKED."
-      : "We couldn't verify the authenticity of the QR code or certificate reference.";
+  const selected =
+    colors[type] || colors.invalid;
+
+  badge.style.backgroundColor =
+    selected.bg;
+
+  badge.style.color =
+    selected.color;
+
+  dot.style.backgroundColor =
+    selected.color;
+
+  text.textContent =
+    message;
+
+  if (type === "valid") {
+
+    desc.textContent =
+      "The following information was retrieved from the scanned QR Code and verified.";
+
+  } else if (type === "revoked") {
+
+    desc.textContent =
+      "This certificate was found, but its current status is REVOKED.";
+
+  } else {
+
+    desc.textContent =
+      "We couldn't verify the authenticity of the QR code or certificate reference.";
+
+  }
+
 }
+
 
 function setField(id, value) {
-  const element = document.getElementById(id);
-  if (!element) return;
-  const safeValue = value == null || String(value).trim() === "" ? "—" : String(value);
-  element.textContent = safeValue;
-  element.setAttribute("title", safeValue);
+
+  const element =
+    document.getElementById(id);
+
+  if (!element) {
+    return;
+  }
+
+  const safeValue =
+    value === null ||
+    value === undefined ||
+    String(value).trim() === ""
+      ? "—"
+      : String(value);
+
+  element.textContent =
+    safeValue;
+
+  element.setAttribute(
+    "title",
+    safeValue
+  );
+
 }
 
-function clearCertificateFields() {
+
+function showVerificationFailed() {
+
   setField("accountNo", "—");
   setField("accountName", "—");
   setField("balance", "—");
   setField("reportDate", "—");
+
+  setVerificationStatus(
+    "invalid",
+    "Verification Failed"
+  );
+
 }
 
-function loadCertificate() {
-  const params = new URLSearchParams(window.location.search);
-  const ref = params.get("ref");
 
-  clearCertificateFields();
+function loadCertificate() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const ref =
+    params.get("ref");
 
   if (!ref || !ref.trim()) {
-    setVerificationStatus("invalid", "Verification Failed");
+
+    showVerificationFailed();
+
     return;
+
   }
 
-  const callbackName =
-    "verifyCertificate_" + Date.now() + "_" + Math.floor(Math.random() * 1000000);
+  /*
+    Google Apps Script JSONP.
+    This avoids cross-origin fetch problems from GitHub Pages.
+  */
 
-  const script = document.createElement("script");
+  const callbackName =
+    "certificateVerification_" +
+    Date.now() +
+    "_" +
+    Math.floor(
+      Math.random() * 1000000
+    );
+
+  const script =
+    document.createElement("script");
+
   let finished = false;
 
-  const timeout = setTimeout(function () {
-    if (finished) return;
-    finished = true;
-    cleanup();
-    clearCertificateFields();
-    setVerificationStatus("invalid", "Verification Failed");
-  }, 15000);
+  const timeout =
+    setTimeout(
+      function() {
 
-  window[callbackName] = function (data) {
-    if (finished) return;
-    finished = true;
-    clearTimeout(timeout);
-    cleanup();
+        if (finished) {
+          return;
+        }
 
-    if (!data || data.success !== true) {
-      clearCertificateFields();
-      setVerificationStatus("invalid", "Verification Failed");
-      return;
-    }
+        finished = true;
 
-    setField("accountNo", data.accountNo);
-    setField("accountName", data.accountName);
-    setField("balance", data.balance);
-    setField("reportDate", data.reportDate);
+        cleanup();
 
-    const status = String(data.status || "VALID").trim().toUpperCase();
+        showVerificationFailed();
 
-    if (status === "REVOKED") {
-      setVerificationStatus("revoked", "Certificate Revoked");
-    } else {
-      setVerificationStatus("valid", "Verification Details");
-    }
-  };
+      },
+      15000
+    );
+
+  window[callbackName] =
+    function(data) {
+
+      if (finished) {
+        return;
+      }
+
+      finished = true;
+
+      clearTimeout(timeout);
+
+      cleanup();
+
+      if (!data || data.success !== true) {
+
+        showVerificationFailed();
+
+        return;
+
+      }
+
+      /*
+        Exact backend field names:
+        accountNo
+        accountName
+        balance
+        reportDate
+        status
+      */
+
+      setField(
+        "accountNo",
+        data.accountNo
+      );
+
+      setField(
+        "accountName",
+        data.accountName
+      );
+
+      setField(
+        "balance",
+        data.balance
+      );
+
+      setField(
+        "reportDate",
+        data.reportDate
+      );
+
+      const status =
+        String(
+          data.status || "VALID"
+        )
+        .trim()
+        .toUpperCase();
+
+      if (status === "REVOKED") {
+
+        setVerificationStatus(
+          "revoked",
+          "Certificate Revoked"
+        );
+
+      } else {
+
+        setVerificationStatus(
+          "valid",
+          "Verification Details"
+        );
+
+      }
+
+    };
 
   script.src =
     API_URL +
-    "?ref=" + encodeURIComponent(ref.trim()) +
-    "&callback=" + encodeURIComponent(callbackName) +
-    "&_=" + Date.now();
+    "?ref=" +
+    encodeURIComponent(
+      ref.trim()
+    ) +
+    "&callback=" +
+    encodeURIComponent(
+      callbackName
+    ) +
+    "&_=" +
+    Date.now();
 
-  script.onerror = function () {
-    if (finished) return;
-    finished = true;
-    clearTimeout(timeout);
-    cleanup();
-    clearCertificateFields();
-    setVerificationStatus("invalid", "Verification Failed");
-  };
+  script.onerror =
+    function() {
+
+      if (finished) {
+        return;
+      }
+
+      finished = true;
+
+      clearTimeout(timeout);
+
+      cleanup();
+
+      showVerificationFailed();
+
+    };
 
   document.body.appendChild(script);
 
+
   function cleanup() {
-    if (script.parentNode) script.parentNode.removeChild(script);
-    try {
-      delete window[callbackName];
-    } catch (error) {
-      window[callbackName] = undefined;
+
+    if (script.parentNode) {
+
+      script.parentNode.removeChild(
+        script
+      );
+
     }
+
+    try {
+
+      delete window[callbackName];
+
+    } catch (error) {
+
+      window[callbackName] =
+        undefined;
+
+    }
+
   }
+
 }
 
-document.addEventListener("DOMContentLoaded", loadCertificate);
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadCertificate
+);
+
 </script>
 </body>

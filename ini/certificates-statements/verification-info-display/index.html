@@ -168,6 +168,19 @@ async function loadCertificate() {
   const ref =
     params.get("ref");
 
+  // Immediately clear any certificate data left from a previous REF.
+  // This prevents old account information from appearing while the new
+  // certificate is being fetched.
+  setField("accountNo", "—");
+  setField("accountName", "—");
+  setField("balance", "—");
+  setField("reportDate", "—");
+
+  setVerificationStatus(
+    "invalid",
+    "Verification Details"
+  );
+
   if (!ref || !ref.trim()) {
     showVerificationFailed();
     return;

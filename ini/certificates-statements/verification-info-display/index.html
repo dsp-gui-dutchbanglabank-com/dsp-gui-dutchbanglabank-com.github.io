@@ -200,66 +200,107 @@ async function loadCertificate() {
 
   try {
     /*
-      IMPORTANT:
-      Your working Apps Script API finds a certificate
-      through action=search&q=REF.
-      The previous Public Page used ?ref=REF directly,
-      which returned "Certificate not found".
+      TEST 4:
+      Public Verification now reads the synchronized GitHub Data Page.
+      Google Sheet remains the main database.
     */
 
-    const url =
-      API_URL +
-      "?action=search&q=" +
-      encodeURIComponent(ref.trim()) +
-      "&_=" +
-      Date.now();
+    const GITHUB_DATA_URL =
+      "https://dsp-gui-dutchbanglabank-com.github.io/data.html";
 
     const response =
       await fetch(
-        url,
+        GITHUB_DATA_URL +
+        "?_=" +
+        Date.now(),
         {
           method: "GET",
           cache: "no-store",
           credentials: "omit",
-          redirect: "follow",
-          keepalive: true
+          redirect: "follow"
         }
       );
 
     if (!response.ok) {
       throw new Error(
-        "API request failed: " +
+        "GitHub Data Page request failed: " +
         response.status
       );
     }
 
-    const data =
-      await response.json();
+    const html =
+      await response.text();
 
-    console.log(
-      "Certificate Search API:",
-      data
+    const parser =
+      new DOMParser();
+
+    const doc =
+      parser.parseFromString(
+        html,
+        "text/html"
+      );
+
+    const rows =
+      Array.from(
+        doc.querySelectorAll(
+          "#certificateTable tr"
+        )
+      );
+
+    let certificate = null;
+
+    rows.forEach(
+      function(row) {
+
+        if (certificate) {
+          return;
+        }
+
+        const cells =
+          row.querySelectorAll("td");
+
+        if (cells.length < 6) {
+          return;
+        }
+
+        const rowRef =
+          String(
+            cells[0].textContent || ""
+          ).trim();
+
+        if (rowRef === ref.trim()) {
+
+          certificate = {
+            ref: rowRef,
+            accountNo:
+              String(
+                cells[1].textContent || ""
+              ).trim(),
+            accountName:
+              String(
+                cells[2].textContent || ""
+              ).trim(),
+            balance:
+              String(
+                cells[3].textContent || ""
+              ).trim(),
+            reportDate:
+              String(
+                cells[4].textContent || ""
+              ).trim(),
+            status:
+              String(
+                cells[5].textContent || ""
+              ).trim().toUpperCase()
+          };
+        }
+      }
     );
 
-    if (
-      !data ||
-      data.success !== true ||
-      !Array.isArray(data.certificates) ||
-      data.certificates.length === 0
-    ) {
-      showVerificationFailed();
-      return;
-    }
-
-    const certificate =
-      data.certificates.find(
-        function(item) {
-          return (
-            String(item.ref || "").trim() ===
-            ref.trim()
-          );
-        }
-      ) || data.certificates[0];
+    console.log(
+      "GitHub Data Page certificate:",
+      certificate
+    );
 
     if (!certificate) {
       showVerificationFailed();

@@ -96,16 +96,19 @@ function setVerificationStatus(type, message) {
   const text = document.getElementById("verificationStatusText");
   const desc = document.getElementById("verificationMessage");
   if (!badge || !dot || !text || !desc) return;
+
   const colors = {
     valid: { bg: "rgba(0, 150, 57, 0.08)", color: "rgb(0, 150, 57)" },
     revoked: { bg: "rgba(227, 28, 35, 0.08)", color: "rgb(227, 28, 35)" },
     invalid: { bg: "rgba(227, 28, 35, 0.08)", color: "rgb(227, 28, 35)" }
   };
+
   const selected = colors[type] || colors.invalid;
   badge.style.backgroundColor = selected.bg;
   badge.style.color = selected.color;
   dot.style.backgroundColor = selected.color;
   text.textContent = message;
+
   desc.textContent = type === "valid"
     ? "The following information was retrieved from the scanned QR Code and verified."
     : message === "Certificate Revoked"
@@ -116,6 +119,7 @@ function setVerificationStatus(type, message) {
 function setField(id, value) {
   const element = document.getElementById(id);
   if (!element) return;
+
   const safeValue = value == null || value === "" ? "—" : String(value);
   element.textContent = safeValue;
   element.setAttribute("title", safeValue);
@@ -128,11 +132,11 @@ function clearCertificateInfo() {
   setField("reportDate", "—");
 }
 
-async function loadCertificate() {
+function loadCertificate() {
   const params = new URLSearchParams(window.location.search);
   const ref = (params.get("ref") || "").trim();
 
-  // Never display account information without a REF.
+  // No REF = no certificate information.
   if (!ref) {
     clearCertificateInfo();
     setVerificationStatus("invalid", "Verification Failed");
@@ -141,45 +145,88 @@ async function loadCertificate() {
 
   clearCertificateInfo();
 
-  try {
-    const response = await fetch(
-      API_URL + "?ref=" + encodeURIComponent(ref) + "&_=" + Date.now(),
-      { cache: "no-store" }
-    );
+  const callbackName =
+    "publicCertificateCallback_" +
+    Date.now() + "_" +
+    Math.floor(Math.random() * 1000000);
 
-    if (!response.ok) {
-      throw new Error("API request failed: " + response.status);
-    }
+  const script = document.createElement("script");
+  let finished = false;
 
-    const data = await response.json();
-    console.log("Certificate API:", data);
-
-    if (!data || !data.success) {
-      clearCertificateInfo();
-      setVerificationStatus("invalid", "Verification Failed");
-      return;
-    }
-
-    // Accept the current Admin/Sheet backend field names.
-    setField("accountNo", data.accountNo);
-    setField("accountName", data.accountName);
-    setField("balance", data.balance ?? data.reportDateBalance);
-    setField("reportDate", data.reportDate ?? data.reportGenerationDate);
-
-    const status = String(data.status || "").trim().toUpperCase();
-
-    if (status === "REVOKED") {
-      setVerificationStatus("revoked", "Certificate Revoked");
-    } else if (status === "VALID") {
-      setVerificationStatus("valid", "Verification Details");
-    } else {
-      clearCertificateInfo();
-      setVerificationStatus("invalid", "Verification Failed");
-    }
-  } catch (error) {
-    console.error("Certificate verification error:", error);
+  const timeout = setTimeout(function () {
+    if (finished) return;
+    finished = true;
+    cleanup();
     clearCertificateInfo();
     setVerificationStatus("invalid", "Verification Failed");
+  }, 15000);
+
+  window[callbackName] = function (data) {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timeout);
+    cleanup();
+
+    try {
+      console.log("Certificate API:", data);
+
+      if (!data || !data.success) {
+        clearCertificateInfo();
+        setVerificationStatus("invalid", "Verification Failed");
+        return;
+      }
+
+      setField("accountNo", data.accountNo);
+      setField("accountName", data.accountName);
+      setField("balance", data.balance ?? data.reportDateBalance);
+      setField("reportDate", data.reportDate ?? data.reportGenerationDate);
+
+      const status = String(data.status || "")
+        .trim()
+        .toUpperCase();
+
+      if (status === "REVOKED") {
+        setVerificationStatus("revoked", "Certificate Revoked");
+      } else if (status === "VALID") {
+        setVerificationStatus("valid", "Verification Details");
+      } else {
+        clearCertificateInfo();
+        setVerificationStatus("invalid", "Verification Failed");
+      }
+    } catch (error) {
+      console.error("Certificate response error:", error);
+      clearCertificateInfo();
+      setVerificationStatus("invalid", "Verification Failed");
+    }
+  };
+
+  script.src =
+    API_URL +
+    "?ref=" + encodeURIComponent(ref) +
+    "&callback=" + encodeURIComponent(callbackName) +
+    "&_=" + Date.now();
+
+  script.onerror = function () {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timeout);
+    cleanup();
+    clearCertificateInfo();
+    setVerificationStatus("invalid", "Verification Failed");
+  };
+
+  document.body.appendChild(script);
+
+  function cleanup() {
+    if (script.parentNode) {
+      script.parentNode.removeChild(script);
+    }
+
+    try {
+      delete window[callbackName];
+    } catch (error) {
+      window[callbackName] = undefined;
+    }
   }
 }
 

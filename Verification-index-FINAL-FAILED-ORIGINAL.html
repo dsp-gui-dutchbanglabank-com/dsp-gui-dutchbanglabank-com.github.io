@@ -166,7 +166,7 @@ function setVerificationStatus(type, message) {
       "This certificate was found, but its current status is REVOKED.";
   } else {
     desc.textContent =
-      "We couldn't verify the authenticity of the QR code or certificate reference.";
+      "Failed to display the verification information.";
   }
 }
 
@@ -443,7 +443,7 @@ if (document.readyState === "loading") {
 
         <p
           class="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-sm mx-auto"
-        >We couldn't verify the authenticity of the QR code or certificate reference.</p>
+        >Failed to display the verification information.</p>
 
       </div>
 

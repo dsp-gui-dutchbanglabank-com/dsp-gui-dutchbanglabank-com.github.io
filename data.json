@@ -1,4 +1,37 @@
 {
   "success": true,
-  "certificates": []
+  "certificates": [
+    {
+      "ref": "ref=1439~jpJkogj32XJxf7b5A7av0F5aCik3WJhuKLCB3toETvqihJbzg5SLF6v1ahXVhybh4UKeeeoeZA2O8MLSNYfP2BMKaNGJiZPfACHxflSsyOP3Ooha0JAsHDO9YUoUQWdPWvQL9CnhlhBqnlmXWKSgOwfe8bc7U03ifkQGjsX9CG8T7MgqlUPrnwaithK7hagqTMpclqBp",
+      "accountNo": "1051580367918",
+      "accountName": "MD AWSAT HOSAIN",
+      "balance": "1,06,175.04",
+      "reportDate": "12-Aug-2026",
+      "status": "VALID"
+    },
+    {
+      "ref": "ref=7573~BgZqg96sbJppQmr4iI5DmtTtBTr3G5hjz7mnsk9hl7lyU4i2sob24SRJVzd3iMvJvcKL1al1UqyCuoBxnvieix2eJSJOFFDFlLe3ckAr8U22TpmgYbbnGmIkoofUpg9jiaQrKPS8TZJjIpH4Q8y4zO10St7PfGeI8IL0B85HdLeEH7t4YypO65dNjFbcRO5IYIVrpFW5",
+      "accountNo": "555555555555",
+      "accountName": "lllllllllll",
+      "balance": "llllllllllllll",
+      "reportDate": "lllllllllllll",
+      "status": "VALID"
+    },
+    {
+      "ref": "ref=4197~mgV0xp4pDUgAxdzGQA2MDfN0s4oDmCApFHg377oKjbTVHvENVWjUoxPFzWQvNYaLs0XO2PfyrhJdmVdyv1mOM1EzExbWjpi2h02fxSHML48K9TbsqqCifvqe4vXR16KGiHc4osoAypYnKghnZp7HYvDC4jv96UsxWuVV7ELlyTbjkYkHDKTu9pJCJB6gKvLIgz0ORDar",
+      "accountNo": "dfgdnggfng",
+      "accountName": "hdfggbfhnfh",
+      "balance": "dtgbfdhbf",
+      "reportDate": "drhbfdhbgf",
+      "status": "VALID"
+    },
+    {
+      "ref": "ref=8976~yfx1T0Wtmnxwlc7RPktGuM1VatJPd6z62iTBNPGPkTCOqpTC0Ufp0bCvrBCQLHwhceukxkihfrp3F3ZDWfaHxspoBg2wPBdcox2jDiGRG6Qrhy2qCu4Tb9u3ZXDSZt2djpQ4tlp5tf3zkfmT60nAdVBI2wMRKyXVwjrCjh0BJVK3bAyuCE6qAUPGiH7RTJc04aKDA4GL",
+      "accountNo": "1234567890",
+      "accountName": "AMAR NAM",
+      "balance": "6,10,50,300.85",
+      "reportDate": "22-Aug-2026",
+      "status": "VALID"
+    }
+  ]
 }

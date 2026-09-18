@@ -1,29 +1,4 @@
 {
   "success": true,
-  "certificates": [
-    {
-      "ref": "ref=1439~jpJkogj32XJxf7b5A7av0F5aCik3WJhuKLCB3toETvqihJbzg5SLF6v1ahXVhybh4UKeeeoeZA2O8MLSNYfP2BMKaNGJiZPfACHxflSsyOP3Ooha0JAsHDO9YUoUQWdPWvQL9CnhlhBqnlmXWKSgOwfe8bc7U03ifkQGjsX9CG8T7MgqlUPrnwaithK7hagqTMpclqBp",
-      "accountNo": "1051580367918",
-      "accountName": "MD AWSAT HOSAIN",
-      "balance": "1,06,175.04",
-      "reportDate": "12-Aug-2026",
-      "status": "VALID"
-    },
-    {
-      "ref": "ref=7119~0AqX3nnvywPUDYIjMOF7tBjqh03jXWGcZMrsriI4h2w6VtbeDVPcEkpCYFuKmp5yk6ZsEepkvYTmqsNMP28H8zjEBoGJ7TZgOzCNuMfK2ifuUZDpxfxTHNZVEeUumowhzSxE7ARlpBnaK0PkcILVVnuXmUVkluVca6Xt8nmQWiXE9O7alflKYY6b4HWjKjSy4VzO2QQh",
-      "accountNo": "MD AL AMIN MIAH",
-      "accountName": "3031580463521",
-      "balance": "1,25,50,326.85",
-      "reportDate": "24-Aug-2026",
-      "status": "VALID"
-    },
-    {
-      "ref": "ref=3293~SMaAg98ZQWaC1KQV65slMlWp4lvcnqPKj5ViFqhThgbWhszG0RaFqQ94Wo7grSNW1HU6fbYz1qAvTk9i0XwbfkRvZyswe354jwlF35Pif7VSSbGEKCzuXKoAEvw4TqoQk4xZCY0ZPyl63qivw65sF3PrHtWAto2DzzvRoI2s4MUVXiG9H6sHwDF6I36SIgshH5m4zFmV",
-      "accountNo": "555555555555",
-      "accountName": "lllllllllll",
-      "balance": "12550326.85",
-      "reportDate": "24-Aug-2026",
-      "status": "VALID"
-    }
-  ]
+  "accounts": []
 }

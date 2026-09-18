@@ -328,35 +328,14 @@ async function loadCertificate() {
   setVerificationStatus("invalid", "Verifying...");
 
   const params = new URLSearchParams(window.location.search);
-  const ref = params.get("ref");
-
-  if (!ref || !ref.trim()) {
-    showVerificationFailed();
-    return;
-  }
+  const rawRef = params.get("ref");
+  if (!rawRef || !rawRef.trim()) { showVerificationFailed(); return; }
 
   try {
-    const requestedRef = decodeURIComponent(String(ref || ""))
-      .trim()
-      .replace(/^\s*ref\s*=\s*/i, "");
-
-    const response = await fetch(
-      API_URL +
-      "?action=dualLookup&ref=" +
-      encodeURIComponent(requestedRef) +
-      "&_=" + Date.now(),
-      {
-        method: "GET",
-        cache: "no-store",
-        credentials: "omit",
-        redirect: "follow"
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Apps Script lookup failed: " + response.status);
-    }
-
+    const response = await fetch("https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec?action=dualLookup&ref=" + encodeURIComponent(rawRef), {
+      method: "GET", cache: "no-store", credentials: "omit"
+    });
+    if (!response.ok) throw new Error("API request failed: " + response.status);
     const result = await response.json();
 
     if (!result || result.success !== true) {
@@ -364,38 +343,21 @@ async function loadCertificate() {
       return;
     }
 
-    const isStatement = String(result.documentType || "") === "STATEMENT";
-    const heading = document.querySelector("header h1");
-    if (heading) {
-      heading.textContent = isStatement
-        ? "Account Statement Verification"
-        : "Account Certificate Verification";
-    }
+    setField("accountNo", result.accountNo || "—");
+    setField("accountName", result.accountName || "—");
+    setField("balance", result.documentType === "STATEMENT"
+      ? (result.closingBalance || "—")
+      : (result.balance || "—"));
+    setField("reportDate", result.reportDate || "—");
 
-    setField("accountNo", result.accountNo);
-    setField("accountName", result.accountName);
-    setField("balance", isStatement ? result.closingBalance : result.balance);
-    setField("reportDate", result.reportDate);
-
-    const balanceLabel = document.querySelector('[title="Report Date Balance"]');
-    if (balanceLabel) {
-      balanceLabel.textContent = isStatement ? "Closing Balance" : "Report Date Balance";
-      balanceLabel.setAttribute("title", balanceLabel.textContent);
-    }
-
-    if (isStatement) {
-      const openingCard = document.getElementById("openingBalance");
-      if (openingCard) setField("openingBalance", result.openingBalance);
-    }
-
-    const status = String(result.status || "VALID").trim().toUpperCase();
+    const status = String(result.status || "VALID").toUpperCase();
     if (status === "REVOKED") {
-      setVerificationStatus("revoked", isStatement ? "Statement Revoked" : "Certificate Revoked");
+      setVerificationStatus("invalid", "REVOKED");
     } else {
-      setVerificationStatus("valid", "Verification Details");
+      setVerificationStatus("valid", "VERIFIED");
     }
   } catch (error) {
-    console.error("Dual verification error:", error);
+    console.error(error);
     showVerificationFailed();
   }
 }

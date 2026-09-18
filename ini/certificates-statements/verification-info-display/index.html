@@ -320,44 +320,83 @@ function showVerificationFailed() {
 }
 
 async function loadCertificate() {
-  hideVerificationFailedPage();
-  setField("accountNo", "—");
-  setField("accountName", "—");
-  setField("balance", "—");
-  setField("reportDate", "—");
-  setVerificationStatus("invalid", "Verifying...");
-
-  const params = new URLSearchParams(window.location.search);
-  const rawRef = params.get("ref");
-  if (!rawRef || !rawRef.trim()) { showVerificationFailed(); return; }
-
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbztvLiNtMmyyDB1krhxOCON4hBV4evMyyvNitn3rbN0HxrmfZXckDtBrLFgoevKnuqtKQ/exec?action=dualLookup&ref=" + encodeURIComponent(rawRef), {
-      method: "GET", cache: "no-store", credentials: "omit"
-    });
-    if (!response.ok) throw new Error("API request failed: " + response.status);
-    const result = await response.json();
+    const params = new URLSearchParams(window.location.search);
+    const rawRef = params.get("ref") || "";
 
-    if (!result || result.success !== true) {
+    function normalizeRef(value) {
+      return String(value || "")
+        .trim()
+        .replace(/^\s*ref\s*=\s*/i, "")
+        .replace(/\\~/g, "~")
+        .replace(/\s+/g, "");
+    }
+
+    const requestedRef = normalizeRef(decodeURIComponent(rawRef));
+    if (!requestedRef) {
       showVerificationFailed();
       return;
     }
 
-    setField("accountNo", result.accountNo || "—");
-    setField("accountName", result.accountName || "—");
-    setField("balance", result.documentType === "STATEMENT"
-      ? (result.closingBalance || "—")
-      : (result.balance || "—"));
-    setField("reportDate", result.reportDate || "—");
+    const response = await fetch(
+      GITHUB_DATA_URL + "?_=" + Date.now(),
+      { method: "GET", cache: "no-store", credentials: "omit" }
+    );
 
-    const status = String(result.status || "VALID").toUpperCase();
+    if (!response.ok) throw new Error("data.json request failed: " + response.status);
+
+    const data = await response.json();
+    const accounts = Array.isArray(data.accounts)
+      ? data.accounts
+      : (Array.isArray(data.certificates) ? data.certificates : []);
+
+    const account = accounts.find(function(item) {
+      const cert = normalizeRef(item && (item.certificateRef || item.ref));
+      const statement = normalizeRef(item && item.statementRef);
+      return requestedRef === cert || requestedRef === statement;
+    });
+
+    if (!account) {
+      showVerificationFailed();
+      return;
+    }
+
+    const certRef = normalizeRef(account.certificateRef || account.ref);
+    const statementRef = normalizeRef(account.statementRef);
+    const isStatement = requestedRef === statementRef && requestedRef !== certRef;
+
+    const titleText = isStatement
+      ? "Account Statement Verification"
+      : "Account Certificate Verification";
+
+    document.querySelectorAll("h1").forEach(function(el) {
+      if (el.textContent.indexOf("Account Certificate Verification") !== -1) {
+        el.textContent = titleText;
+      }
+    });
+
+    const labels = Array.from(document.querySelectorAll("p"));
+    labels.forEach(function(el) {
+      const t = el.textContent.trim();
+      if (!isStatement && t === "Report Date Balance") el.textContent = "Report Date Balance";
+      if (isStatement && t === "Report Date Balance") el.textContent = "Closing Balance";
+    });
+
+    setField("accountNo", account.accountNo);
+    setField("accountName", account.accountName);
+    setField("balance", isStatement
+      ? (account.closingBalance || account.balance || "")
+      : (account.balance || ""));
+    setField("reportDate", account.reportDate);
+
+    const status = String(account.status || "VALID").trim().toUpperCase();
     if (status === "REVOKED") {
-      setVerificationStatus("invalid", "REVOKED");
+      setVerificationStatus("revoked", isStatement ? "Statement Revoked" : "Certificate Revoked");
     } else {
-      setVerificationStatus("valid", "VERIFIED");
+      setVerificationStatus("valid", isStatement ? "Statement Verification Details" : "Verification Details");
     }
   } catch (error) {
-    console.error(error);
+    console.error("Verification error:", error);
     showVerificationFailed();
   }
 }

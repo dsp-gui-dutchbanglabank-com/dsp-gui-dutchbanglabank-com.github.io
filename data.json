@@ -1,4 +1,13 @@
 {
   "success": true,
-  "accounts": []
+  "certificates": [
+    {
+      "ref": "ref=1587~csxmHlynhnkjpNcA6DSbhLi7liuXdOpdPHi9930kXi8tVoQ69RJe2WiAMudSxtdctPJzo6KFIogJYMkc112m2L5g25eLeVuiAI9eOVQHQT7Da3KtJXIqhsFv9J2K0YKHqW9W0FC362AP6SJrkjJu2JfllI4bukbGNkPMCpi6MghUCDd6DP21nSroiWYpTSfoy1hoxECy",
+      "accountNo": "0",
+      "accountName": "AAAAAAAAAAAAAA",
+      "balance": "0",
+      "reportDate": "01-Jan-2000",
+      "status": "VALID"
+    }
+  ]
 }

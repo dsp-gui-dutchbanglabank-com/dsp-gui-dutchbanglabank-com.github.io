@@ -120,11 +120,13 @@
 
         <thead>
           <tr>
-            <th>REF</th>
+            <th>Certificate REF</th>
+            <th>Statement REF</th>
             <th>Account No</th>
             <th>Account Name</th>
-            <th>Balance</th>
-            <th>Report Date</th>
+            <th>Opening Balance</th>
+            <th>Closing Balance</th>
+            <th>Report Generation Date</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -133,7 +135,7 @@
 
           <tr>
             <td
-              colspan="6"
+              colspan="8"
               class="empty"
             >
               Loading...
@@ -232,10 +234,10 @@ async function loadCertificateData() {
       table.innerHTML = `
         <tr>
           <td
-            colspan="6"
+            colspan="8"
             class="empty"
           >
-            No certificates found.
+            No account records found.
           </td>
         </tr>
       `;
@@ -264,23 +266,31 @@ async function loadCertificateData() {
           row.innerHTML = `
 
             <td class="ref">
-              ${escapeHtml(cert.ref)}
+              ${escapeHtml(cert.certificateRef || cert.ref || cert.certificateREF || "")}
+            </td>
+
+            <td class="ref">
+              ${escapeHtml(cert.statementRef || cert.statementREF || "")}
             </td>
 
             <td>
-              ${escapeHtml(cert.accountNo)}
+              ${escapeHtml(cert.accountNo || "")}
             </td>
 
             <td>
-              ${escapeHtml(cert.accountName)}
+              ${escapeHtml(cert.accountName || "")}
             </td>
 
             <td>
-              ${escapeHtml(cert.balance)}
+              ${escapeHtml(cert.openingBalance ?? "")}
             </td>
 
             <td>
-              ${escapeHtml(cert.reportDate)}
+              ${escapeHtml(cert.closingBalance ?? cert.reportDateBalance ?? cert.balance ?? "")}
+            </td>
+
+            <td>
+              ${escapeHtml(cert.reportGenerationDate || cert.reportDate || "")}
             </td>
 
             <td class="${statusClass}">
@@ -301,7 +311,7 @@ async function loadCertificateData() {
     status.textContent =
       "Live data loaded successfully. " +
       certificates.length +
-      " certificate(s) found.";
+      " account record(s) found.";
 
   } catch (error) {
 
@@ -315,7 +325,7 @@ async function loadCertificateData() {
       <tr>
 
         <td
-          colspan="6"
+          colspan="8"
           class="empty"
         >
           Could not load certificate data.

@@ -290,12 +290,10 @@ async function loadCertificate() {
     }
 
     function normalizeRef(value) {
-      let text =
-        String(value || "")
-          .trim()
-          .replace(/^\s*ref\s*=\s*/i, "");
-
-      return text;
+      let text = String(value || "").trim();
+      try { text = decodeURIComponent(text); } catch (e) {}
+      text = text.replace(/^\s*(?:ref\s*=\s*)+/i, "");
+      return text.trim();
     }
 
     const requestedRef =
@@ -313,14 +311,11 @@ async function loadCertificate() {
         const certRef = normalizeRef(item.certificateRef);
         const stmtRef = normalizeRef(item.statementRef);
 
-        // Match the REF according to the record's actual type.
-        if (itemType === "STATEMENT") {
-          return stmtRef === requestedRef || itemRef === requestedRef;
-        }
-        if (itemType === "CERTIFICATE") {
-          return certRef === requestedRef || itemRef === requestedRef;
-        }
-        return itemRef === requestedRef || certRef === requestedRef || stmtRef === requestedRef;
+        // Match both REF fields independently. This supports JSON files
+        // where each account is represented by certificate and statement rows.
+        return [itemRef, certRef, stmtRef].some(function(candidate) {
+          return candidate && candidate === requestedRef;
+        });
       });
 
     if (!certificate) {

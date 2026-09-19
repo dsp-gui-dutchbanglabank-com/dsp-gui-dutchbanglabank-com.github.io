@@ -189,6 +189,7 @@ function showVerificationFailed() {
   setField("accountNo", "—");
   setField("accountName", "—");
   setField("balance", "—");
+  setField("openingBalance", "—");
   setField("reportDate", "—");
 
   setVerificationStatus(
@@ -205,6 +206,7 @@ async function loadCertificate() {
   setField("accountNo", "—");
   setField("accountName", "—");
   setField("balance", "—");
+  setField("openingBalance", "—");
   setField("reportDate", "—");
 
   // Never show stale certificate information while a new REF is loading.
@@ -227,6 +229,7 @@ async function loadCertificate() {
   setField("accountNo", "—");
   setField("accountName", "—");
   setField("balance", "—");
+  setField("openingBalance", "—");
   setField("reportDate", "—");
 
   setVerificationStatus(
@@ -305,16 +308,13 @@ async function loadCertificate() {
     const certificate =
       data.certificates.find(
         function(item) {
-          if (!item) return false;
-
           const refs = [
-            item.ref,
-            item.certificateRef,
-            item.statementRef
+            item && item.ref,
+            item && item.certificateRef,
+            item && item.statementRef
           ];
-
-          return refs.some(function(value) {
-            return normalizeRef(value) === requestedRef;
+          return refs.some(function(candidate) {
+            return normalizeRef(candidate) === requestedRef;
           });
         }
       );
@@ -340,26 +340,39 @@ async function loadCertificate() {
     );
 
     const isStatement =
-      normalizeRef(certificate.statementRef) === requestedRef &&
-      normalizeRef(certificate.certificateRef) !== requestedRef;
+      normalizeRef(certificate.statementRef) === requestedRef ||
+      String(certificate.type || "").toUpperCase() === "STATEMENT";
 
-    setField(
-      "balance",
-      isStatement
-        ? (certificate.closingBalance || certificate.reportDateBalance || certificate.balance || "—")
-        : (certificate.reportDateBalance || certificate.balance || certificate.closingBalance || "—")
-    );
-
-    setField(
-      "reportDate",
-      certificate.reportGenerationDate || certificate.reportDate || "—"
-    );
-    const balanceLabel = document.querySelector('[title="Report Date Balance"]');
-    if (balanceLabel) {
-      balanceLabel.textContent = isStatement ? "Closing Balance" : "Report Date Balance";
-      balanceLabel.setAttribute("title", isStatement ? "Closing Balance" : "Report Date Balance");
+    const title = document.querySelector("h1.text-lg");
+    if (title) {
+      title.textContent = isStatement
+        ? "Account Statement Verification"
+        : "Account Certificate Verification";
     }
 
+    const balanceLabel = document.querySelector('p[title="Report Date Balance"]');
+    if (isStatement) {
+      if (balanceLabel) balanceLabel.textContent = "Closing Balance";
+      setField("balance", certificate.closingBalance || certificate.balance);
+      let opening = document.getElementById("openingBalance");
+      if (!opening) {
+        const grid = document.querySelector(".grid.grid-cols-1.sm\:grid-cols-2");
+        if (grid) {
+          const card = document.createElement("div");
+          card.className = "qr-field-card group relative overflow-hidden border border-slate-200/70 bg-white/95 rounded-xl shadow-sm";
+          card.innerHTML = '<div class="relative pl-4 pr-3.5 py-2 sm:pl-5 sm:pr-4 sm:py-2.5"><p class="text-xs sm:text-sm font-semibold tracking-wide mb-1" style="color: rgb(0, 85, 165);">Opening Balance</p><p id="openingBalance" class="text-slate-800 text-sm sm:text-base font-medium leading-relaxed break-words">—</p></div>';
+          grid.insertBefore(card, grid.firstElementChild.nextElementSibling.nextElementSibling);
+        }
+      }
+      setField("openingBalance", certificate.openingBalance);
+    } else {
+      if (balanceLabel) balanceLabel.textContent = "Report Date Balance";
+      setField("balance", certificate.reportDateBalance || certificate.balance);
+      const opening = document.getElementById("openingBalance");
+      if (opening && opening.parentElement && opening.parentElement.parentElement) opening.parentElement.parentElement.remove();
+    }
+
+    setField("reportDate", certificate.reportGenerationDate || certificate.reportDate);
 
     const status =
       String(

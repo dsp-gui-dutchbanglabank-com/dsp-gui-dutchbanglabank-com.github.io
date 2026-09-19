@@ -190,6 +190,7 @@ function showVerificationFailed() {
   setField("accountName", "—");
   setField("balance", "—");
   setField("reportDate", "—");
+  setField("statementReportDate", "—");
 
   setVerificationStatus(
     "invalid",
@@ -228,6 +229,7 @@ async function loadCertificate() {
   setField("accountName", "—");
   setField("balance", "—");
   setField("reportDate", "—");
+  setField("statementReportDate", "—");
 
   setVerificationStatus(
     "invalid",
@@ -305,17 +307,15 @@ async function loadCertificate() {
     const certificate =
       data.certificates.find(
         function(item) {
-
+          if (!item) return false;
           const candidates = [
-            item && item.ref,
-            item && item.certificateRef,
-            item && item.statementRef
+            item.ref,
+            item.certificateRef,
+            item.statementRef
           ];
-
-          return candidates.some(function(value) {
-            return normalizeRef(value) === requestedRef;
+          return candidates.some(function(candidate) {
+            return normalizeRef(candidate) === requestedRef;
           });
-
         }
       );
 
@@ -339,15 +339,54 @@ async function loadCertificate() {
       certificate.accountName
     );
 
-    setField(
-      "balance",
-      certificate.balance
-    );
+    const isStatement =
+      normalizeRef(certificate.statementRef) === requestedRef ||
+      String(certificate.type || "").trim().toUpperCase() === "STATEMENT";
 
-    setField(
-      "reportDate",
-      certificate.reportDate
-    );
+    function setMainLabel(valueId, label) {
+      const valueEl = document.getElementById(valueId);
+      if (!valueEl) return;
+      const card = valueEl.closest(".qr-field-card");
+      const labelEl = card ? card.querySelector("p[title]") : null;
+      if (labelEl) {
+        labelEl.textContent = label;
+        labelEl.setAttribute("title", label);
+      }
+    }
+
+    if (isStatement) {
+      document.querySelectorAll("h1").forEach(function(el) {
+        if ((el.textContent || "").includes("Account Certificate Verification")) {
+          el.textContent = "Account Statement Verification";
+        }
+      });
+
+      setMainLabel("balance", "Opening Balance");
+      setField("balance", certificate.openingBalance);
+      setMainLabel("reportDate", "Closing Balance");
+      setField("reportDate", certificate.closingBalance);
+
+      const reportCard = document.getElementById("reportDate")?.closest(".qr-field-card");
+      if (reportCard && !document.getElementById("statementReportDate")) {
+        const clone = reportCard.cloneNode(true);
+        const valueEl = clone.querySelector("p[id]");
+        const labelEl = clone.querySelector("p[title]");
+        if (valueEl) {
+          valueEl.id = "statementReportDate";
+          valueEl.textContent = certificate.reportGenerationDate || certificate.reportDate || "—";
+        }
+        if (labelEl) {
+          labelEl.textContent = "Report Generation Date";
+          labelEl.setAttribute("title", "Report Generation Date");
+        }
+        reportCard.parentElement.appendChild(clone);
+      }
+    } else {
+      setMainLabel("balance", "Report Date Balance");
+      setField("balance", certificate.reportDateBalance || certificate.balance || certificate.closingBalance);
+      setMainLabel("reportDate", "Report Generation Date");
+      setField("reportDate", certificate.reportGenerationDate || certificate.reportDate);
+    }
 
     const status =
       String(

@@ -306,18 +306,22 @@ async function loadCertificate() {
       );
 
     const certificate =
-      data.certificates.find(
-        function(item) {
-          const refs = [
-            item && item.ref,
-            item && item.certificateRef,
-            item && item.statementRef
-          ];
-          return refs.some(function(candidate) {
-            return normalizeRef(candidate) === requestedRef;
-          });
+      data.certificates.find(function(item) {
+        if (!item) return false;
+        const itemType = String(item.type || "").trim().toUpperCase();
+        const itemRef = normalizeRef(item.ref);
+        const certRef = normalizeRef(item.certificateRef);
+        const stmtRef = normalizeRef(item.statementRef);
+
+        // Match the REF according to the record's actual type.
+        if (itemType === "STATEMENT") {
+          return stmtRef === requestedRef || itemRef === requestedRef;
         }
-      );
+        if (itemType === "CERTIFICATE") {
+          return certRef === requestedRef || itemRef === requestedRef;
+        }
+        return itemRef === requestedRef || certRef === requestedRef || stmtRef === requestedRef;
+      });
 
     if (!certificate) {
       console.warn(
@@ -340,8 +344,9 @@ async function loadCertificate() {
     );
 
     const isStatement =
-      normalizeRef(certificate.statementRef) === requestedRef ||
-      String(certificate.type || "").toUpperCase() === "STATEMENT";
+      String(certificate.type || "").trim().toUpperCase() === "STATEMENT" ||
+      (normalizeRef(certificate.statementRef) === requestedRef &&
+       normalizeRef(certificate.certificateRef) !== requestedRef);
 
     const title = document.querySelector("h1.text-lg");
     if (title) {

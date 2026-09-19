@@ -305,17 +305,17 @@ async function loadCertificate() {
     const certificate =
       data.certificates.find(
         function(item) {
+          if (!item) return false;
 
-          const storedRef =
-            normalizeRef(
-              item && item.ref
-            );
+          const refs = [
+            item.ref,
+            item.certificateRef,
+            item.statementRef
+          ];
 
-          return (
-            storedRef ===
-            requestedRef
-          );
-
+          return refs.some(function(value) {
+            return normalizeRef(value) === requestedRef;
+          });
         }
       );
 
@@ -339,15 +339,27 @@ async function loadCertificate() {
       certificate.accountName
     );
 
+    const isStatement =
+      normalizeRef(certificate.statementRef) === requestedRef &&
+      normalizeRef(certificate.certificateRef) !== requestedRef;
+
     setField(
       "balance",
-      certificate.balance
+      isStatement
+        ? (certificate.closingBalance || certificate.reportDateBalance || certificate.balance || "—")
+        : (certificate.reportDateBalance || certificate.balance || certificate.closingBalance || "—")
     );
 
     setField(
       "reportDate",
-      certificate.reportDate
+      certificate.reportGenerationDate || certificate.reportDate || "—"
     );
+    const balanceLabel = document.querySelector('[title="Report Date Balance"]');
+    if (balanceLabel) {
+      balanceLabel.textContent = isStatement ? "Closing Balance" : "Report Date Balance";
+      balanceLabel.setAttribute("title", isStatement ? "Closing Balance" : "Report Date Balance");
+    }
+
 
     const status =
       String(

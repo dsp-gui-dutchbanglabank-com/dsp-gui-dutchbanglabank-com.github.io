@@ -369,6 +369,13 @@ async function loadCertificate() {
       const reportCard = document.getElementById("reportDate")?.closest(".qr-field-card");
       if (reportCard && !document.getElementById("statementReportDate")) {
         const clone = reportCard.cloneNode(true);
+        clone.style.setProperty("--qr-accent", "#E31C23");
+        const accentBar = clone.querySelector(".absolute.inset-y-0.left-0");
+        if (accentBar) accentBar.style.backgroundColor = "rgb(227, 28, 35)";
+        const hoverWash = clone.querySelector(".pointer-events-none.absolute.inset-0");
+        if (hoverWash) {
+          hoverWash.style.background = "linear-gradient(135deg, rgba(227, 28, 35, 0.08) 0%, transparent 55%, rgba(227, 28, 35, 0.04) 100%)";
+        }
         const valueEl = clone.querySelector("p[id]");
         const labelEl = clone.querySelector("p[title]");
         if (valueEl) {

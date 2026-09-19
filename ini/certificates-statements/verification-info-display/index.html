@@ -302,22 +302,32 @@ async function loadCertificate() {
         )
       );
 
-    const certificate =
-      data.certificates.find(
-        function(item) {
+    // Prefer the record that matches the requested REF's specific type.
+    // The JSON contains a paired CERTIFICATE and STATEMENT record with
+    // the same certificateRef/statementRef values, so a generic find()
+    // can incorrectly select the certificate row for a statement REF.
+    const statementMatch = data.certificates.find(function(item) {
+      return String(item && item.type || "").toUpperCase() === "STATEMENT" &&
+        normalizeRef(item && item.statementRef) === requestedRef;
+    });
 
-          const candidates = [
-            item && item.ref,
-            item && item.certificateRef,
-            item && item.statementRef
-          ];
+    const certificateMatch = data.certificates.find(function(item) {
+      return String(item && item.type || "").toUpperCase() === "CERTIFICATE" &&
+        normalizeRef(item && item.certificateRef) === requestedRef;
+    });
 
-          return candidates.some(function(value) {
-            return normalizeRef(value) === requestedRef;
-          });
+    const certificate = statementMatch || certificateMatch ||
+      data.certificates.find(function(item) {
+        const candidates = [
+          item && item.ref,
+          item && item.certificateRef,
+          item && item.statementRef
+        ];
 
-        }
-      );
+        return candidates.some(function(value) {
+          return normalizeRef(value) === requestedRef;
+        });
+      });
 
     if (!certificate) {
       console.warn(

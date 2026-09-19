@@ -29,6 +29,35 @@
       "reportDateBalance": "11,06,175.04",
       "reportGenerationDate": "19-Sep-2026",
       "status": "VALID"
+    },
+    {
+      "ref": "ref=3589~bxajXWqMBSoQZc6nmfwTOPwIqLQOf4Et5rJ1a50xWTUgqftiQmJGPV2GNodXIlVebIVyxWkDcLf6bDWaB0yjbJST7HolTdDc7PQ7LPO55QkzD7ruBepmnBfX0dAwqZzZ99AVzj8Gs0FbpkA8j1MzZJi8LG0EVoE5UWRJpRm4W7i7Da15RV0YUlwNpsinGXNOB6CSxtvb",
+      "certificateRef": "ref=3589~bxajXWqMBSoQZc6nmfwTOPwIqLQOf4Et5rJ1a50xWTUgqftiQmJGPV2GNodXIlVebIVyxWkDcLf6bDWaB0yjbJST7HolTdDc7PQ7LPO55QkzD7ruBepmnBfX0dAwqZzZ99AVzj8Gs0FbpkA8j1MzZJi8LG0EVoE5UWRJpRm4W7i7Da15RV0YUlwNpsinGXNOB6CSxtvb",
+      "statementRef": "ref=3370~3z3stdlNPicplHTcHbJfx5XtyuqlUbumzHsw8KaNZOsOMQVAMF7jfuDMWjRmHLm8rNUYryrRjmn85c2NlO6Wei6iYQjgj0dfpTgEO9bMq0uo5FxeWjnNZ2Xc5lDqzcDaV8EhXSp0YGhTnlwhFONXdxgUOVyY26l0xc0zcdEiVrf4dtY7vIdnhQeTSiG0EtxPKqTHhFRt",
+      "type": "CERTIFICATE",
+      "balance": "77777777777777777",
+      "reportDate": "19-Sep-2026",
+      "accountNo": "88888888888888",
+      "accountName": "AAAAAAAAAAAAAAAA",
+      "openingBalance": "5555555555555",
+      "closingBalance": "77777777777777777",
+      "reportDateBalance": "77777777777777777",
+      "reportGenerationDate": "19-Sep-2026",
+      "status": "VALID"
+    },
+    {
+      "ref": "ref=3370~3z3stdlNPicplHTcHbJfx5XtyuqlUbumzHsw8KaNZOsOMQVAMF7jfuDMWjRmHLm8rNUYryrRjmn85c2NlO6Wei6iYQjgj0dfpTgEO9bMq0uo5FxeWjnNZ2Xc5lDqzcDaV8EhXSp0YGhTnlwhFONXdxgUOVyY26l0xc0zcdEiVrf4dtY7vIdnhQeTSiG0EtxPKqTHhFRt",
+      "certificateRef": "ref=3589~bxajXWqMBSoQZc6nmfwTOPwIqLQOf4Et5rJ1a50xWTUgqftiQmJGPV2GNodXIlVebIVyxWkDcLf6bDWaB0yjbJST7HolTdDc7PQ7LPO55QkzD7ruBepmnBfX0dAwqZzZ99AVzj8Gs0FbpkA8j1MzZJi8LG0EVoE5UWRJpRm4W7i7Da15RV0YUlwNpsinGXNOB6CSxtvb",
+      "statementRef": "ref=3370~3z3stdlNPicplHTcHbJfx5XtyuqlUbumzHsw8KaNZOsOMQVAMF7jfuDMWjRmHLm8rNUYryrRjmn85c2NlO6Wei6iYQjgj0dfpTgEO9bMq0uo5FxeWjnNZ2Xc5lDqzcDaV8EhXSp0YGhTnlwhFONXdxgUOVyY26l0xc0zcdEiVrf4dtY7vIdnhQeTSiG0EtxPKqTHhFRt",
+      "type": "STATEMENT",
+      "reportDate": "19-Sep-2026",
+      "accountNo": "88888888888888",
+      "accountName": "AAAAAAAAAAAAAAAA",
+      "openingBalance": "5555555555555",
+      "closingBalance": "77777777777777777",
+      "reportDateBalance": "77777777777777777",
+      "reportGenerationDate": "19-Sep-2026",
+      "status": "VALID"
     }
   ]
 }
